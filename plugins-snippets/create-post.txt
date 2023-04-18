@@ -1,0 +1,36 @@
+# @api_view(['POST'])
+# def create_post(request):
+#     serializer = PostSerializer(data=request.data)
+#     if serializer.is_valid():
+#         # Obtener los datos de la request
+#         title = request.data.get('title')
+#         content = request.data.get('content')
+#         tags_input = request.data.getlist('tags')
+#         cover_image = request.FILES.get('cover_image')
+        
+#         # Crear los tags y relacionarlos con la publicación
+#         tags = []
+#         for tag_dict in tags_input:
+#             tag = Tag.objects.get_or_create(name=tag_dict.get('name'))
+#             tags.append(tag)
+        
+#         # Crear la publicación y guardarla en la base de datos
+#         post = Post.objects.create(title=title, content=content)
+#         post.tags.set(tags)
+#         post.save()
+        
+#         # Devolver la respuesta con la publicación creada
+#         post = PostSerializer(post)
+#         return Response(post.data, status=status.HTTP_201_CREATED)
+    
+#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+"""
+def create_post(request):
+    serializer = PostSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+"""
