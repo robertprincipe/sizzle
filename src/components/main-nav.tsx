@@ -1,7 +1,6 @@
 import { NavItem } from "@/types/nav";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
-import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,6 +10,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Link } from "react-router-dom";
+import { Menu } from "lucide-react";
 
 interface MainNavProps {
   items?: NavItem[];
@@ -20,7 +21,7 @@ export function MainNav({ items }: MainNavProps) {
   return (
     <div className="flex gap-6 md:gap-10">
       <a href="/" className="items-center hidden space-x-2 md:flex">
-        <Icons.logo className="w-6 h-6" />
+        <img src="/apple-touch-icon.png" className="w-8" />
         <span className="hidden font-bold sm:inline-block">
           {siteConfig.name}
         </span>
@@ -30,16 +31,16 @@ export function MainNav({ items }: MainNavProps) {
           {items?.map(
             (item, index) =>
               item.href && (
-                <a
+                <Link
                   key={index}
-                  href={item.href}
+                  to={item.href}
                   className={cn(
                     "flex items-center text-lg font-semibold text-slate-600 hover:text-slate-900 dark:text-slate-100 sm:text-sm",
                     item.disabled && "cursor-not-allowed opacity-80"
                   )}
                 >
                   {item.title}
-                </a>
+                </Link>
               )
           )}
         </nav>
@@ -50,8 +51,7 @@ export function MainNav({ items }: MainNavProps) {
             variant="ghost"
             className="-ml-4 text-base hover:bg-transparent focus:ring-0 md:hidden"
           >
-            <Icons.logo className="w-4 h-4 mr-2" />{" "}
-            <span className="font-bold">Menu</span>
+            <img src="/apple-touch-icon.png" className="w-8 mr-2" /> <Menu />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
@@ -61,7 +61,8 @@ export function MainNav({ items }: MainNavProps) {
         >
           <DropdownMenuLabel>
             <a href="/" className="flex items-center">
-              <Icons.logo className="w-4 h-4 mr-2" /> {siteConfig.name}
+              <img src="/apple-touch-icon.png" className="w-8 mr-2" />{" "}
+              {siteConfig.name}
             </a>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />

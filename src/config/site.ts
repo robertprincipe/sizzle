@@ -10,13 +10,17 @@ interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  name: "Next.js",
+  name: "make",
   description:
-    "Beautifully designed components built with Radix UI and Tailwind CSS.",
+    "Encuentra las mejores aplicaciones de IA",
   mainNav: [
     {
-      title: "Home",
-      href: "/",
+      title: 'Blog',
+      href: "/blog"
+    },
+    {
+      title: 'Precios',
+      href: "/pricing"
     },
     {
       title: "Contacto",

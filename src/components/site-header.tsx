@@ -7,6 +7,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "./ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { Link } from "react-router-dom";
 
 export function SiteHeader() {
   return (
@@ -43,18 +44,26 @@ export function SiteHeader() {
               </SheetContent>
             </Sheet>
 
-            <a href={siteConfig.links.signup} rel="noreferrer">
-              <div
-                className={buttonVariants({
-                  size: "sm",
-                  variant: "ghost",
-                  className: "text-slate-700 dark:text-slate-400",
-                })}
+            {true ? (
+              <Link
+                to={"/login"}
+                className="inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white transition-all bg-indigo-500 border border-transparent rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
               >
-                <Icons.user className="w-5 h-5 fill-current" />
-                <span className="sr-only">Twitter</span>
-              </div>
-            </a>
+                Registrarse
+              </Link>
+            ) : (
+              <a href={siteConfig.links.signup} rel="noreferrer">
+                <div
+                  className={buttonVariants({
+                    size: "sm",
+                    variant: "ghost",
+                    className: "text-slate-700 dark:text-slate-400",
+                  })}
+                >
+                  <Icons.user className="w-5 h-5 fill-current" />
+                </div>
+              </a>
+            )}
           </nav>
         </div>
       </div>

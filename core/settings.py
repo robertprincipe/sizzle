@@ -13,10 +13,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "localhost"
-]
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 
 
 BASE_APPS = [
@@ -33,7 +30,11 @@ THIRD_PARTY_APPS = [
     'corsheaders',
 ]
 
-INSTALLED_APPS = BASE_APPS + THIRD_PARTY_APPS
+SAAS_APPS = [
+    'apps.blog'
+]
+
+INSTALLED_APPS = BASE_APPS + THIRD_PARTY_APPS + SAAS_APPS
 
 MIDDLEWARE = [
     #das
@@ -92,20 +93,9 @@ DATABASES = {
 
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
-# Password validation
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:5173',
-    'http://localhost:8000',
-    'http://127.0.0.1:5173',
-    'http://127.0.0.1:8000',
-]
+CORS_ORIGIN_WHITELIST = os.environ.get('CORS_ORIGIN_WHITELIST').split(',')
 
-CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:5173',
-    'http://localhost:8000',
-    'http://127.0.0.1:5173',
-    'http://127.0.0.1:8000',
-]
+CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS').split(',')
 
 AUTH_PASSWORD_VALIDATORS = [
     {

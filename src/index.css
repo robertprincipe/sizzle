@@ -1,3 +1,39 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ce-block__content {
+  @apply lg:max-w-[40rem];
+}
+
+.wizzard {
+  @apply py-4;
+}
+
+.wizzard input {
+  @apply w-full p-2 rounded-sm text-sm focus:outline-none border border-gray-300;
+}
+
+.inline-wizz {
+  @apply w-full p-2 rounded-sm text-sm focus:outline-none border border-gray-300;
+}
+
+.wizzard.withBorder img {
+  border: 1px solid #e8e8eb;
+}
+
+.wizzard.withBackground {
+  background: #eff2f5;
+  padding: 10px;
+}
+
+.wizzard.withBackground img {
+  display: block;
+  max-width: 60%;
+  margin: 0 auto 15px;
+}
+
+.cdx-marker {
+  background: rgba(245, 235, 111, 0.29);
+  padding: 3px 0;
+}
