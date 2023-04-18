@@ -2,6 +2,7 @@ import { NavItem } from "@/types/nav";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import Logo from "@/assets/images/android-chrome-192x192.png";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,7 +22,7 @@ export function MainNav({ items }: MainNavProps) {
   return (
     <div className="flex gap-6 md:gap-10">
       <a href="/" className="items-center hidden space-x-2 md:flex">
-        <img src="/apple-touch-icon.png" className="w-8" />
+        <img src={Logo} className="w-8" />
         <span className="hidden font-bold sm:inline-block">
           {siteConfig.name}
         </span>
