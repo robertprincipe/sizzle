@@ -1,8 +1,8 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Tag, Post
-from .serializers import PostSerializer, TagSerializer
+from .models import Tag, Post, Comment, Reaction
+from .serializers import PostSerializer, TagSerializer, ReactionSerializer, CommentSerializer
 
 import json
 
@@ -26,7 +26,7 @@ def create_post(request):
     post_serializer = PostSerializer(data=request.data)
     
     if post_serializer.is_valid():
-        post = post_serializer.save()
+        post = post_serializer.save(user=request.user)
 
         tags, error = get_tags(tags=request.data.get('tags', None))
         if error:
@@ -87,4 +87,67 @@ def post_detail(request, slug):
     except Post.DoesNotExist:
         return Response({"message": "La publicación no existe."}, status=status.HTTP_404_NOT_FOUND)
 
+@api_view(['PUT'])
+def react_post(request, post_id):
+    try:
+        post = Post.objects.get(id=post_id)
+    except Post.DoesNotExist:
+        return Response({"message": "La publicación no existe."}, status=status.HTTP_404_NOT_FOUND)
+    try:
+        reaction = Reaction.objects.get(id=request.data.get("reaction_id", None))
+    except Reaction.DoesNotExist:
+        reaction_serializer = ReactionSerializer(data=request.data)
+        if reaction_serializer.is_valid():
+            reaction_serializer.save(post=post, user=request.user)
+            return Response(reaction_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(reaction_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    if reaction.emoji == request.data.get("emoji", None):
+        reaction.delete()
+        return Response({"message": "Tu reacción fue removida"}, status=status.HTTP_200_OK)
+    else:
+        reaction_serializer = ReactionSerializer(reaction, data=request.data)
+        if reaction_serializer.is_valid():
+            reaction_serializer.save()
+            return Response(reaction_serializer.data, status=status.HTTP_200_OK)
+        return Response(reaction_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def comment_post(request):
+    try:
+        post = Post.objects.get(id=request.data.get("post_id", None))
+    except Post.DoesNotExist:
+        return Response({"message": "No existe la publicación"}, status=status.HTTP_404_NOT_FOUND)
+
+    comment_serializer = CommentSerializer(data=request.data)
     
+    if comment_serializer.is_valid():
+        comment_serializer.save(post=post, user=request.user)
+
+        return Response(comment_serializer.data, status=status.HTTP_200_OK)
+    
+    return Response(comment_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['PUT'])
+def update_comment(request, id):
+    try:
+        comment = Comment.objects.get(id=id)
+    except Comment.DoesNotExist:
+        return Response({"message": "No existe el comentario"}, status=status.HTTP_404_NOT_FOUND)
+
+    comment_serializer = CommentSerializer(comment, data=request.data)
+    
+    if comment_serializer.is_valid():
+        return Response(comment_serializer.data, status=status.HTTP_200_OK)
+    
+    return Response(comment_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])
+def delete_comment(request, id):
+    try:
+        comment = Comment.objects.get(id=id)
+    except Comment.DoesNotExist:
+        return Response({"message": "No existe el comentario"}, status=status.HTTP_404_NOT_FOUND)
+
+    comment.delete()
+    return Response({"message": "Comentario eliminado con exito."}, status=status.HTTP_200_OK)

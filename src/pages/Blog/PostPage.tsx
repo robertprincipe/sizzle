@@ -4,10 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import { ChevronLeft } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import Blocks from "editorjs-blocks-react-renderer";
+import Head from "@/components/shared/Head";
 
 export default function PostPage() {
   const { slug } = useParams();
-  const { data, isLoading } = useQuery(["post", slug], () =>
+  const { data, isLoading } = useQuery(["postDetail"], () =>
     postDetail(slug || "")
   );
 
@@ -16,7 +17,8 @@ export default function PostPage() {
       {isLoading ? (
         <></>
       ) : (
-        <article className="container relative max-w-3xl py-6 lg:py-10">
+        <section className="container relative max-w-3xl py-6 lg:py-10">
+          <Head title={data?.data.title || ""} />
           <div>
             <time
               dateTime={""}
@@ -226,7 +228,7 @@ export default function PostPage() {
               </div>
             </div>
           </div>
-        </article>
+        </section>
       )}
     </section>
   );

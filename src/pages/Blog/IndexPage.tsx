@@ -1,24 +1,25 @@
+import Head from "@/components/shared/Head";
 import { fromNow } from "@/lib/date";
 import { allPosts } from "@/services/post";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
 export default function BlogPage() {
-  const { data: posts, isLoading } = useQuery([""], allPosts);
+  const { data: posts, isLoading } = useQuery(["allPosts"], allPosts);
 
   return (
     <div className="container max-w-4xl py-6 lg:py-10">
+      <Head title="Publicaciones | make" />
       <div className="flex flex-col items-start gap-4 md:flex-row md:justify-between md:gap-8">
         <div className="flex-1 space-y-4">
           <h1 className="inline-block text-4xl font-extrabold tracking-tight text-slate-900 lg:text-5xl">
-            Blog
+            Publicaciones
           </h1>
           <p className="text-xl text-slate-600">
-            A blog built using Contentlayer. Posts are written in MDX.
+            Revisa las tutoriales, tips, hacks.
           </p>
         </div>
       </div>
-      <hr className="my-8 border-slate-200" />
       <div className="grid gap-10 sm:grid-cols-2">
         {posts?.data.map((post) => (
           <article

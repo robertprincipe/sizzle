@@ -1,6 +1,9 @@
+import Head from "@/components/shared/Head";
+
 const ContactPage = () => {
   return (
     <div className="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+      <Head title="Contacto" />
       <div className="max-w-2xl mx-auto lg:max-w-5xl">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-gray-800 dark:text-white sm:text-4xl">
@@ -31,7 +34,7 @@ const ContactPage = () => {
                       type="text"
                       name="hs-firstname-contacts-1"
                       id="hs-firstname-contacts-1"
-                      className="block w-full px-4 py-3 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400"
+                      className="block w-full px-4 py-3 text-sm border border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400"
                       placeholder="First Name"
                     />
                   </div>
@@ -44,7 +47,7 @@ const ContactPage = () => {
                       type="text"
                       name="hs-lastname-contacts-1"
                       id="hs-lastname-contacts-1"
-                      className="block w-full px-4 py-3 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400"
+                      className="block w-full px-4 py-3 text-sm border border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400"
                       placeholder="Last Name"
                     />
                   </div>
@@ -59,7 +62,7 @@ const ContactPage = () => {
                     name="hs-email-contacts-1"
                     id="hs-email-contacts-1"
                     autoComplete="email"
-                    className="block w-full px-4 py-3 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400"
+                    className="block w-full px-4 py-3 text-sm border border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400"
                     placeholder="Email"
                   />
                 </div>
@@ -72,7 +75,7 @@ const ContactPage = () => {
                     type="text"
                     name="hs-phone-number-1"
                     id="hs-phone-number-1"
-                    className="block w-full px-4 py-3 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400"
+                    className="block w-full px-4 py-3 text-sm border border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400"
                     placeholder="Phone Number"
                   />
                 </div>
@@ -85,7 +88,7 @@ const ContactPage = () => {
                     id="hs-about-contacts-1"
                     name="hs-about-contacts-1"
                     rows={4}
-                    className="block w-full px-4 py-3 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400"
+                    className="block w-full px-4 py-3 text-sm border border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400"
                     placeholder="Details"
                   ></textarea>
                 </div>

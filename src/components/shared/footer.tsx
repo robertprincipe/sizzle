@@ -6,26 +6,17 @@ const Footer = () => {
           <a
             className="flex-none text-xl font-semibold text-black dark:text-white"
             href="#"
-            aria-label="Brand"
+            aria-label="make"
           >
-            Brand
+            make
           </a>
         </div>
 
         <div className="mt-3">
           <p className="text-gray-500">
-            We&#39;re part of the{" "}
-            <a
-              className="font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-400"
-              href="#"
-            >
-              Htmlstream
-            </a>{" "}
-            family.
+            Somos una empresa dedicada a la creación de productos digitales.
           </p>
-          <p className="text-gray-500">
-            © Preline. 2022 Htmlstream. All rights reserved.
-          </p>
+          <p className="text-gray-500">&copy;make {new Date().getFullYear()}</p>
         </div>
 
         <div className="mt-3 space-x-2">

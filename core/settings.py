@@ -33,7 +33,8 @@ THIRD_PARTY_APPS = [
 ]
 
 SAAS_APPS = [
-    'apps.blog'
+    'apps.blog',
+    'apps.user'
 ]
 
 INSTALLED_APPS = BASE_APPS + THIRD_PARTY_APPS + SAAS_APPS
@@ -138,3 +139,5 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 12
 }
+
+AUTH_USER_MODEL = 'user.User'

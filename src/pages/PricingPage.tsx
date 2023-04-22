@@ -1,6 +1,9 @@
+import Head from "@/components/shared/Head";
+
 const PricingPage = () => {
   return (
     <>
+      <Head title="Precios" />
       <div className="overflow-hidden">
         <div className="relative">
           <div

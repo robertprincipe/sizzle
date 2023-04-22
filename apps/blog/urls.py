@@ -1,10 +1,14 @@
 from django.urls import path
-from .views import create_post, all_post, post_detail, update_post, delete_post
+from .views import *
 
 urlpatterns = [
-    path('create', create_post, name='create_post'),
-    path('', all_post, name='all_post'),
-    path('<str:slug>', post_detail, name='post_detail'),
-    path('<int:id>/update', update_post, name='update_post'),
-    path('<int:id>/delete', delete_post, name='delete_post'),
+    path('post/create', create_post, name='create_post'),
+    path('post', all_post, name='all_post'),
+    path('post/<str:slug>', post_detail, name='post_detail'),
+    path('post/<int:id>/update', update_post, name='update_post'),
+    path('post/<int:id>/delete', delete_post, name='delete_post'),
+    path('comment/<int:id>/update', update_comment, name='update_comment'),
+    path('comment/<int:id>/delete', delete_comment, name='delete_comment'),
+    path('comment', comment_post, name='comment_post'),
+    path('react/<int:post_id>', react_post, name='react_post'),
 ]

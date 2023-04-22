@@ -1,3 +1,4 @@
+from apps.user.models import User
 from django.db import models
 from django.core.validators import FileExtensionValidator, validate_slug
 from django.core.exceptions import ValidationError
@@ -8,6 +9,7 @@ from django.utils.safestring import mark_safe
 from django_editorjs import EditorJsField
 
 from apps.blog.storage import ImageKitStorage
+
 
 # Create your models here.
 
@@ -27,11 +29,11 @@ class Tag(models.Model):
         return self.name
 
 class Post(models.Model):
-
     class Meta:
         db_table = "posts"
         verbose_name = "publicación"
         verbose_name_plural = 'publicaciones'
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=230, unique=True, validators=[validate_slug], db_index=True)
     cover_image = models.ImageField(upload_to='posts', storage=ImageKitStorage, null=True, blank=True, validators=[FileExtensionValidator(['jpg', 'jpeg', 'png', 'webp', 'gif'])])
@@ -67,3 +69,26 @@ class Post(models.Model):
     
 
 # robert196@+
+
+class Comment(models.Model):
+    class Meta:
+        db_table="comments"
+        verbose_name="comentario"
+        verbose_name_plural="comentarios"
+    
+    user = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='replies', on_delete=models.CASCADE)
+    content=models.TextField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+class Reaction(models.Model):
+    class Meta:
+        db_table="reactions"
+        verbose_name="reacción"
+        verbose_name_plural="reacciones"
+
+    user = models.ForeignKey(User, related_name='reactions', on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name='reactions', on_delete=models.CASCADE)
+    emoji = models.CharField(max_length=2)
