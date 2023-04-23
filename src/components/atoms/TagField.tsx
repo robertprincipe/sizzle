@@ -1,5 +1,5 @@
 import useClickOutside from "@/hooks/useClickOutside";
-import { ITag } from "@/types/tag";
+import { ITag } from "@/types/itag";
 import { X } from "lucide-react";
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
 import AutosizeInput from "react-18-input-autosize";

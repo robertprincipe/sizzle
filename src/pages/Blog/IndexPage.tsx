@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 export default function BlogPage() {
   const { data: posts, isLoading } = useQuery(["allPosts"], allPosts);
 
+  console.log(posts);
+
   return (
     <div className="container max-w-4xl py-6 lg:py-10">
       <Head title="Publicaciones | make" />
@@ -20,37 +22,41 @@ export default function BlogPage() {
           </p>
         </div>
       </div>
-      <div className="grid gap-10 sm:grid-cols-2">
-        {posts?.data.map((post) => (
-          <article
-            key={post.id}
-            className="relative flex flex-col space-y-2 group"
-          >
-            {post.cover_image && (
-              <img
-                src={post.cover_image as string}
-                alt={post.title}
-                width={804}
-                height={452}
-                className="transition-colors border rounded-md border-slate-200 bg-slate-200 group-hover:border-slate-900"
-              />
-            )}
-            <h2 className="text-2xl font-extrabold">{post.title}</h2>
-            {post.content && <p className="text-slate-600">{post.content}</p>}
-            {post.created_at && (
-              <p className="text-sm text-slate-600">
-                {fromNow(post.created_at)}
-              </p>
-            )}
-            <Link
-              to={`/post/${post?.slug as string}`}
-              className="absolute inset-0"
+      {posts?.data ? (
+        <div className="grid gap-10 sm:grid-cols-2">
+          {posts?.data.map((post) => (
+            <article
+              key={post.id}
+              className="relative flex flex-col space-y-2 group"
             >
-              <span className="sr-only">View Article</span>
-            </Link>
-          </article>
-        ))}
-      </div>
+              {post.cover_image && (
+                <img
+                  src={post.cover_image as string}
+                  alt={post.title}
+                  width={804}
+                  height={452}
+                  className="transition-colors border rounded-md border-slate-200 bg-slate-200 group-hover:border-slate-900"
+                />
+              )}
+              <h2 className="text-2xl font-extrabold">{post.title}</h2>
+              {post.content && <p className="text-slate-600">{post.content}</p>}
+              {post.created_at && (
+                <p className="text-sm text-slate-600">
+                  {fromNow(post.created_at)}
+                </p>
+              )}
+              <Link
+                to={`/post/${post?.slug as string}`}
+                className="absolute inset-0"
+              >
+                <span className="sr-only">View Article</span>
+              </Link>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div>No hay publicaciones</div>
+      )}
     </div>
   );
 }

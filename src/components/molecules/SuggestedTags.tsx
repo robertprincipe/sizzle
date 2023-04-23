@@ -1,4 +1,4 @@
-import { ITag } from "@/types/tag";
+import { ITag } from "@/types/itag";
 
 type ISuggestedTagsProps = {
   suggestedTags: ITag[];

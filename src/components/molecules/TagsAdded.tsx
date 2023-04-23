@@ -1,4 +1,4 @@
-import { ITag } from "@/types/tag";
+import { ITag } from "@/types/itag";
 import { X } from "lucide-react";
 import { Dispatch, KeyboardEvent, SetStateAction, useState } from "react";
 import TagField from "./InputTags";

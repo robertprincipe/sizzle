@@ -65,7 +65,7 @@ def delete_post(request, id):
     try:
         post = Post.objects.get(id=id)
     except Post.DoesNotExist:
-        return Response({"message": "No existe una publicación con este id"}, status=status.HTTP_404_NOT_FOUND)
+        return Response({"message": "No existe la publicación"}, status=status.HTTP_404_NOT_FOUND)
 
     post.delete()
     

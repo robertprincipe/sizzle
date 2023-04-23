@@ -14,7 +14,7 @@ import InputTags from "./InputTags";
 import { useMutation } from "@tanstack/react-query";
 
 import { postCreate } from "@/services/post";
-import { ITag } from "@/types/tag";
+import { ITag } from "@/types/itag";
 import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
 import { makeSlug } from "@/lib/strings";

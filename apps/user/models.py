@@ -1,15 +1,19 @@
 from django.db import models
-from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser, PermissionsMixin)
 from django.core.exceptions import ValidationError
 import re
 
+
+
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
+        print(extra_fields)
         if not email:
             raise ValueError('El correo electrónico es requerido.')
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
+        print(extra_fields)
         user.save(using=self._db)
 
         return user
@@ -40,13 +44,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
 
     def validate_username(username):
-            pattern_special_characters = r'^[a-zA-Z0-9]+([._-]?[a-zA-Z0-9]+)*$'
-            if re.search(pattern_special_characters, username):
-                raise ValidationError('Nombre de usuario contiene caracteres invalidos')
-            return re.sub(pattern_special_characters, '', username)
+        pattern_special_characters = r'\badmin\b|[!@#$%^~&*()_+-=[]{}|;:",.<>/?]|\s'
+        if re.search(pattern_special_characters, username):
+            raise ValidationError('Nombre de usuario contiene caracteres invalidos')
+        return re.sub(pattern_special_characters, '', username)    
 
     username = models.CharField(max_length=255, db_index=True, unique=True, validators=[validate_username])
-    email = models.EmailField(max_length=255)
+    email = models.EmailField(max_length=255, unique=True, db_index=True)
     picture = models.ImageField(upload_to="users/profile/", blank=True, null=True, verbose_name='Picture')
     
     is_active = models.BooleanField(default=True)
@@ -62,8 +66,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
+    objects = UserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
 
     def __str__(self):
         return self.username

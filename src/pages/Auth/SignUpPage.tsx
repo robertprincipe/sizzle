@@ -1,8 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Icons } from "@/components/icons";
 import { Home, Loader2 } from "lucide-react";
 import { useState } from "react";
 
@@ -10,16 +8,48 @@ import { Command } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Feedback from "@/components/atoms/Feedback";
 import Head from "@/components/shared/Head";
+import { useAuthStore } from "@/store/auth";
 
-interface LoginPageProps extends React.HTMLAttributes<HTMLDivElement> {}
+const signUpSchema = z.object({
+  username: z
+    .string()
+    .regex(
+      /^[a-zA-Z0-9]+([._-]?[a-zA-Z0-9]+)*$/,
+      "Solo puede contener punto, guion y subraya sin espacios."
+    )
+    .min(3, "Nombre de usuario debe tener al menos 3 caracteres.")
+    .max(150, "Nombre de usuario debe tener maximo 150 caracteres."),
+  email: z.string().email("Correo electrónico no es un formato valido."),
+  password: z
+    .string()
+    .min(8, "La contraseña debe tener al menos 8 caracteres."),
+});
 
-const LoginPage = ({ className, ...props }: LoginPageProps) => {
+type signUpData = z.infer<typeof signUpSchema>;
+
+const SignUpPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  async function onSubmit(event: React.SyntheticEvent) {
-    event.preventDefault();
+  const signup = useAuthStore((state) => state.signup);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<signUpData>({
+    resolver: zodResolver(signUpSchema),
+    mode: "onSubmit",
+  });
+
+  function onSubmit(data: signUpData) {
     setIsLoading(true);
+
+    signup(data);
 
     setTimeout(() => {
       setIsLoading(false);
@@ -28,7 +58,7 @@ const LoginPage = ({ className, ...props }: LoginPageProps) => {
 
   return (
     <section className="container relative grid flex-col items-center justify-center h-screen lg:max-w-none lg:grid-cols-2 lg:px-0">
-      <Head title="Iniciar sesión" />
+      <Head title="Registrate" />
       <Link
         to="/"
         className={cn(
@@ -64,46 +94,60 @@ const LoginPage = ({ className, ...props }: LoginPageProps) => {
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col space-y-2 text-center">
             <h1 className="text-2xl font-semibold tracking-tight">
-              Create an account
+              Registrase
             </h1>
             <p className="text-sm text-muted-foreground">
-              Enter your email below to create your account
+              Podrás acceder a muchas herramientas y publicaciones ocultas.
             </p>
           </div>
-          <div className={cn("grid gap-6", className)} {...props}>
-            <form onSubmit={onSubmit}>
+          <div className="grid gap-6">
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid gap-2">
                 <div className="grid gap-1">
-                  <Label className="sr-only" htmlFor="email">
-                    Email
-                  </Label>
+                  <Input
+                    placeholder="Nombre de usuario"
+                    className={
+                      errors.username ? "border-red-500 focus:ring-red-400" : ""
+                    }
+                    disabled={isLoading}
+                    {...register("username")}
+                  />
+                  <Feedback field={errors.username} />
                   <Input
                     placeholder="Correo electrónico"
                     type="email"
+                    className={
+                      errors.email ? "border-red-500 focus:ring-red-400" : ""
+                    }
                     disabled={isLoading}
+                    {...register("email")}
                   />
+                  <Feedback field={errors.email} />
                   <Input
                     placeholder="Contraseña"
                     type="password"
+                    className={errors.password ? "border-red-500" : ""}
                     disabled={isLoading}
+                    {...register("password")}
                   />
+                  <Feedback field={errors.password} />
                 </div>
                 <Button disabled={isLoading}>
                   {isLoading && (
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                   )}
-                  Ingresar
+                  Registrarme
                 </Button>
               </div>
             </form>
           </div>
 
           <Link
-            to={"/signup"}
+            to={"/login"}
             className="relative flex justify-center text-xs uppercase"
           >
             <span className="px-2 bg-background text-muted-foreground">
-              O registrate
+              O ingresa
             </span>
           </Link>
 
@@ -130,4 +174,4 @@ const LoginPage = ({ className, ...props }: LoginPageProps) => {
   );
 };
 
-export default LoginPage;
+export default SignUpPage;

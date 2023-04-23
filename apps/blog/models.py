@@ -10,9 +10,6 @@ from django_editorjs import EditorJsField
 
 from apps.blog.storage import ImageKitStorage
 
-
-# Create your models here.
-
 def validate_tag_name(value):
     if not re.match(r'^[a-z0-9]+(?:_[a-z0-9]+)*$', value):
         raise ValidationError('El nombre del tag solo puede contener letras en minúscula, números y guiones bajos (underscore), y no puede comenzar ni terminar con un guion bajo.')
@@ -33,6 +30,10 @@ class Post(models.Model):
         db_table = "posts"
         verbose_name = "publicación"
         verbose_name_plural = 'publicaciones'
+    class PostObjects(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset().filter(published=True)
+        
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=230, unique=True, validators=[validate_slug], db_index=True)
@@ -53,7 +54,7 @@ class Post(models.Model):
     published = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    tags = models.ManyToManyField(Tag, blank=True, null=True, related_name='posts_tags')
+    tags = models.ManyToManyField(Tag, blank=True, related_name='posts_tags')
 
     def image_preview(self):
         print(self.cover_image)
