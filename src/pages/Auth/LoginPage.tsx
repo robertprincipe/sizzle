@@ -2,28 +2,60 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Icons } from "@/components/icons";
 import { Home, Loader2 } from "lucide-react";
 import { useState } from "react";
 
 import { Command } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Head from "@/components/shared/Head";
+import { useAuthStore } from "@/store/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import Feedback from "@/components/atoms/Feedback";
 
 interface LoginPageProps extends React.HTMLAttributes<HTMLDivElement> {}
 
+const signUpSchema = z.object({
+  username: z
+    .string()
+    .regex(
+      /^[a-zA-Z0-9]+([._-]?[a-zA-Z0-9]+)*$/,
+      "Solo puede contener punto, guion y subraya sin espacios."
+    )
+    .min(3, "Nombre de usuario debe tener al menos 3 caracteres.")
+    .max(150, "Nombre de usuario debe tener maximo 150 caracteres."),
+  password: z
+    .string()
+    .min(8, "La contraseña debe tener al menos 8 caracteres."),
+});
+
+type loginData = z.infer<typeof signUpSchema>;
+
 const LoginPage = ({ className, ...props }: LoginPageProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { login } = useAuthStore();
 
-  async function onSubmit(event: React.SyntheticEvent) {
-    event.preventDefault();
+  const router = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<loginData>({
+    resolver: zodResolver(signUpSchema),
+    mode: "onSubmit",
+  });
+
+  async function onSubmit(data: loginData) {
     setIsLoading(true);
-
+    login(data.username, data.password);
     setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+      router({ pathname: "/" });
+    }, 1000);
   }
 
   return (
@@ -71,22 +103,25 @@ const LoginPage = ({ className, ...props }: LoginPageProps) => {
             </p>
           </div>
           <div className={cn("grid gap-6", className)} {...props}>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid gap-2">
                 <div className="grid gap-1">
                   <Label className="sr-only" htmlFor="email">
                     Email
                   </Label>
                   <Input
-                    placeholder="Correo electrónico"
-                    type="email"
+                    placeholder="Nombre de usuario"
                     disabled={isLoading}
+                    {...register("username")}
                   />
+                  <Feedback field={errors.username} />
                   <Input
                     placeholder="Contraseña"
                     type="password"
                     disabled={isLoading}
+                    {...register("password")}
                   />
+                  <Feedback field={errors.password} />
                 </div>
                 <Button disabled={isLoading}>
                   {isLoading && (

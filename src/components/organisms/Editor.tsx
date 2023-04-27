@@ -5,7 +5,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { ChevronLeft, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { lazy, useState, Suspense } from "react";
+import { lazy, useState, Suspense, useEffect } from "react";
 
 import { z } from "zod";
 
@@ -13,11 +13,13 @@ import InputTags from "./InputTags";
 
 import { useMutation } from "@tanstack/react-query";
 
-import { postCreate } from "@/services/post";
-import { ITag } from "@/types/itag";
+import { postCreate } from "@/services/blog";
+import { ITag } from "@/types/iblog";
 import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
 import { makeSlug } from "@/lib/strings";
+import { IPost } from "@/types/iblog";
+import Head from "../shared/Head";
 
 const Dropimage = lazy(() => import("./Dropimage"));
 const EditorJSX = lazy(() => import("./EditorJSX"));
@@ -28,15 +30,20 @@ const postPatchSchema = z.object({
 
 type FormData = z.infer<typeof postPatchSchema>;
 
-export function Editor() {
+type IEditorProps = {
+  preDataFill?: IPost;
+};
+
+export function Editor({ preDataFill }: IEditorProps) {
   const [tags, setTags] = useState<ITag[]>([]);
-  const [image, setImage] = useState<Blob>();
+  const [coverImage, setCoverImage] = useState<Blob | undefined>();
   const [blocks, setBlocks] = useState();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormData>({
     resolver: zodResolver(postPatchSchema),
     mode: "onSubmit",
@@ -44,7 +51,7 @@ export function Editor() {
 
   const { toast } = useToast();
 
-  const { mutate, isLoading, isError } = useMutation(postCreate, {
+  const { mutate, isLoading } = useMutation(postCreate, {
     onError: (error) => {
       if (error instanceof AxiosError) {
         toast({
@@ -67,11 +74,24 @@ export function Editor() {
     },
   });
 
+  useEffect(() => {
+    if (preDataFill) {
+      (async () => {
+        return await fetch((preDataFill.cover_image as string) || "").then(
+          (r) => r.blob()
+        );
+      })();
+      reset(preDataFill);
+      setTags(preDataFill.tags || []);
+      setBlocks(JSON.parse(preDataFill.content || "{}"));
+      setCoverImage(undefined);
+    }
+  }, [preDataFill]);
+
   async function onSubmit(data: FormData) {
-    // const blocks = await editorRef.current?.save();
     mutate({
       ...data,
-      cover_image: image,
+      cover_image: coverImage,
       tags,
       slug: makeSlug(data.title, "-"),
       content: JSON.stringify(blocks),
@@ -80,7 +100,7 @@ export function Editor() {
 
   return (
     <form onSubmit={(e) => e.preventDefault()}>
-      {errors.title?.message}
+      <Head title="Crear publicación" />
       <div className="grid w-full gap-4 md:gap-10">
         <div className="container flex items-center justify-between w-full mx-auto mt-5">
           <div className="flex items-center space-x-10">
@@ -105,9 +125,9 @@ export function Editor() {
             <span>Guardar</span>
           </button>
         </div>
-        <div className="prose prose-stone mx-auto lg:w-[800px] p-2 text-gray-900 dark:prose-invert">
+        <div className="prose prose-stone mx-auto lg:w-[800px] p-2 text-gray-900 dark:prose-invert dark:text-white">
           <Suspense>
-            <Dropimage putImage={setImage} />
+            <Dropimage setImageFile={setCoverImage} />
           </Suspense>
           <TextareaAutosize
             autoFocus

@@ -19,10 +19,11 @@ const EditorJSX = ({ blocks, setBlocks }: IEditorJSXProps) => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
   const initializeEditor = useCallback(async () => {
-    // const body = postPatchSchema.parse({});
+    // const body = ;
     if (!ref.current) {
       const editor = new EditorJS({
         holder: "editor",
+        data: blocks,
         onReady() {
           ref.current = editor;
         },

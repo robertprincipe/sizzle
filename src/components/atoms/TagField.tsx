@@ -1,5 +1,5 @@
 import useClickOutside from "@/hooks/useClickOutside";
-import { ITag } from "@/types/itag";
+import { ITag } from "@/types/iblog";
 import { X } from "lucide-react";
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
 import AutosizeInput from "react-18-input-autosize";
@@ -25,15 +25,12 @@ const TagField = ({ tag, removeTag, updatedTag }: ITagFieldProps) => {
   };
 
   const autoWidth = () => {
-    console.log("auto2");
     if (inputEditRef.current) {
       inputEditRef.current.style.width = `${inputEditRef.current.value.length}ch`;
-      console.log("auto3");
     }
   };
 
   const onEditTag = () => {
-    console.log("auto1");
     autoWidth();
     if (inputEditRef.current) inputEditRef.current.focus();
     setEditTag(tag);

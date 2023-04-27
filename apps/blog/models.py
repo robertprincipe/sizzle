@@ -37,6 +37,7 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=230, unique=True, validators=[validate_slug], db_index=True)
+    # excerpt = models.TextField(max_length=175, blank=True, null=True)
     cover_image = models.ImageField(upload_to='posts', storage=ImageKitStorage, null=True, blank=True, validators=[FileExtensionValidator(['jpg', 'jpeg', 'png', 'webp', 'gif'])])
     content = EditorJsField(
         editorjs_config={

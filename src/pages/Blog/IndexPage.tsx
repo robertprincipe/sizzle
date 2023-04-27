@@ -1,13 +1,13 @@
 import Head from "@/components/shared/Head";
 import { fromNow } from "@/lib/date";
-import { allPosts } from "@/services/post";
+import { allPosts } from "@/services/blog";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
 export default function BlogPage() {
-  const { data: posts, isLoading } = useQuery(["allPosts"], allPosts);
-
-  console.log(posts);
+  const { data: posts } = useQuery(["allPosts"], allPosts, {
+    refetchOnWindowFocus: false,
+  });
 
   return (
     <div className="container max-w-4xl py-6 lg:py-10">
@@ -23,7 +23,7 @@ export default function BlogPage() {
         </div>
       </div>
       {posts?.data ? (
-        <div className="grid gap-10 sm:grid-cols-2">
+        <div className="grid gap-10 sm:grid-cols-2 mt-6">
           {posts?.data.map((post) => (
             <article
               key={post.id}
@@ -39,7 +39,7 @@ export default function BlogPage() {
                 />
               )}
               <h2 className="text-2xl font-extrabold">{post.title}</h2>
-              {post.content && <p className="text-slate-600">{post.content}</p>}
+              {/* {post.content && <p className="text-slate-600">{post.content}</p>} */}
               {post.created_at && (
                 <p className="text-sm text-slate-600">
                   {fromNow(post.created_at)}

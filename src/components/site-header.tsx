@@ -8,8 +8,11 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "./ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { Link } from "react-router-dom";
+import { useAuthStore } from "@/store/auth";
+import AvatarNav from "./atoms/AvatarNav";
 
 export function SiteHeader() {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   return (
     <header className="sticky top-0 z-40 w-full bg-white border-b border-b-slate-200 dark:border-b-slate-700 dark:bg-slate-900">
       <div className="container flex items-center h-16 space-x-4 sm:justify-between sm:space-x-0">
@@ -44,7 +47,7 @@ export function SiteHeader() {
               </SheetContent>
             </Sheet>
 
-            {true ? (
+            {!isAuthenticated ? (
               <Link
                 to={"/login"}
                 className="inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white transition-all bg-indigo-500 border border-transparent rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
@@ -52,17 +55,7 @@ export function SiteHeader() {
                 Registrarse
               </Link>
             ) : (
-              <a href={siteConfig.links.signup} rel="noreferrer">
-                <div
-                  className={buttonVariants({
-                    size: "sm",
-                    variant: "ghost",
-                    className: "text-slate-700 dark:text-slate-400",
-                  })}
-                >
-                  <Icons.user className="w-5 h-5 fill-current" />
-                </div>
-              </a>
+              <AvatarNav />
             )}
           </nav>
         </div>

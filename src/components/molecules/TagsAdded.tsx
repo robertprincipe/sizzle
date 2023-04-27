@@ -1,4 +1,4 @@
-import { ITag } from "@/types/itag";
+import { ITag } from "@/types/iblog";
 import { X } from "lucide-react";
 import { Dispatch, KeyboardEvent, SetStateAction, useState } from "react";
 import TagField from "./InputTags";
@@ -9,6 +9,11 @@ type ITagsAddedProps = {
   removeTag: (tag: ITag) => void;
   setTags: Dispatch<SetStateAction<ITag[]>>;
 };
+
+/*
+maick
+gi5o3o2i9
+*/
 
 const TagsAdded: React.FC<ITagsAddedProps> = ({
   tagsAdded,

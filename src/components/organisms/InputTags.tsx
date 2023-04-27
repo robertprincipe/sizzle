@@ -1,7 +1,7 @@
 import type { Dispatch, KeyboardEvent, SetStateAction } from "react";
 import { createRef, useState } from "react";
 
-import { ITag } from "@/types/itag";
+import { ITag } from "@/types/iblog";
 import { ZodError, z } from "zod";
 import TagField from "../atoms/TagField";
 

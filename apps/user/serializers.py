@@ -10,9 +10,6 @@ class UserSerializer(UserCreateSerializer):
             'id',
             'email',
             'username',
-            'is_active',
-            'is_staff',
             'role',
-            'verified',
         )
 

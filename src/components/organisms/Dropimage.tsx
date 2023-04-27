@@ -3,20 +3,27 @@ import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 type IDropimageProps = {
-  putImage: (file: Blob) => void;
-  imageUrnSaved?: string;
+  setImageFile: (file: Blob) => void;
+  isCircle?: boolean;
+  height?: number;
+  previewHeight?: number;
 };
 
-const Dropimage: React.FC<IDropimageProps> = ({ putImage, imageUrnSaved }) => {
-  const [image, setImage] = useState<string | ArrayBuffer | null | undefined>(
-    ""
-  );
+const Dropimage: React.FC<IDropimageProps> = ({
+  setImageFile,
+  isCircle,
+  height = 48,
+  previewHeight = 16,
+}) => {
+  const [imagePreview, setImagePreview] = useState<
+    string | ArrayBuffer | null | undefined
+  >("");
   const onDrop = useCallback((acceptedFiles: File[]) => {
     acceptedFiles.map((file) => {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setImage(e.target?.result);
-        putImage(file);
+        setImagePreview(e.target?.result);
+        setImageFile(file);
       };
       reader.readAsDataURL(file);
       return file;
@@ -28,55 +35,55 @@ const Dropimage: React.FC<IDropimageProps> = ({ putImage, imageUrnSaved }) => {
   });
 
   const removeImageFromState = () => {
-    setImage("");
-    putImage({} as Blob);
+    setImagePreview("");
+    setImageFile({} as Blob);
   };
 
   return (
-    <div className="relative">
+    <div className={`relative ${isCircle ? "w-fit" : "w-full"}`}>
       <div
         {...getRootProps({ className: "dropzone" })}
-        className={`flex cursor-pointer items-center justify-center overflow-hidden rounded-md border border-gray-300 bg-gray-50 dark:bg-gray-800 dark:text-white ${
-          image ? "h-48" : "h-16"
+        className={`flex cursor-pointer items-center justify-center overflow-hidden  border border-gray-300 bg-gray-50 dark:bg-gray-800 dark:text-white ${
+          isCircle
+            ? `h-${height} w-${height} rounded-full`
+            : imagePreview
+            ? `h-${isCircle ? height : previewHeight} rounded-md`
+            : `h-${height}`
         }`}
       >
-        {imageUrnSaved ? (
+        {!imagePreview ? (
+          <>
+            <input type="file" {...getInputProps()} className="hidden" />
+            <div className="flex flex-col items-center p-2 text-center">
+              {isDragActive ? (
+                <span className="text-xs font-light">Suelta la imágen</span>
+              ) : (
+                <span className="text-xs">
+                  <span className="font-bold text-gray-900 dark:text-white">
+                    Abrir imagen
+                  </span>{" "}
+                  o arrastra y suelta las imágenes que deseas subir
+                </span>
+              )}
+            </div>
+          </>
+        ) : (
           <img
             alt=""
-            src={imageUrnSaved}
-            className="object-cover w-full h-full scale-110"
+            src={imagePreview?.toString()}
+            className={`object-cover w-full h-full scale-110 ${
+              isCircle ? "rounded-full " : ""
+            }`}
           />
-        ) : (
-          <>
-            {!image ? (
-              <>
-                <input type="file" {...getInputProps()} className="hidden" />
-                <div className="flex flex-col items-center p-2 text-center">
-                  {isDragActive ? (
-                    <span className="text-xs font-light">Suelta la imágen</span>
-                  ) : (
-                    <span className="text-xs">
-                      <span className="font-bold text-gray-900 dark:text-white">
-                        Abrir imagen
-                      </span>{" "}
-                      o arrastra y suelta las imágenes que deseas subir
-                    </span>
-                  )}
-                </div>
-              </>
-            ) : (
-              <img
-                alt=""
-                src={image?.toString()}
-                className="object-cover w-full h-full scale-110"
-              />
-            )}
-          </>
         )}
       </div>
 
-      {image || imageUrnSaved ? (
-        <div className="absolute top-1.5 right-1.5">
+      {imagePreview ? (
+        <div
+          className={`absolute ${
+            isCircle ? "bottom-7 right-7" : "top-1.5 right-1.5"
+          }`}
+        >
           <button
             className="inline-flex items-center p-1 text-sm font-medium text-center text-white bg-red-600 rounded hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-600"
             type="button"
