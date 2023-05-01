@@ -1,15 +1,19 @@
 import { X } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 type IDropimageProps = {
-  setImageFile: (file: Blob) => void;
+  imageUrl?: Blob | string;
+  onRemoveImageUrl?: () => void;
+  setImageFile: (file?: Blob | string) => void;
   isCircle?: boolean;
   height?: number;
   previewHeight?: number;
 };
 
 const Dropimage: React.FC<IDropimageProps> = ({
+  imageUrl,
+  onRemoveImageUrl,
   setImageFile,
   isCircle,
   height = 48,
@@ -34,9 +38,27 @@ const Dropimage: React.FC<IDropimageProps> = ({
     onDrop,
   });
 
+  const pImg = () => {
+    //
+
+    return;
+  };
+
+  useEffect(() => {
+    if (imageUrl && typeof imageUrl === "string")
+      fetch(imageUrl)
+        .then((r) => r.blob())
+        .then((blob) => {
+          setImagePreview(URL.createObjectURL(blob));
+        });
+  }, [imageUrl]);
+
   const removeImageFromState = () => {
-    setImagePreview("");
-    setImageFile({} as Blob);
+    if (imageUrl && onRemoveImageUrl) {
+      onRemoveImageUrl();
+    }
+    setImagePreview(undefined);
+    setImageFile(undefined);
   };
 
   return (
@@ -48,7 +70,7 @@ const Dropimage: React.FC<IDropimageProps> = ({
             ? `h-${height} w-${height} rounded-full`
             : imagePreview
             ? `h-${isCircle ? height : previewHeight} rounded-md`
-            : `h-${height}`
+            : `h-${height} rounded-md`
         }`}
       >
         {!imagePreview ? (

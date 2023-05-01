@@ -1,36 +1,31 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 
-import { Link, Navigate, useNavigate, useSearchParams } from "react-router-dom";
-
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuthStore } from "@/store/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Feedback from "@/components/atoms/Feedback";
+import { resetPasswordConfirm } from "@/services/auth";
+import { toastError } from "@/lib/errors";
 
-const signUpSchema = z.object({
-  username: z
+const resetPasswordConfirmSchema = z.object({
+  new_password: z
     .string()
-    .regex(
-      /^[a-zA-Z0-9]+([._-]?[a-zA-Z0-9]+)*$/,
-      "Solo puede contener punto, guion y subraya sin espacios."
-    )
-    .min(3, "Nombre de usuario debe tener al menos 3 caracteres.")
-    .max(150, "Nombre de usuario debe tener maximo 150 caracteres."),
-  password: z
+    .min(8, "La contraseña debe tener al menos 8 caracteres."),
+  re_new_password: z
     .string()
     .min(8, "La contraseña debe tener al menos 8 caracteres."),
 });
 
-type loginData = z.infer<typeof signUpSchema>;
+type resetPasswordConfirmData = z.infer<typeof resetPasswordConfirmSchema>;
 
-const LoginPage = () => {
+const ResetPasswordConfirm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { login, isAuthenticated } = useAuthStore();
+  const { user, access } = useAuthStore();
 
   const [params] = useSearchParams();
 
@@ -40,52 +35,58 @@ const LoginPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<loginData>({
-    resolver: zodResolver(signUpSchema),
+  } = useForm<resetPasswordConfirmData>({
+    resolver: zodResolver(resetPasswordConfirmSchema),
     mode: "onSubmit",
   });
+  //   router({ pathname: params.get("backTo") ?? "/" });
 
-  const onSubmit = async (data: loginData) => {
+  const onSubmit = async (data: resetPasswordConfirmData) => {
     setIsLoading(true);
-    login(data.username, data.password);
-    setIsLoading(false);
+    try {
+      await resetPasswordConfirm(
+        user?.id || "",
+        access || "",
+        data.new_password,
+        data.re_new_password
+      );
+      setIsLoading(false);
+    } catch (error) {
+      toastError(error);
+    }
   };
-  if (isAuthenticated) return <Navigate to={params.get("backTo") ?? "/"} />;
-
   return (
     <div className="lg:p-8">
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <div className="flex flex-col space-y-2 text-center">
           <h1 className="text-2xl font-semibold tracking-tight">
-            Hola de nuevo
+            Cambiar contreña
           </h1>
           <p className="text-sm text-muted-foreground">
-            Ingresa tu nombre de usuario y contraseña
+            Ponga una contraseña dificil pero a la vez que pueda recordar
           </p>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-2">
             <div className="grid gap-1">
-              <Label className="sr-only" htmlFor="email">
-                Email
-              </Label>
               <Input
-                placeholder="Nombre de usuario"
-                disabled={isLoading}
-                {...register("username")}
-              />
-              <Feedback field={errors.username} />
-              <Input
-                placeholder="Contraseña"
+                placeholder="Nueva contraseña"
                 type="password"
                 disabled={isLoading}
-                {...register("password")}
+                {...register("new_password")}
               />
-              <Feedback field={errors.password} />
+              <Feedback field={errors.new_password} />
+              <Input
+                placeholder="Repetir nueva contraseña"
+                type="password"
+                disabled={isLoading}
+                {...register("re_new_password")}
+              />
+              <Feedback field={errors.re_new_password} />
             </div>
             <Button disabled={isLoading}>
               {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-              Ingresar
+              Cambiar contraseña
             </Button>
           </div>
         </form>
@@ -99,11 +100,11 @@ const LoginPage = () => {
           </Link>
 
           <Link
-            to={"/auth/signup"}
+            to={"/auth/resetPasswordConfirm"}
             className="relative flex justify-center text-xs uppercase"
           >
             <span className="px-2 bg-background text-muted-foreground">
-              Soy nuevo quiero registrarme
+              O registrate
             </span>
           </Link>
         </div>
@@ -130,4 +131,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default ResetPasswordConfirm;

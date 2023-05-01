@@ -45,7 +45,7 @@ const EditorJSX = ({ blocks, setBlocks }: IEditorJSXProps) => {
         },
       });
     }
-  }, []);
+  }, [blocks]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {

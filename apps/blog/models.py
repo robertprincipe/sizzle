@@ -3,6 +3,7 @@ from django.db import models
 from django.core.validators import FileExtensionValidator, validate_slug
 from django.core.exceptions import ValidationError
 import re
+from uuid import uuid4 
 
 from django.utils.safestring import mark_safe
 
@@ -19,6 +20,7 @@ class Tag(models.Model):
         db_table = "tags"
         verbose_name = "etiqueta"
         verbose_name_plural = 'etiquetas'
+    id=models.UUIDField(primary_key=True, default=uuid4, editable=False, unique=True)
     name = models.CharField(max_length=120, db_index=True, validators=[validate_tag_name])
     description = models.CharField(max_length=255, blank=True, null=True)
 
@@ -34,9 +36,10 @@ class Post(models.Model):
         def get_queryset(self):
             return super().get_queryset().filter(published=True)
         
+    id=models.UUIDField(primary_key=True, default=uuid4, editable=False, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=200, db_index=True)
-    slug = models.SlugField(max_length=230, unique=True, validators=[validate_slug], db_index=True)
+    slug = models.SlugField(max_length=230, unique=True, blank=True, validators=[validate_slug], db_index=True)
     # excerpt = models.TextField(max_length=175, blank=True, null=True)
     cover_image = models.ImageField(upload_to='posts', storage=ImageKitStorage, null=True, blank=True, validators=[FileExtensionValidator(['jpg', 'jpeg', 'png', 'webp', 'gif'])])
     content = EditorJsField(
@@ -48,7 +51,9 @@ class Post(models.Model):
                     "config": {"rows": 2, "cols": 3,},
                 }
             }
-        }
+        },
+        blank=True,
+        null=True
     )
     view_count = models.IntegerField(default=0)
     reading_time = models.IntegerField(default=0)
@@ -56,6 +61,10 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField(Tag, blank=True, related_name='posts_tags')
+
+    
+    post_objects = PostObjects()
+    objects = models.Manager()
 
     def image_preview(self):
         print(self.cover_image)
@@ -77,7 +86,8 @@ class Comment(models.Model):
         db_table="comments"
         verbose_name="comentario"
         verbose_name_plural="comentarios"
-    
+
+    id=models.UUIDField(primary_key=True, default=uuid4, editable=False, unique=True)
     user = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
     parent = models.ForeignKey('self', null=True, blank=True, related_name='replies', on_delete=models.CASCADE)
@@ -91,6 +101,7 @@ class Reaction(models.Model):
         verbose_name="reacción"
         verbose_name_plural="reacciones"
 
-    user = models.ForeignKey(User, related_name='reactions', on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, related_name='reactions', on_delete=models.CASCADE)
+    id=models.UUIDField(primary_key=True, default=uuid4, editable=False, unique=True)
+    user = models.ForeignKey(User, related_name='reactions', on_delete=models.CASCADE, blank=True)
+    post = models.ForeignKey(Post, related_name='reactions', on_delete=models.CASCADE, blank=True)
     emoji = models.CharField(max_length=2)

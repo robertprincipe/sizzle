@@ -12,7 +12,10 @@ import { useAuthStore } from "@/store/auth";
 import AvatarNav from "./atoms/AvatarNav";
 
 export function SiteHeader() {
+  // const location = useLocation();
+  // ?backTo=${location.pathname}
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
   return (
     <header className="sticky top-0 z-40 w-full bg-white border-b border-b-slate-200 dark:border-b-slate-700 dark:bg-slate-900">
       <div className="container flex items-center h-16 space-x-4 sm:justify-between sm:space-x-0">
@@ -49,7 +52,7 @@ export function SiteHeader() {
 
             {!isAuthenticated ? (
               <Link
-                to={"/login"}
+                to={`/auth/signup`}
                 className="inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white transition-all bg-indigo-500 border border-transparent rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
               >
                 Registrarse

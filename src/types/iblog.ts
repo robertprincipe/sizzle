@@ -1,7 +1,7 @@
 import { IUser } from "./iuser";
 
 export interface ITag {
-    id?: number;
+    id?: string;
     name: string;
     description?: string;
     color?: string;
@@ -9,11 +9,14 @@ export interface ITag {
 }
 
 export interface IPost {
-    id?: number;
+    id?: string;
+    author?: IUser;
     title: string;
     slug?: string;
     content?: string;
+    published?: boolean;
     cover_image?: Blob | string;
+    reading_time?: number;
     comment_count?: number;
     tags?: ITag[];
     created_at?: Date;
@@ -21,11 +24,11 @@ export interface IPost {
 }
 
 export interface IComment {
-    id?: number;
+    id?: string;
     user?: IUser;
     content: string;
-    parent_id?: number;
+    parent_id?: string;
     replies?: IComment[];
-    post_id?: number;
+    post_id?: string;
     created_at?: Date;
 }

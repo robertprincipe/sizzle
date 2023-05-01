@@ -1,5 +1,5 @@
 import { toastError } from "@/lib/errors";
-import { check_authenticated, login, me, refresh_access, signup } from "@/services/auth";
+import { check_authenticated, login, me, refresh_access } from "@/services/auth";
 import { IUser } from "@/types/iuser";
 
 import { create } from 'zustand';
@@ -11,7 +11,7 @@ type AuthState = {
     refresh?: string;
     isAuthenticated: boolean;
     login: (username: string, password: string) => void;
-    signup: (data: IUser) => void;
+    // signup: (data: IUser) => void;
     me: () => void;
     logout: () => void;
     check_authenticated: () => void;
@@ -38,13 +38,13 @@ export const useAuthStore = create(
                 set({ ...initialState })
             }
         },
-        signup: async (data: IUser) => {
-            try {
-                await signup(data)
-            } catch (error) {
-                toastError(error)
-            }
-        },
+        // signup: async (data: IUser) => {
+        //     try {
+        //         await signup(data)
+        //     } catch (error) {
+        //         toastError(error)
+        //     }
+        // },
         logout: () => {
             set({ ...initialState })
         },
@@ -86,4 +86,6 @@ export const useAuthStore = create(
          * gi5o3o2i9
          * danza
          * EgIIAg%253D%253D
+         * make
+         * p139ffjoi30
          */

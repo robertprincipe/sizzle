@@ -10,3 +10,9 @@ export const ProtectedRoute = ({ redirectTo = "/login" }: Props) => {
   if (!isAuth) return <Navigate to={redirectTo} />;
   return <Outlet />;
 };
+
+export const UserLogged = () => {
+  const isAuth = useAuthStore((state) => state.isAuthenticated);
+  if (isAuth) return <Navigate to={"/"} />;
+  return <Outlet />;
+};

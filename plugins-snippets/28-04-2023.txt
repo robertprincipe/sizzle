@@ -1,0 +1,330 @@
+
+
+import { check_authenticated, login, me, refresh_access, signup } from "@/services/auth";
+import { IUser } from "@/types/iuser";
+import produce from 'immer';
+import { toast } from 'react-hot-toast'
+import { AxiosError } from "axios";
+
+import * as ls from "@/lib/ls";
+
+const access = ls.getItem("Auth")?.state?.access
+
+import { create, StateCreator } from 'zustand';
+import { createJSONStorage, devtools, persist, subscribeWithSelector } from 'zustand/middleware';
+
+export const toastError = (error: unknown) => {
+    if (error instanceof AxiosError) {
+        toast.error(Object.entries(error.response?.data)
+            .map((msg) => `${msg[0]}: ${msg[1]}`)
+            .join("\n"),);
+    } else {
+        toast.error("Error desconocido.");
+    }
+};
+
+type State = {
+    user?: IUser;
+    access?: string;
+    refresh?: string;
+    isAuthenticated: boolean;
+}
+
+type Action = {
+    login: (username: string, password: string) => void;
+    signup: (data: IUser) => void;
+    me: () => void;
+    logout: () => void;
+    check_authenticated: () => void;
+    refresh_access: () => void;
+}
+
+export const useAuthStore = create(
+    persist<State & Action>((set) => ({
+    user: undefined,
+    isAuthenticated: false,
+    login: async (username: string, password: string) => {
+        try {
+            const { data: { access, refresh } } = await login(username, password)
+            set({ isAuthenticated: true, access, refresh })
+        } catch (error) {
+            toastError(error)
+            set({ isAuthenticated: false, user: undefined, access: undefined, refresh: undefined })
+        }
+    },
+    signup: async (data: IUser) => {
+        try {
+            await signup(data)
+        } catch (error) {
+            toastError(error)
+        }
+    },
+    logout: () => {
+        set({ isAuthenticated: false, access: undefined, refresh: undefined, user: undefined })
+        // window.location.reload()
+    },
+    me: async () => {
+        console.log("hola1")
+        if (!access) return;
+        try {
+            console.log("hola")
+            console.log(access)
+            const { data } = await me()
+            console.log(data)
+            set({ user: data })
+        } catch (err) {
+            console.log(err)
+            set({ user: undefined })
+        }
+    },
+    check_authenticated: async () => {
+        if (!access) return;
+        try {
+            const { status } = await check_authenticated()
+            if (status === 200) set({ isAuthenticated: true })
+        } catch (err) {
+            console.log(err)
+            set({ isAuthenticated: false, access: undefined, refresh: undefined })
+        }
+    },
+    refresh_access: async () => {
+        if (!access) return;
+        try {
+            const { data } = await refresh_access()
+            set({ access: data.access })
+        } catch (err) {
+            console.log(err)
+            set({ isAuthenticated: false, user: undefined, access: undefined, refresh: undefined })
+        }
+    },
+
+})
+
+
+export const useAuthStore = create(
+    subscribeWithSelector(log((
+        devtools(authStore),
+        {
+            name: 'Auth',
+            storage: createJSONStorage(() => localStorage)
+        }
+    ))),
+);
+
+import { check_authenticated, login, me, refresh_access, signup } from "@/services/auth";
+import { IUser } from "@/types/iuser";
+import produce from 'immer';
+import { toast } from 'react-hot-toast'
+import { AxiosError } from "axios";
+
+import * as ls from "@/lib/ls";
+
+// const access = ls.getItem("Auth")?.state?.access
+
+const tokenAZ = ls.getItem("access")
+
+import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
+
+export const toastError = (error: unknown) => {
+    if (error instanceof AxiosError) {
+        toast.error(Object.entries(error.response?.data)
+            .map((msg) => `${msg[0]}: ${msg[1]}`)
+            .join("\n"),);
+    } else {
+        toast.error("Error desconocido.");
+    }
+};
+
+type State = {
+    user?: IUser;
+    access?: string;
+    refresh?: string;
+    isAuthenticated: boolean;
+}
+
+type Action = {
+    login: (username: string, password: string) => void;
+    signup: (data: IUser) => void;
+    me: () => void;
+    logout: () => void;
+    check_authenticated: () => void;
+    refresh_access: () => void;
+}
+
+export const useAuthStore = create(
+    persist<State & Action>((set, get) => ({
+        user: undefined,
+        isAuthenticated: false,
+        login: async (username: string, password: string) => {
+            /**
+             * maick
+             * gi5o3o2i9
+             * danza
+             * EgIIAg%253D%253D
+             */
+            try {
+
+                const { data: { access, refresh } } = await login(username, password)
+                // ls.setItem("access", access)
+                // ls.setItem("refresh", refresh)
+                set({ isAuthenticated: true, access, refresh })
+            } catch (error) {
+                toastError(error)
+                set({ isAuthenticated: false, user: undefined, access: undefined, refresh: undefined })
+                ls.removeItem("access")
+                ls.removeItem("refresh")
+            }
+        },
+        signup: async (data: IUser) => {
+            try {
+                await signup(data)
+            } catch (error) {
+                toastError(error)
+            }
+        },
+        logout: () => {
+            localStorage.clear()
+            set({ isAuthenticated: false, access: undefined, refresh: undefined, user: undefined })
+            // window.location.reload()
+        },
+        me: async () => {
+            console.log("hola1")
+            if (!tokenAZ) return;
+            try {
+                console.log("hola")
+                console.log(tokenAZ)
+                const { data } = await me()
+                console.log(data)
+                set({ user: data })
+            } catch (err) {
+                console.log(err)
+                ls.removeItem("access")
+                ls.removeItem("refresh")
+                set({ user: undefined })
+            }
+        },
+        check_authenticated: async () => {
+            if (!tokenAZ) return;
+            try {
+                const { status } = await check_authenticated()
+                if (status === 200) set({ isAuthenticated: true })
+            } catch (err) {
+                console.log(err)
+                ls.removeItem("access")
+                ls.removeItem("refresh")
+                set({ isAuthenticated: false, access: undefined, refresh: undefined })
+            }
+        },
+        refresh_access: async () => {
+            if (!tokenAZ) return;
+            try {
+                const { data } = await refresh_access()
+                ls.setItem("access", data.access)
+                set({ access: data.access })
+            } catch (err) {
+                ls.removeItem("access")
+                ls.removeItem("refresh")
+                console.log(err)
+                set({ isAuthenticated: false, user: undefined, access: undefined, refresh: undefined })
+            }
+        },
+
+    }), {
+        name: 'Auth',
+        storage: createJSONStorage(() => localStorage)
+    }))
+
+    import axios from "axios"
+    import * as ls from "@/lib/ls";
+    
+    const access = ls.getItem("Auth")?.state?.access
+    
+    const tokenAZ = ls.getItem("access")
+    
+    const API = axios.create({
+        baseURL: import.meta.env.VITE_API_URL,
+        headers: {
+            Authorization: `${tokenAZ ? `Bearer ${tokenAZ}` : ''}`
+        },
+    })
+    
+    // API.interceptors.response.use(res => res
+    //     , (error) => {
+    //         if (error.response) {
+    //             // Si el servidor respondió con un error, devolver el mensaje de error del servidor
+    //             throw new Error(error.response.data.message);
+    //         } else if (error.request) {
+    //             // Si no se recibió respuesta del servidor
+    //             throw new Error('No se pudo conectar al servidor.');
+    //         } else {
+    //             // Error en la petición
+    //             throw new Error(error.message);
+    //         }
+    //     })
+    
+    export default API
+
+
+    import API from "@/lib/api";
+import { IUser } from "@/types/iuser";
+import * as ls from "@/lib/ls";
+
+const access = ls.getItem("Auth")?.state?.access
+const refresh = ls.getItem("Auth")?.state?.refresh
+
+const tokenAZ = ls.getItem("access")
+const refreshAZ = ls.getItem("refresh")
+
+export const login = (username: string, password: string) =>
+    API.post<{ access: string, refresh: string }>("/auth/jwt/create/", { username, password });
+
+export const signup = (data: IUser) => API.post("/auth/users/", data);
+
+export const activation = (uid: string, access: string) => API.post("/auth/users/activation/", { uid, access });
+
+export const me = () => API.get("/auth/users/me/");
+
+export const check_authenticated = () => API.post('/auth/jwt/verify', { token: tokenAZ })
+
+export const refresh_access = () => API.post('/auth/jwt/refresh/', { refresh: refreshAZ });
+
+export const reset_password = (email: string) => API.post(`/auth/users/reset_password/`, { email })
+
+export const reset_password_confirm = (uid: string, new_password: string, re_new_password: string) =>
+    API.post(`/auth/users/reset_password_confirm/`, {
+        uid,
+        access: tokenAZ,
+        new_password,
+        re_new_password,
+    })
+
+
+          
+            <article
+            key={post.id}
+            className="relative flex flex-col space-y-2 group"
+          >
+            {post.cover_image && (
+              <img
+                src={post.cover_image as string}
+                alt={post.title}
+                width={804}
+                height={452}
+                className="transition-colors border rounded-md border-slate-200 bg-slate-200 group-hover:border-slate-900"
+              />
+            )}
+            <h2 className="text-2xl font-extrabold">{post.title}</h2>
+            {/* {post.content && <p className="text-slate-600">{post.content}</p>} */}
+            {post.created_at && (
+              <p className="text-sm text-slate-600">
+                {fromNow(post.created_at)}
+              </p>
+            )}
+            <Link
+              to={`/post/${post?.slug as string}`}
+              className="absolute inset-0"
+            >
+              <span className="sr-only">View Article</span>
+            </Link>
+          </article>

@@ -1,0 +1,43 @@
+import { useToast } from "@/hooks/use-toast";
+import { activation } from "@/services/auth";
+import { useQuery } from "@tanstack/react-query";
+import { isAxiosError } from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+
+const ActivatePage = () => {
+  const { uid, token } = useParams();
+  const router = useNavigate();
+  const { toast } = useToast();
+  const { isError, error, isLoading } = useQuery(
+    ["activation"],
+    () => {
+      if (!uid || !token) return;
+      return activation({ uid, access: token });
+    },
+    {
+      onSuccess: (data) => {
+        router("/login");
+        toast({
+          description: "Tu registro se realizo correctamente",
+        });
+      },
+    }
+  );
+  return (
+    <>
+      {isLoading ? (
+        <div>Cargando...</div>
+      ) : isError ? (
+        <div>
+          {isAxiosError(error)
+            ? error?.response?.data?.detail
+            : "Algo salío mal, intente más tarde."}
+        </div>
+      ) : (
+        <div>Bienvenido</div>
+      )}
+    </>
+  );
+};
+
+export default ActivatePage;

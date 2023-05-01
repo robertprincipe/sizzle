@@ -7,71 +7,43 @@ import Feedback from "../atoms/Feedback";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { commentPost, commentsPost } from "@/services/blog";
+import {
+  commentPost,
+  commentsPost,
+  deleteCommentPost,
+  updateCommentPost,
+} from "@/services/blog";
 import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
-import { IComment, IPost } from "@/types/iblog";
+import { IComment } from "@/types/iblog";
 import { useState } from "react";
 import CommentCard from "../molecules/CommentCard";
-import { useNavigate } from "react-router-dom";
+import { toastError } from "@/lib/errors";
 
 const commentSchema = z.object({
   content: z
     .string({ required_error: "El comentario es requerido" })
     .min(3, "Mínimo 3 caracteres"),
-  parent_id: z.number().optional(),
-  post_id: z.number().optional(),
 });
 
 type commentData = z.infer<typeof commentSchema>;
 
 type ICommentsProps = {
   post: {
-    id?: number;
+    id?: string;
     comment_count?: number;
   };
 };
 
 const Comments = ({ post: { id: post_id, comment_count } }: ICommentsProps) => {
   const [toReply, setToReply] = useState<IComment>();
+  const [editComment, setEditComment] = useState<IComment>();
   const { toast } = useToast();
 
-  const router = useNavigate();
-
   const { data, refetch } = useQuery(["comments", post_id], () =>
-    commentsPost(post_id || 0)
+    commentsPost(post_id || "")
   );
 
-  console.log(data?.data);
-
-  const {
-    mutate,
-    isLoading,
-    data: newComment,
-  } = useMutation(commentPost, {
-    onError: (error) => {
-      console.log(error);
-      if (error instanceof AxiosError) {
-        toast({
-          description: Object.entries(error.response?.data)
-            .map((msg) => `${msg[0]}: ${msg[1]}`)
-            .join("\n"),
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          description: "Algo salio mal, intente más tarde",
-          variant: "destructive",
-        });
-      }
-    },
-    onSuccess: () => {
-      refetch();
-      toast({
-        description: "Publicación guardada.",
-      });
-    },
-  });
   const {
     register,
     formState: { errors },
@@ -81,20 +53,55 @@ const Comments = ({ post: { id: post_id, comment_count } }: ICommentsProps) => {
     resolver: zodResolver(commentSchema),
   });
 
-  const onSubmit = (data: commentData) => {
-    mutate({ ...data, post_id });
+  const onSubmit = async (data: commentData) => {
+    console.log(data);
 
-    console.log(newComment);
+    const commentDataPost = {
+      ...data,
+      id: editComment?.id,
+      post_id,
+      parent_id: toReply?.parent_id ? toReply.parent_id : toReply?.id,
+    };
 
-    reset();
-    setToReply(undefined);
-    window.location.hash = `#comm-${newComment?.data?.id}`;
+    try {
+      const { data } = editComment
+        ? await updateCommentPost(commentDataPost)
+        : await commentPost(commentDataPost);
+      toast({
+        description: `${
+          editComment ? "Comentario editado." : "Comentario creado."
+        }`,
+      });
+      reset({
+        content: "",
+      });
+      setToReply(undefined);
+      setEditComment(undefined);
+      refetch();
+      window.location.hash = `#comm-${data?.id}`;
+    } catch (error) {
+      toastError(error);
+    }
+  };
+
+  const updatePost = (comment: IComment) => {
+    setEditComment(comment);
+    reset(comment);
+  };
+
+  const deleteComment = async (id: string) => {
+    try {
+      await deleteCommentPost(id);
+      refetch();
+    } catch (error) {
+      toastError(error);
+    }
   };
 
   return (
     <section className="py-8 bg-white dark:bg-gray-900 lg:py-16" id="comments">
       <div className="max-w-2xl px-4 mx-auto">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-bold text-gray-900 lg:text-2xl dark:text-white">
             Comentarios ({comment_count || 0})
           </h2>
@@ -105,28 +112,28 @@ const Comments = ({ post: { id: post_id, comment_count } }: ICommentsProps) => {
           id="to-comment"
         >
           {toReply && (
-            <>
-              <input
-                type="number"
-                className="hidden"
-                value={toReply.parent_id ? toReply.parent_id : toReply.id}
-                {...register("parent_id", { valueAsNumber: true })}
-              />
-              <div className="px-4 py-2 border border-gray-300 rounded-lg mb-3">
-                <div className="flex items-center">
-                  <p className="inline-flex items-center text-sm text-gray-900 dark:text-white">
+            <div className="px-2 pb-2">
+              <div className="text-sm mb-1">Contestar a:</div>
+              <div className="flex items-center space-x-2">
+                <div className="bg-gray-500 dark:bg-gray-300 w-1 h-8 rounded-full" />
+                <div className="flex items-center space-x-2">
+                  <div className="flex space-x-1 items-center">
                     <img
-                      className="w-6 h-6 mr-2 rounded-full"
-                      src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
+                      className="w-6 h-6 rounded-full"
+                      src={toReply.user?.picture as string}
                       alt="Michael Gough"
                     />
-                    {toReply.user?.username}
+                    <span className="font-semibold">
+                      {toReply.user?.username}
+                    </span>
+                    :
+                  </div>
+                  <p className="inline-flex items-center text-sm text-gray-600 dark:text-gray-300">
+                    {toReply.content}
                   </p>
                 </div>
-                {toReply.content}
               </div>
-              <Feedback field={errors.parent_id} />
-            </>
+            </div>
           )}
           <div className="grid w-full gap-2">
             <Textarea
@@ -135,7 +142,7 @@ const Comments = ({ post: { id: post_id, comment_count } }: ICommentsProps) => {
             />
             <Feedback field={errors.content} />
             <Button>
-              {isLoading && <Loader2 className="animate-spin" />}
+              {/* {&& <Loader2 className="animate-spin" />} */}
               Comentar
             </Button>
           </div>
@@ -145,6 +152,8 @@ const Comments = ({ post: { id: post_id, comment_count } }: ICommentsProps) => {
             <CommentCard
               comment={comment}
               setToReply={setToReply}
+              onDelete={deleteComment}
+              onEdit={updatePost}
               children={
                 comment.replies &&
                 comment.replies.map((reply) => (
@@ -152,6 +161,8 @@ const Comments = ({ post: { id: post_id, comment_count } }: ICommentsProps) => {
                     key={reply.id}
                     comment={reply}
                     setToReply={setToReply}
+                    onDelete={deleteComment}
+                    onEdit={updatePost}
                   />
                 ))
               }

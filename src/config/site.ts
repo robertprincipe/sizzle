@@ -10,7 +10,7 @@ interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  name: "make",
+  name: "Wariv",
   description:
     "Encuentra las mejores aplicaciones de IA",
   mainNav: [

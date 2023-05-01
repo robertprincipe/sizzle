@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser, PermissionsMixin)
 from django.core.exceptions import ValidationError
 import re
-
+from uuid import uuid4 
 
 
 class UserManager(BaseUserManager):
@@ -28,7 +28,12 @@ class UserManager(BaseUserManager):
 
         return user
 
-
+ROLES = (
+    (1, 'USER'),
+    (2, 'EDITOR'),
+    (3, 'MODERATOR'),
+    (4, 'ADMIN'),
+)
 
 class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
@@ -36,19 +41,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name="usuario"
         verbose_name_plural="usuarios"
 
-    roles = (
-        (1, 'User'),
-        (2, 'Editor'),
-        (3, 'Moderator'),
-        (4, 'Admin'),
-    )
-
     def validate_username(username):
         pattern_special_characters = r'\badmin\b|[!@#$%^~&*()_+-=[]{}|;:",.<>/?]|\s'
         if re.search(pattern_special_characters, username):
             raise ValidationError('Nombre de usuario contiene caracteres invalidos')
         return re.sub(pattern_special_characters, '', username)    
 
+    id = models.UUIDField(default=uuid4, unique=True, primary_key=True, editable=False)
     username = models.CharField(max_length=255, db_index=True, unique=True, validators=[validate_username])
     email = models.EmailField(max_length=255, unique=True, db_index=True)
     picture = models.ImageField(upload_to="users/profile/", blank=True, null=True, verbose_name='Picture')
@@ -59,7 +58,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     profile_info = models.TextField(max_length=150, null=True, blank=True)
 
-    role = models.CharField(max_length=10, choices=roles, default=1)
+    role = models.CharField(max_length=10, choices=ROLES, default=1)
 
     verified = models.BooleanField(default=False)
 

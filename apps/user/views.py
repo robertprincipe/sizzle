@@ -6,27 +6,54 @@ from rest_framework import status
 from .models import User
 from .serializers import UserSerializer
 
-@api_view(["POST"])
-def signup(request):
-    user_serializer = UserSerializer(data=request.data)
-    
-    if user_serializer.is_valid():
-        user_serializer.save()
-        return Response({'message': 'Registro exitoso.'}, status=status.HTTP_201_CREATED)
-
-    return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(["POST"])
-def signin(request):
+@api_view(["PUT"])
+def update_profile(request, id):
     try:
-        user = User.objects.get(request.data["email"])
-        return Response({
-            'user': user,
-        }, status=status.HTTP_200_OK)
+        user = User.objects.get(id=id)
     except User.DoesNotExist:
         return Response({
-            'message': 'Error en email o contraseña.',
+            'message': 'No existe el usuario.',
         }, status=status.HTTP_404_NOT_FOUND)
+
+    try:
+        user.username = request.data.get("username")
+        user.email = request.data.get("email")
+        user.profile_info = request.data.get("profile_info", None)
+
+        user.picture = request.data.get("picture", user.picture)
+        user.banner = request.data.get("banner", user.banner)
+        
+        user.save()
+        
+        return Response(UserSerializer(user).data, status=status.HTTP_200_OK)
+    except Exception as e:
+        print(e)
+        return Response({"message": "hubo un error"}, status=status.HTTP_400_BAD_REQUEST)
     
-    
+@api_view(["DELETE"])
+def remove_image_profile(request, id, image):
+    try:
+        user = User.objects.get(id=id)
+    except User.DoesNotExist:
+        return Response({
+            'message': 'No existe el usuario.',
+        }, status=status.HTTP_404_NOT_FOUND)
+
+    try:
+        if not image in ["picture", "banner"]:
+            return Response({
+                'message': 'La imagen no es valida.',
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        if (image == "picture"):
+            user.picture = None
+            user.save()
+        elif (image == "banner"):
+            user.banner = None
+            user.save()
+
+        return Response({"message": "Removido correctamente"}, status=status.HTTP_200_OK)
+    except Exception as e:
+        print(e)
+        return Response({"message": "hubo un error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+      
