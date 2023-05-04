@@ -1,18 +1,11 @@
 import ArticlesSkeleton from "@/components/loaders/ArticlesSkeleton";
+import ButtonPostCreator from "@/components/shared/ButtonPostCreator";
 import Head from "@/components/shared/Head";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { toast } from "@/components/ui/use-toast";
-import { fromNow } from "@/lib/date";
-import { toastError } from "@/lib/errors";
-import { genId, makeSlug } from "@/lib/strings";
-import { cn } from "@/lib/utils";
-import { allPosts, postCreate } from "@/services/blog";
+
+import { allPosts } from "@/services/blog";
 import { useAuthStore } from "@/store/auth";
 import { useQuery } from "@tanstack/react-query";
-import { Loader2, Plus } from "lucide-react";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function BlogPage() {
   const { isAuthenticated } = useAuthStore((state) => state);
@@ -23,28 +16,6 @@ export default function BlogPage() {
       refetchOnWindowFocus: false,
     }
   );
-
-  console.log(posts?.data.length);
-
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const router = useNavigate();
-
-  const createPost = async () => {
-    setIsLoading(true);
-    try {
-      const { data: post } = await postCreate({
-        title: "Nueva publicacion",
-        slug: `${makeSlug("Nueva publicacion", "-")}-${genId(5)}`,
-      });
-
-      setIsLoading(false);
-      router(`/post/${post.id}/edit`);
-    } catch (error) {
-      toastError(error);
-    }
-
-    // This forces a cache invalidation.
-  };
 
   return (
     <div className="container max-w-4xl py-6 lg:py-10">
@@ -58,22 +29,7 @@ export default function BlogPage() {
             Revisa las tutoriales, tips, hacks.
           </p>
         </div>
-        {isAuthenticated && (
-          <Button
-            onClick={createPost}
-            className={cn({
-              "cursor-not-allowed opacity-60": isLoading,
-            })}
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-            ) : (
-              <Plus className="w-4 h-4 mr-2" />
-            )}
-            Crear Publicación
-          </Button>
-        )}
+        {isAuthenticated && <ButtonPostCreator />}
       </div>
       {isLoadingAllPosts ? (
         <ArticlesSkeleton />

@@ -5,7 +5,7 @@ interface Props {
   redirectTo?: string;
 }
 
-export const ProtectedRoute = ({ redirectTo = "/login" }: Props) => {
+export const ProtectedRoute = ({ redirectTo = "/auth/login" }: Props) => {
   const isAuth = useAuthStore((state) => state.isAuthenticated);
   if (!isAuth) return <Navigate to={redirectTo} />;
   return <Outlet />;

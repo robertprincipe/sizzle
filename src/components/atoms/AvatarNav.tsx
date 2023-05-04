@@ -23,6 +23,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Link } from "react-router-dom";
+import { Gauge } from "lucide-react";
 
 const AvatarNav = () => {
   const { user, logout } = useAuthStore((state) => state);
@@ -59,11 +60,13 @@ const AvatarNav = () => {
             <span>Profile</span>
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <CreditCard className="w-4 h-4 mr-2" />
-            <span>Billing</span>
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-          </DropdownMenuItem>
+          <Link to={"/dashboard"}>
+            <DropdownMenuItem>
+              <Gauge className="w-4 h-4 mr-2" />
+              <span>Dashboard</span>
+              <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </Link>
 
           <Link to={"/config"}>
             <DropdownMenuItem>

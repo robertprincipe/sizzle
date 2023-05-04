@@ -1,4 +1,4 @@
-import { useTheme } from "next-themes";
+import { useTheme } from "@/hooks/useTheme";
 import { Switch } from "./ui/switch";
 
 export function ThemeToggle() {

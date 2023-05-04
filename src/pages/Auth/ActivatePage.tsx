@@ -11,7 +11,7 @@ const ActivatePage = () => {
   const { toast } = useToast();
   const { mutate, isError, error, isLoading } = useMutation(activation, {
     onSuccess: () => {
-      router("/login");
+      router("/auth/login");
       toast({
         description: "Tu registro se realizo correctamente",
       });

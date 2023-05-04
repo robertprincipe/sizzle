@@ -5,7 +5,14 @@ import { buttonVariants } from "@/components/ui/button";
 import { ChevronLeft, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { lazy, useState, Suspense, useEffect } from "react";
+import {
+  lazy,
+  useState,
+  Suspense,
+  useEffect,
+  useCallback,
+  useRef,
+} from "react";
 
 import { z } from "zod";
 
@@ -21,25 +28,33 @@ import { genId, makeSlug } from "@/lib/strings";
 import { IPost } from "@/types/iblog";
 import Head from "../shared/Head";
 import { toastError } from "@/lib/errors";
+import { Link, useSearchParams } from "react-router-dom";
+import Feedback from "../atoms/Feedback";
 
 const Dropimage = lazy(() => import("./Dropimage"));
-const EditorJSX = lazy(() => import("./EditorJSX"));
+const RichTextEditor = lazy(() => import("./RichTextEditor"));
+
+import EditorJS, { OutputData } from "@editorjs/editorjs";
 
 const postPatchSchema = z.object({
-  title: z.string().min(3).max(128),
+  title: z
+    .string({ required_error: "El titulo es requerido." })
+    .min(3, "El titulo debe tener al menos 3 caracteres.")
+    .max(128, "El titulo debe tener menos de 128 caracteres."),
   published: z.boolean(),
 });
 
 type formData = z.infer<typeof postPatchSchema>;
 
-type IEditorProps = {
+type IPostEditorProps = {
   preDataFill?: IPost;
 };
 
-const Editor = ({ preDataFill }: IEditorProps) => {
+const PostEditor = ({ preDataFill }: IPostEditorProps) => {
+  const [params] = useSearchParams();
   const [tags, setTags] = useState<ITag[]>([]);
   const [coverImage, setCoverImage] = useState<Blob | string | undefined>();
-  const [blocks, setBlocks] = useState();
+  const [blocks, setBlocks] = useState<any>();
 
   const {
     register,
@@ -80,13 +95,73 @@ const Editor = ({ preDataFill }: IEditorProps) => {
     if (preDataFill) {
       reset(preDataFill);
       setTags(preDataFill.tags || []);
-      console.log(preDataFill.content);
-
-      setBlocks(JSON.parse(preDataFill.content || "{}"));
     }
   }, [preDataFill]);
 
+  const ref = useRef<EditorJS>();
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+
+  const initializeEditor = useCallback(async () => {
+    const EditorJS = (await import("@editorjs/editorjs")).default;
+    const Header = (await import("@editorjs/header")).default;
+    const Embed = (await import("@editorjs/image")).default;
+    const Table = (await import("@editorjs/link-autocomplete")).default;
+    const List = (await import("@editorjs/paragraph")).default;
+    const Code = (await import("@editorjs/list")).default;
+    const LinkTool = (await import("@editorjs/table")).default;
+
+    if (!ref.current) {
+      const editor = new EditorJS({
+        holder: "editor",
+        onReady() {
+          ref.current = editor;
+        },
+        placeholder: "Type here to write your post...",
+        inlineToolbar: true,
+        data: JSON.parse(preDataFill?.content || "{}"),
+        tools: {
+          header: Header,
+          linkTool: LinkTool,
+          list: List,
+          code: Code,
+          table: Table,
+          embed: Embed,
+        },
+      });
+    }
+  }, [preDataFill]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsMounted(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isMounted) {
+      initializeEditor();
+
+      return () => {
+        ref.current?.destroy();
+        ref.current = undefined;
+      };
+    }
+  }, [initializeEditor]);
+
   async function onSubmit(data: formData) {
+    const blocks = await ref.current?.save();
+    const wordCount = blocks
+      ? blocks.blocks?.reduce(
+          (acc: number, block: any) =>
+            acc + block.data.text.trim().split(/\s+/).length,
+          0
+        )
+      : 0;
+
+    const reading_time = wordCount === 0 ? Math.ceil(wordCount / 250) : 1;
+
+    console.log("reading_time", reading_time);
+
     mutate({
       ...data,
       id: preDataFill?.id,
@@ -94,6 +169,7 @@ const Editor = ({ preDataFill }: IEditorProps) => {
       tags,
       slug: makeSlug(data.title, "-"),
       content: JSON.stringify(blocks),
+      reading_time,
     });
   }
 
@@ -114,8 +190,8 @@ const Editor = ({ preDataFill }: IEditorProps) => {
       <div className="grid w-full gap-4 md:gap-10">
         <div className="container flex items-center justify-between w-full mx-auto mt-5">
           <div className="flex items-center space-x-10">
-            <a
-              href="/dashboard"
+            <Link
+              to={`${params.get("backTo") ?? "/blog"}`}
               className={cn(
                 buttonVariants({
                   variant: "ghost",
@@ -124,7 +200,7 @@ const Editor = ({ preDataFill }: IEditorProps) => {
             >
               <ChevronLeft className="w-4 h-4 mr-2" />
               Atras
-            </a>
+            </Link>
           </div>
           <div className="space-x-2">
             <label
@@ -154,6 +230,7 @@ const Editor = ({ preDataFill }: IEditorProps) => {
               imageUrl={preDataFill?.cover_image}
               onRemoveImageUrl={onRemoveImageUrl}
               setImageFile={setCoverImage}
+              previewSize="md"
             />
           </Suspense>
           <TextareaAutosize
@@ -161,17 +238,23 @@ const Editor = ({ preDataFill }: IEditorProps) => {
             id="title"
             defaultValue={""}
             placeholder="Post title"
-            className="w-full my-3 overflow-hidden text-5xl font-bold appearance-none resize-none focus:outline-none dark:bg-transparent"
+            className="w-full my-1 overflow-hidden text-3xl font-bold appearance-none resize-none md:my-3 md:text-4xl lg:text-5xl focus:outline-none dark:bg-transparent"
             {...register("title")}
           />
+          <Feedback field={errors.title} />
           <InputTags tags={tags} setTags={setTags} />
-          <Suspense>
-            <EditorJSX blocks={blocks} setBlocks={setBlocks} />
-          </Suspense>
+          <div id="editor" className="min-h-[500px]" />
+          <p className="text-sm text-gray-500">
+            Use{" "}
+            <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
+              Tab
+            </kbd>{" "}
+            to open the command menu.
+          </p>
         </div>
       </div>
     </form>
   );
 };
 
-export default Editor;
+export default PostEditor;

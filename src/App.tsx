@@ -1,4 +1,3 @@
-import { ThemeProvider } from "next-themes";
 import { RouterProvider } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
@@ -6,6 +5,7 @@ import { Toaster as ToasterRX } from "./components/ui/toaster";
 import { HelmetProvider } from "react-helmet-async";
 import router from "./components/router";
 import { Toaster } from "react-hot-toast";
+import { ThemeProvider } from "./hooks/useTheme";
 
 const queryClient = new QueryClient();
 
@@ -13,7 +13,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <HelmetProvider>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider>
           <RouterProvider router={router} />
           <ToasterRX />
           <Toaster
@@ -30,7 +30,6 @@ const App = () => {
                 background: "#363636",
                 color: "#fff",
               },
-
               // Default options for specific types
               success: {
                 duration: 3000,

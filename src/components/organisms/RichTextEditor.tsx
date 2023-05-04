@@ -9,21 +9,20 @@ import EditorJS from "@editorjs/editorjs";
 import Wizzard from "../plugin/Wizzard";
 import MarkerTool from "../plugin/InlineWizz";
 
-type IEditorJSXProps = {
-  blocks?: any;
+type IRichTextEditorProps = {
+  initialBlocks?: any;
   setBlocks: (blocks: any) => void;
 };
 
-const EditorJSX = ({ blocks, setBlocks }: IEditorJSXProps) => {
+const RichTextEditor = ({ initialBlocks, setBlocks }: IRichTextEditorProps) => {
   const ref = useRef<EditorJS>();
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
   const initializeEditor = useCallback(async () => {
-    // const body = ;
     if (!ref.current) {
       const editor = new EditorJS({
         holder: "editor",
-        data: blocks,
+        data: JSON.parse(initialBlocks),
         onReady() {
           ref.current = editor;
         },
@@ -32,7 +31,6 @@ const EditorJSX = ({ blocks, setBlocks }: IEditorJSXProps) => {
         },
         placeholder: "Type here to write your post...",
         inlineToolbar: true,
-        // data: body.content,
         tools: {
           image: {
             class: Image,
@@ -45,7 +43,7 @@ const EditorJSX = ({ blocks, setBlocks }: IEditorJSXProps) => {
         },
       });
     }
-  }, [blocks]);
+  }, [initialBlocks]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -78,4 +76,4 @@ const EditorJSX = ({ blocks, setBlocks }: IEditorJSXProps) => {
   );
 };
 
-export default EditorJSX;
+export default RichTextEditor;

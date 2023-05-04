@@ -1,7 +1,6 @@
 import { ITag } from "@/types/iblog";
 import { X } from "lucide-react";
 import { Dispatch, KeyboardEvent, SetStateAction, useState } from "react";
-import TagField from "./InputTags";
 
 type ITagsAddedProps = {
   tagsAdded: ITag[];
@@ -25,9 +24,9 @@ const TagsAdded: React.FC<ITagsAddedProps> = ({
 
   return (
     <div className="flex space-x-1">
-      {tagsAdded?.map((tag, idx) => (
+      {/* {tagsAdded?.map((tag, idx) => (
         <TagField />
-      ))}
+      ))} */}
     </div>
   );
 };

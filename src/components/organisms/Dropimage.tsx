@@ -7,8 +7,8 @@ type IDropimageProps = {
   onRemoveImageUrl?: () => void;
   setImageFile: (file?: Blob | string) => void;
   isCircle?: boolean;
-  height?: number;
-  previewHeight?: number;
+  size?: "sm" | "md" | "lg";
+  previewSize?: "sm" | "md" | "lg";
 };
 
 const Dropimage: React.FC<IDropimageProps> = ({
@@ -16,8 +16,8 @@ const Dropimage: React.FC<IDropimageProps> = ({
   onRemoveImageUrl,
   setImageFile,
   isCircle,
-  height = 48,
-  previewHeight = 16,
+  size,
+  previewSize,
 }) => {
   const [imagePreview, setImagePreview] = useState<
     string | ArrayBuffer | null | undefined
@@ -38,12 +38,6 @@ const Dropimage: React.FC<IDropimageProps> = ({
     onDrop,
   });
 
-  const pImg = () => {
-    //
-
-    return;
-  };
-
   useEffect(() => {
     if (imageUrl && typeof imageUrl === "string")
       fetch(imageUrl)
@@ -51,6 +45,11 @@ const Dropimage: React.FC<IDropimageProps> = ({
         .then((blob) => {
           setImagePreview(URL.createObjectURL(blob));
         });
+
+    return () => {
+      setImagePreview(undefined);
+      setImageFile(undefined);
+    };
   }, [imageUrl]);
 
   const removeImageFromState = () => {
@@ -61,16 +60,34 @@ const Dropimage: React.FC<IDropimageProps> = ({
     setImageFile(undefined);
   };
 
+  const SIZES = {
+    sm: "h-8 w-8",
+    md: "h-20",
+    lg: "h-12 w-12",
+  };
+
+  const PREVIEW_SIZES = {
+    sm: "h-8 w-8",
+    md: "h-40",
+    lg: "h-12 w-12",
+  };
+
   return (
     <div className={`relative ${isCircle ? "w-fit" : "w-full"}`}>
       <div
         {...getRootProps({ className: "dropzone" })}
-        className={`flex cursor-pointer items-center justify-center overflow-hidden  border border-gray-300 bg-gray-50 dark:bg-gray-800 dark:text-white ${
+        className={`flex cursor-pointer items-center justify-center overflow-hidden ${
+          imagePreview ? "" : "border border-gray-300"
+        } bg-gray-50 dark:bg-gray-800 dark:text-white ${
           isCircle
-            ? `h-${height} w-${height} rounded-full`
+            ? `${SIZES[size || "md"]} rounded-full`
             : imagePreview
-            ? `h-${isCircle ? height : previewHeight} rounded-md`
-            : `h-${height} rounded-md`
+            ? `h-${
+                isCircle
+                  ? "w-48 h-48"
+                  : ` ${PREVIEW_SIZES[previewSize || "md"]}`
+              } rounded-md`
+            : `${SIZES[size || "md"]} rounded-md`
         }`}
       >
         {!imagePreview ? (
@@ -107,11 +124,11 @@ const Dropimage: React.FC<IDropimageProps> = ({
           }`}
         >
           <button
-            className="inline-flex items-center p-1 text-sm font-medium text-center text-white bg-red-600 rounded hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-600"
+            className="inline-flex items-center text-sm font-medium text-center text-white bg-red-600 rounded-md px-0.5 hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-600"
             type="button"
             onClick={removeImageFromState}
           >
-            <X />
+            <X className="w-5" />
           </button>
         </div>
       ) : null}

@@ -66,18 +66,6 @@ const InputTag = ({ tags, setTags }: InputTagProps) => {
     // }
   };
 
-  const updatedTag = (tag: ITag) => {
-    const validatedName = validateTagName(tag.name);
-    setTags((prev) =>
-      prev.map((ptag) => {
-        if (tag && tag.name === ptag.name) {
-          return { ...ptag, name: validatedName || "" };
-        }
-        return ptag;
-      })
-    );
-  };
-
   const removeTag = (name: string) => {
     setTags((prev) => prev.filter((ptag) => ptag.name !== name));
   };
@@ -85,18 +73,13 @@ const InputTag = ({ tags, setTags }: InputTagProps) => {
   return (
     <label
       htmlFor="input-tags"
-      className={`relative block cursor-text bg-transparent py-2.5 text-sm text-gray-900 dark:text-white`}
+      className={`relative block cursor-text bg-transparent pb-1 md:pb-2.5 text-sm text-gray-900 dark:text-white`}
       // ref={collectionDropdownRef}
     >
       <div className="flex">
         <div className="flex space-x-1">
           {tags?.map((tag, idx) => (
-            <TagField
-              key={idx}
-              tag={tag}
-              updatedTag={updatedTag}
-              removeTag={removeTag}
-            />
+            <TagField key={idx} tag={tag} removeTag={removeTag} />
           ))}
         </div>
         {tags.length < 3 ? (

@@ -19,9 +19,15 @@ export const patchPost = (post: IPost) => {
     const formData = new FormData();
     formData.append("title", post.title);
     formData.append("content", post.content || '');
-    if (post.cover_image) formData.append("cover_image", post.cover_image);
+    // se borra la imagen
+    // formData.append("cover_image", post.cover_image || '');
+    console.log(post.cover_image);
+
+    if (post.cover_image || post.cover_image === "") formData.append("cover_image", post.cover_image);
+
     formData.append("tags", JSON.stringify(post.tags));
     formData.append("published", JSON.stringify(post.published));
+    formData.append("reading_time", JSON.stringify(post.reading_time));
     formData.append("slug", post.slug || '');
 
     return API.patch<IPost>(`/posts/${post.id}/patch`, formData)
@@ -32,6 +38,8 @@ export const deletePost = (id: string) => API.delete(`/posts/${id}/delete`)
 export const deleteImagePost = (id: string) => API.delete(`/posts/${id}/remove-image`)
 
 export const allPosts = () => API.get<IPost[]>('/posts')
+
+export const editorPosts = () => API.get<IPost[]>('/posts/editor/all')
 
 export const postDetail = (slug: string) => API.get<IPost>(`/posts/${slug}`)
 

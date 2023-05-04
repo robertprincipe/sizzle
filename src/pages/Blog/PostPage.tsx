@@ -2,7 +2,7 @@ import { fromNow } from "@/lib/date";
 import { postDetail } from "@/services/blog";
 import { useQuery } from "@tanstack/react-query";
 
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import Head from "@/components/shared/Head";
 
@@ -19,14 +19,22 @@ const ContentPost = lazy(() => import("@/components/molecules/ContentPost"));
 
 export default function PostPage() {
   const { slug } = useParams();
+  const router = useNavigate();
   // const user = useAuthStore((state) => state.user);
-  const { data, isLoading } = useQuery(["postDetail"], () =>
-    postDetail(slug || "")
+  const { data, isLoading } = useQuery(
+    ["postDetail"],
+    () => postDetail(slug || ""),
+    {
+      retry: false,
+      onError(err) {
+        router("/404");
+      },
+    }
   );
 
   return (
     <>
-      {isLoading ? (
+      {isLoading && !data ? (
         <PostSkeleton />
       ) : (
         <>
@@ -61,7 +69,7 @@ export default function PostPage() {
 
                       <ul className="text-xs text-gray-500">
                         <li className="relative inline-block pr-6 last:pr-0 last-of-type:before:hidden before:absolute before:top-1/2 before:right-2 before:-translate-y-1/2 before:w-1 before:h-1 before:bg-gray-300 before:rounded-full dark:text-gray-400 dark:before:bg-gray-600">
-                          {fromNow(data?.data.created_at as Date)}
+                          {fromNow(data?.data.created_at || new Date())}
                         </li>
                         <li className="relative inline-block pr-6 last:pr-0 last-of-type:before:hidden before:absolute before:top-1/2 before:right-2 before:-translate-y-1/2 before:w-1 before:h-1 before:bg-gray-300 before:rounded-full dark:text-gray-400 dark:before:bg-gray-600">
                           {data?.data.reading_time === 0
@@ -88,13 +96,15 @@ export default function PostPage() {
               {data?.data.title}
             </h1>
 
-            <img
-              src={data?.data.cover_image as string}
-              alt={data?.data.title}
-              width={720}
-              height={405}
-              className="mt-8 transition-colors rounded-md bg-slate-200 group-hover:border-slate-900"
-            />
+            {data?.data.cover_image && (
+              <img
+                src={data?.data.cover_image as string}
+                alt={data?.data.title}
+                width={720}
+                height={405}
+                className="mt-8 transition-colors rounded-md bg-slate-200 group-hover:border-slate-900"
+              />
+            )}
 
             <Suspense fallback={<ContentPostSkeleton />}>
               <ContentPost content={data?.data.content} />

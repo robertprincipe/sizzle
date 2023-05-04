@@ -106,9 +106,9 @@ const ConfigProfilePage = () => {
   };
 
   return (
-    <div className="grid w-full gap-4 md:gap-10">
-      <div className="container flex items-center justify-center w-full mx-auto mt-5">
-        <form onSubmit={handleSubmit(onSubmit)} className="lg:w-[800px]">
+    <>
+      {/* <div className="grid w-full gap-4 md:gap-10">
+        <div className="container flex items-center justify-center w-full mx-auto mt-5">
           <Card className="p-0 rounded-lg">
             <CardHeader>
               <CardTitle>Actualizar Información del perfil.</CardTitle>
@@ -118,7 +118,6 @@ const ConfigProfilePage = () => {
                 <Dropimage
                   imageUrl={banner}
                   setImageFile={setBanner}
-                  previewHeight={52}
                   onRemoveImageUrl={removeBannerProfile}
                 />
                 <div className="absolute rounded-full shadow -bottom-1/2 left-4 dark:shadow-gray-400">
@@ -130,43 +129,117 @@ const ConfigProfilePage = () => {
                   />
                 </div>
               </div>
-              <div className="grid gap-2">
-                <Label htmlFor="subject">Nombre de usuario</Label>
-                <Input
-                  id="subject"
-                  placeholder="AdAstra"
-                  {...register("username")}
-                />
-                <Feedback field={errors.username} />
-              </div>
-              <input type="text" {...register("id")} hidden />
-              <div className="grid gap-2">
-                <Label htmlFor="subject">Correo electrónico</Label>
-                <Input
-                  id="subject"
-                  placeholder="ad.astra@hotmail"
-                  {...register("email")}
-                />
-                <Feedback field={errors.email} />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="description">Información del perfil</Label>
-                <Textarea
-                  id="description"
-                  placeholder="Soy de huanuco peru"
-                  {...register("profile_info")}
-                />
-                <Feedback field={errors.profile_info} />
-              </div>
             </CardContent>
-            <CardFooter className="justify-between space-x-2">
-              <Button variant="ghost">Cancel</Button>
-              <Button>Submit</Button>
-            </CardFooter>
+            <CardFooter className="justify-between space-x-2"></CardFooter>
           </Card>
+        </div>
+      </div> */}
+
+      <div className="max-w-4xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+        <form onSubmit={handleSubmit(onSubmit)} className="lg:w-[800px]">
+          <div className="bg-white rounded-xl shadow dark:bg-slate-900">
+            <div className="relative h-40 rounded-t-xl bg-[url('https://cdn.midjourney.com/6fcdb019-5fbe-468f-8537-f1f65e364465/0_3_640_N.webp')] bg-no-repeat bg-cover bg-center">
+              <div className="absolute top-0 right-0 p-4">
+                <button
+                  type="button"
+                  className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
+                >
+                  <svg
+                    className="w-3 h-3"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                    <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
+                  </svg>
+                  Upload header
+                </button>
+              </div>
+            </div>
+
+            <div className="pt-0 p-4 sm:pt-0 sm:p-7">
+              <div className="space-y-1 sm:space-y-3">
+                <div>
+                  <label className="sr-only">Product photo</label>
+
+                  <div className="grid sm:flex sm:items-center sm:gap-x-5">
+                    <img
+                      className="-mt-8 relative z-10 inline-block h-24 w-24 mx-auto sm:mx-0 rounded-full ring-4 ring-white dark:ring-gray-800"
+                      src="https://cdn.midjourney.com/6fcdb019-5fbe-468f-8537-f1f65e364465/0_3_640_N.webp"
+                      alt="Image Description"
+                    />
+
+                    <div className="mt-4 sm:mt-auto sm:mb-1.5 flex justify-center sm:justify-start gap-2">
+                      <button
+                        type="button"
+                        className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
+                      >
+                        <svg
+                          className="w-3 h-3"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          viewBox="0 0 16 16"
+                        >
+                          <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                          <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
+                        </svg>
+                        Upload logo
+                      </button>
+                      <button
+                        type="button"
+                        className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-red-600 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-red-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="subject">Nombre de usuario</Label>
+                  <Input
+                    id="subject"
+                    placeholder="AdAstra"
+                    {...register("username")}
+                  />
+                  <Feedback field={errors.username} />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="subject">Correo electrónico</Label>
+                  <Input
+                    id="subject"
+                    placeholder="ad.astra@hotmail"
+                    {...register("email")}
+                  />
+                  <Feedback field={errors.email} />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="description">Información del perfil</Label>
+                  <Textarea
+                    id="description"
+                    placeholder="Soy de huanuco peru"
+                    {...register("profile_info")}
+                  />
+                  <Feedback field={errors.profile_info} />
+                </div>
+              </div>
+
+              <div className="mt-5 flex justify-center gap-x-2">
+                <Button variant="ghost">Cancel</Button>
+                <Button>Submit</Button>
+              </div>
+            </div>
+          </div>
         </form>
       </div>
-    </div>
+    </>
   );
 };
 

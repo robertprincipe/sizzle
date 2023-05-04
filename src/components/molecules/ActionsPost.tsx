@@ -18,36 +18,38 @@ const ActionsPost = ({
         </>
       ) : (
         <div className="relative inline-block px-4 py-3 bg-white rounded-full shadow-md dark:bg-gray-800">
-          <div className="flex items-center gap-x-1.5">
+          <div className="flex items-center flex-col md:flex-row gap-x-1.5">
             <ReactPost postId={post_id || ""} />
-            <div className="block h-3 mx-3 border-r border-gray-300 dark:border-gray-600"></div>
+            <div className="hidden h-3 mx-3 border-r border-gray-300 md:block dark:border-gray-600"></div>
 
-            <div className="inline-block hs-tooltip">
-              <a
-                className="flex items-center text-sm text-gray-500 hs-tooltip-toggle gap-x-2 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
-                href="#comments"
-              >
-                <MessageCircle className="h-5" />
-                {comment_count}
-                <span
-                  className="absolute z-10 invisible inline-block px-2 py-1 text-xs font-medium text-white transition-opacity bg-gray-900 rounded-md shadow-sm opacity-0 hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible dark:bg-black"
-                  role="tooltip"
+            <div className="flex items-center gap-x-1.5 mt-2 md:mt-0">
+              <div className="inline-block hs-tooltip">
+                <a
+                  className="flex items-center text-sm text-gray-500 hs-tooltip-toggle gap-x-2 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
+                  href="#comments"
                 >
-                  Comment
-                </span>
-              </a>
-            </div>
+                  <MessageCircle className="h-5" />
+                  {comment_count}
+                  <span
+                    className="absolute z-10 invisible inline-block px-2 py-1 text-xs font-medium text-white transition-opacity bg-gray-900 rounded-md shadow-sm opacity-0 hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible dark:bg-black"
+                    role="tooltip"
+                  >
+                    Comment
+                  </span>
+                </a>
+              </div>
 
-            <div className="block h-3 mx-3 border-r border-gray-300 dark:border-gray-600"></div>
+              <div className="block h-3 mx-3 border-r border-gray-300 dark:border-gray-600"></div>
 
-            <div className="relative inline-flex hs-dropdown">
-              <button
-                id="blog-article-share-dropdown"
-                className="flex items-center text-sm text-gray-500 hs-dropdown-toggle gap-x-2 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
-              >
-                <Share2 className="w-5" />
-                Compartir
-              </button>
+              <div className="relative inline-flex hs-dropdown">
+                <button
+                  id="blog-article-share-dropdown"
+                  className="flex items-center text-sm text-gray-500 hs-dropdown-toggle gap-x-2 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
+                >
+                  <Share2 className="w-5" />
+                  <span className="hidden md:block">Compartir</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>

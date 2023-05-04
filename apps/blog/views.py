@@ -6,6 +6,7 @@ from .models import Tag, Post, Comment, Reaction
 from .serializers import PostSerializer, TagSerializer, ReactionSerializer, CommentSerializer
 from .permissions import IsAuthorOrAdminOrModerator
 from django.db.models import Count
+from apps.user.models import User
 
 import json
 
@@ -77,7 +78,7 @@ def delete_post(request, id):
     try:
         post = Post.objects.get(id=id)
         post.delete()
-        return Response({"message": "La publicación fue eliminada con exito."}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"message": "La publicación fue eliminada con exito."}, status=status.HTTP_200_OK)
     except Exception as e:
         return Response(e, status=status.HTTP_404_NOT_FOUND)
     
@@ -87,6 +88,18 @@ def delete_post(request, id):
 @api_view(['GET'])
 def all_post(request):
     posts = Post.post_objects.all().order_by('-created_at')
+
+    posts = PostSerializer(posts, many=True)
+
+    return Response(posts.data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated, IsAuthorOrAdminOrModerator])
+def editor_posts(request):
+    posts = Post.objects.filter(user=request.user).order_by('-created_at')
+
+    if len(posts) == 0:
+        return Response({"message": "No tienes publicaciones"}, status=status.HTTP_404_NOT_FOUND)
 
     posts = PostSerializer(posts, many=True)
 

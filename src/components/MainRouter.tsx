@@ -10,8 +10,11 @@ import PostPage from "@/pages/Blog/PostPage";
 import { ProtectedRoute } from "./shared/ProtectedRoutes";
 import HomePage from "@/pages/HomePage";
 import EditPostPage from "@/pages/Blog/EditPostPage";
+const EditorPostsPage = lazy(() => import("@/pages/Admin/EditorPostsPage"));
+const OverViewPage = lazy(() => import("@/pages/Admin/OverviewPage"));
+import NotificationsPage from "@/pages/Admin/NotificationsPage";
+const AdminLayout = lazy(() => import("./layouts/Admin"));
 
-// const EditPostPage = lazy(() => import("@/pages/Blog/EditPostPage"));
 const ProfilePage = lazy(() => import("@/pages/ProfilePage"));
 
 const ContactPage = lazy(() => import("@/pages/ContactPage"));
@@ -33,7 +36,7 @@ const MainRoutesList: RouteObject[] = [
       { path: "post/:slug", element: <Suspense children={<PostPage />} /> },
       {
         path: "",
-        element: <ProtectedRoute redirectTo="/login" />,
+        element: <ProtectedRoute redirectTo="/auth/login" />,
         children: [
           {
             path: "post/:id/edit",
@@ -42,6 +45,25 @@ const MainRoutesList: RouteObject[] = [
           {
             path: "config",
             element: <Suspense children={<ConfigProfilePage />} />,
+          },
+
+          {
+            path: "/dashboard/",
+            element: <Suspense children={<AdminLayout />} />,
+            children: [
+              {
+                path: "",
+                element: <OverViewPage />,
+              },
+              {
+                path: "posts",
+                element: <Suspense children={<EditorPostsPage />} />,
+              },
+              {
+                path: "notifications",
+                element: <NotificationsPage />,
+              },
+            ],
           },
         ],
       },
