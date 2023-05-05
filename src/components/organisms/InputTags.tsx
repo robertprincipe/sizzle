@@ -1,80 +1,89 @@
-import type { Dispatch, KeyboardEvent, SetStateAction } from "react";
+import { KeyboardEvent, useEffect } from "react";
 import { createRef, useState } from "react";
 
 import { ITag } from "@/types/iblog";
 import { ZodError, z } from "zod";
 import TagField from "../atoms/TagField";
+import Feedback from "../atoms/Feedback";
 
 const tagNameSchema = z.string().regex(/^[a-zA-Z0-9]+$/, {
   message: "La consulta solo puede contener letras y números",
 });
 
 type InputTagProps = {
-  tags: ITag[];
-  setTags: Dispatch<SetStateAction<ITag[]>>;
+  defaultTags?: ITag[];
+  onChange: (tags: ITag[]) => void;
 };
 
-const InputTag = ({ tags, setTags }: InputTagProps) => {
+const InputTag = ({ defaultTags, onChange }: InputTagProps) => {
   const inputTagRef = createRef<HTMLInputElement>();
+  const [tags, setTags] = useState<ITag[] | undefined>(defaultTags);
 
   const [errorMessage, setErrorMessage] = useState<string>();
 
-  // const [openDropdown, setOpenDropdown] = useState(false);
-  // const collectionDropdownRef = useClickOutside(() => setOpenDropdown(false));
+  useEffect(() => {
+    if (defaultTags) setTags(defaultTags);
+  }, [defaultTags]);
 
-  const validateTagName = (tagQuery: string): string | undefined => {
-    try {
-      if (tagQuery.charAt(tagQuery.length - 1) === ",") {
-        tagQuery = tagQuery.slice(0, -1);
-      }
-      const validatedName = tagNameSchema.parse(tagQuery);
-      if (tags?.some((t) => t.name === validatedName)) {
-        throw new Error("El tag ya fue agregado");
-      }
-      return validatedName;
-    } catch (error) {
-      if (error instanceof ZodError) {
-        throw new Error(error.errors[0].message);
-      }
-    }
-  };
+  useEffect(() => {
+    if (tags) onChange(tags);
+  }, [tags, onChange]);
 
   const getValue = async (e: KeyboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
     let tagQuery = (e.target as HTMLInputElement).value;
+
+    // eliminar el ultimo tag cuando se haga click a borrar
+    if (e.key === "Backspace" && tagQuery === "") {
+      if (tags) {
+        // elimnar el ultimo elemento de tags
+        setTags(tags.slice(0, -1));
+      }
+      return;
+    }
+
     try {
       if ((e.key === "Enter" || e.key === ",") && tagQuery !== "") {
-        const validatedName = validateTagName(tagQuery);
-        setTags([
-          ...tags,
-          {
-            name: validatedName || "",
-          },
-        ]);
+        if (tagQuery.charAt(tagQuery.length - 1) === ",") {
+          tagQuery = tagQuery.slice(0, -1);
+        }
+        const validatedName = tagNameSchema.parse(tagQuery.trim());
+        if (tags?.some((t) => t.name === validatedName)) {
+          setErrorMessage("El tag ya fue agregado");
+          return;
+        }
+
+        if (tags && validatedName)
+          setTags([
+            ...tags,
+            {
+              name: validatedName,
+            },
+          ]);
 
         if (inputTagRef.current) inputTagRef.current.value = "";
       }
     } catch (error) {
       if (error instanceof ZodError) {
         setErrorMessage(error.errors[0].message);
+        return;
       }
     }
 
-    // if (tagQuery.length > 0) {
-    //   setOpenDropdown(true);
-    // } else {
-    //   setOpenDropdown(false);
-    // }
+    setInterval(() => {
+      setErrorMessage(undefined);
+    }, 7000);
   };
 
   const removeTag = (name: string) => {
-    setTags((prev) => prev.filter((ptag) => ptag.name !== name));
+    if (tags) setTags(tags.filter((ptag) => ptag.name !== name));
   };
 
   return (
     <label
       htmlFor="input-tags"
-      className={`relative block cursor-text bg-transparent pb-1 md:pb-2.5 text-sm text-gray-900 dark:text-white`}
-      // ref={collectionDropdownRef}
+      className={`relative block cursor-text bg-transparent text-sm text-gray-900 dark:text-white`}
     >
       <div className="flex">
         <div className="flex space-x-1">
@@ -82,7 +91,7 @@ const InputTag = ({ tags, setTags }: InputTagProps) => {
             <TagField key={idx} tag={tag} removeTag={removeTag} />
           ))}
         </div>
-        {tags.length < 3 ? (
+        {tags && tags?.length < 3 ? (
           <input
             id="input-tags"
             name="input-tags"
@@ -103,15 +112,8 @@ const InputTag = ({ tags, setTags }: InputTagProps) => {
       </div>
 
       {errorMessage && (
-        <span className="text-sm font-medium text-red-500">{errorMessage}</span>
+        <span className="text-xs text-red-500">{errorMessage}</span>
       )}
-
-      {/* <SuggestedTags
-        toggleTag={[] as ITag[]}
-        tagsAdded={tags}
-        suggestedTags={suggestedCollections}
-        openDropdown={openDropdown}
-      /> */}
     </label>
   );
 };

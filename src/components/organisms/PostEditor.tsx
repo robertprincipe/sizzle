@@ -3,7 +3,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { ChevronLeft, Loader2 } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { lazy, useState, Suspense, useEffect } from "react";
 
@@ -11,47 +11,52 @@ import { z } from "zod";
 
 import InputTags from "./InputTags";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { deleteImagePost, patchPost } from "@/services/blog";
+import { patchPost, postData } from "@/services/blog";
 import { ITag } from "@/types/iblog";
 import { useToast } from "@/hooks/use-toast";
-import { AxiosError } from "axios";
-import { genId, makeSlug } from "@/lib/strings";
+import { makeSlug } from "@/lib/strings";
 import { IPost } from "@/types/iblog";
 import Head from "../shared/Head";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import Feedback from "../atoms/Feedback";
+import { toastError } from "@/lib/errors";
+import Dropzone from "react-dropzone";
 
 const Dropimage = lazy(() => import("./Dropimage"));
 const RichTextEditor = lazy(() => import("./RichTextEditor"));
 
 const postPatchSchema = z.object({
+  id: z.string().optional(),
   title: z
     .string({ required_error: "El titulo es requerido." })
     .min(3, "El titulo debe tener al menos 3 caracteres.")
     .max(128, "El titulo debe tener menos de 128 caracteres."),
   published: z.boolean(),
+  slug: z.string().optional(),
+  cover_image: z.union([z.string(), z.undefined(), z.any()]).optional(),
+  content: z.any().optional(),
+  tags: z
+    .array(
+      z.object({ name: z.string({ required_error: "El tag es requerido." }) })
+    )
+    .optional(),
 });
 
 type formData = z.infer<typeof postPatchSchema>;
-
 type IPostEditorProps = {
   preDataFill?: IPost;
 };
 
 const PostEditor = ({ preDataFill }: IPostEditorProps) => {
   const [params] = useSearchParams();
-  const [tags, setTags] = useState<ITag[]>([]);
-  const [coverImage, setCoverImage] = useState<Blob | string | undefined>();
-  const [blocks, setBlocks] = useState<any>();
-  const [imageUrl, setImageUrl] = useState<string>();
-
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    control,
   } = useForm<formData>({
     resolver: zodResolver(postPatchSchema),
     mode: "onSubmit",
@@ -59,21 +64,19 @@ const PostEditor = ({ preDataFill }: IPostEditorProps) => {
 
   const { toast } = useToast();
 
+  const { id } = useParams();
+  useQuery(["postData", id], () => postData(id || ""), {
+    cacheTime: 0,
+    staleTime: 0,
+    onSuccess: (data) => {
+      reset(data.data);
+    },
+  });
+
   const { mutate, isLoading } = useMutation(patchPost, {
     onError: (error) => {
-      if (error instanceof AxiosError) {
-        toast({
-          description: Object.values(error.response?.data)
-            .map((msg) => msg)
-            .join("\n"),
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          description: "Algo salio mal, intente más tarde",
-          variant: "destructive",
-        });
-      }
+      console.log(error);
+      toastError(error);
     },
     onSuccess: () => {
       toast({
@@ -82,54 +85,19 @@ const PostEditor = ({ preDataFill }: IPostEditorProps) => {
     },
   });
 
-  useEffect(() => {
-    if (preDataFill) {
-      reset(preDataFill);
-      setTags(preDataFill.tags || []);
-      setBlocks(JSON.parse(preDataFill.content || "{}"));
-      setImageUrl(preDataFill.cover_image as string);
-    }
-  }, [preDataFill]);
+  const onSubmit = async (data: formData) => mutate(data);
 
-  async function onSubmit(data: formData) {
-    const wordCount = blocks.blocks?.reduce(
-      (acc: number, block: any) =>
-        acc + block.data.text.trim().split(/\s+/).length,
-      0
-    );
-
-    const reading_time = wordCount === 0 ? Math.ceil(wordCount / 250) : 1;
-
-    mutate({
-      ...data,
-      id: preDataFill?.id,
-      cover_image:
-        imageUrl && !coverImage
+  /*
+postUpdated.imageUrl && !postUpdated.coverImage
           ? undefined // no change
-          : !imageUrl && !coverImage
+          : !postUpdated.imageUrl && !postUpdated.coverImage
           ? "" // remove
-          : coverImage, // change
-      tags,
-      slug: makeSlug(data.title, "-"),
-      content: JSON.stringify(blocks),
-      reading_time,
-    });
-  }
+          : postUpdated.coverImage, // change
+  */
 
   const onRemoveImageUrl = () => {
-    setImageUrl(undefined);
+    // setCoverImage("");
   };
-
-  // const onRemoveImageUrl = async () => {
-  //   try {
-  //     const { data } = await deleteImagePost(preDataFill?.id || "");
-  //     toast({
-  //       description: data.message,
-  //     });
-  //   } catch (error) {
-  //     toastError(error);
-  //   }
-  // };
 
   return (
     <form onSubmit={(e) => e.preventDefault()}>
@@ -173,13 +141,21 @@ const PostEditor = ({ preDataFill }: IPostEditorProps) => {
         </div>
         <div className="prose prose-stone mx-auto lg:w-[800px] p-2 text-gray-900 dark:prose-invert dark:text-white">
           <Suspense>
-            <Dropimage
-              imageUrl={preDataFill?.cover_image}
-              onRemoveImageUrl={onRemoveImageUrl}
-              setImageFile={setCoverImage}
-              previewSize="md"
+            <Controller
+              name="cover_image"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <Dropimage
+                  imageUrl={preDataFill?.cover_image}
+                  // onRemoveImageUrl={onRemoveImageUrl}
+                  setImageFile={onChange}
+                  // onChange={onChange}
+                  previewSize="md"
+                />
+              )}
             />
           </Suspense>
+          {/* <Feedback field={errors.cover_image} /> */}
           <TextareaAutosize
             autoFocus
             id="title"
@@ -189,15 +165,93 @@ const PostEditor = ({ preDataFill }: IPostEditorProps) => {
             {...register("title")}
           />
           <Feedback field={errors.title} />
-          <InputTags tags={tags} setTags={setTags} />
+          <Controller
+            name="tags"
+            control={control}
+            defaultValue={preDataFill?.tags}
+            render={({ field: { value, onChange } }) => (
+              <InputTags tags={value} setTags={onChange} />
+            )}
+          />
+          {/* <Feedback field={errors.tags} /> */}
+          {/* <Controller
+            control={control}
+            name="cover_image"
+            rules={{
+              required: { value: true, message: "This field is required" },
+            }}
+            render={({ field: { onChange, onBlur }, fieldState }) => (
+              <Dropzone
+                noClick
+                onDrop={(acceptedFiles: any) => {
+                  setValue("cover_image", acceptedFiles[0], {
+                    shouldValidate: true,
+                  });
+                }}
+              >
+                {({
+                  getRootProps,
+                  getInputProps,
+                  open,
+                  isDragActive,
+                  acceptedFiles,
+                }) => (
+                  <div>
+                    <div
+                      style={{
+                        borderStyle: "dashed",
+                        backgroundColor: isDragActive
+                          ? `#808080`
+                          : "transparent",
+                      }}
+                      {...getRootProps()}
+                    >
+                      <input
+                        {...getInputProps({
+                          id: "spreadsheet",
+                          onChange,
+                          onBlur,
+                        })}
+                      />
+
+                      <p>
+                        <button type="button" onClick={open}>
+                          Choose a file
+                        </button>{" "}
+                        or drag and drop
+                      </p>
+
+                      {acceptedFiles.length
+                        ? acceptedFiles[0].name
+                        : "No file selected."}
+
+                      <div>
+                        {fieldState.error && (
+                          <span role="alert">{fieldState.error.message}</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </Dropzone>
+            )}
+          /> */}
           <Suspense>
             {preDataFill && (
-              <RichTextEditor
-                initialBlocks={preDataFill.content}
-                setBlocks={setBlocks}
+              <Controller
+                name="content"
+                control={control}
+                // defaultValue={preDataFill?.content}
+                render={({ field: { value, onChange } }) => (
+                  <RichTextEditor
+                    initialBlocks={preDataFill?.content}
+                    onChange={onChange}
+                  />
+                )}
               />
             )}
           </Suspense>
+          {/* <Feedback field={errors.content} /> */}
         </div>
       </div>
     </form>

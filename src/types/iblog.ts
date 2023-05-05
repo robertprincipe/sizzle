@@ -13,7 +13,7 @@ export interface IPost {
     author?: IUser;
     title: string;
     slug?: string;
-    content?: string;
+    content?: string | any;
     published?: boolean;
     cover_image?: Blob | string;
     reading_time?: number;

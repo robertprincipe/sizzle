@@ -16,18 +16,35 @@ export const postUpdate = (id: string, data: IPost) => {
 };
 
 export const patchPost = (post: IPost) => {
-    const formData = new FormData();
-    formData.append("title", post.title);
-    formData.append("content", post.content || '');
-    // se borra la imagen
-    // formData.append("cover_image", post.cover_image || '');
     console.log(post.cover_image);
 
-    if (post.cover_image || post.cover_image === "") formData.append("cover_image", post.cover_image);
+    const formData = new FormData();
+    formData.append("title", post.title);
+    formData.append("content", post.content);
+    // se borra la imagen
+    // formData.append("cover_image", post.cover_image || '');
+
+    console.log("post.content", post.content, "end");
+    if (post.cover_image || post.cover_image === "") {
+        console.log("post.content", post.content);
+        formData.append("cover_image", post.cover_image)
+    }
 
     formData.append("tags", JSON.stringify(post.tags));
     formData.append("published", JSON.stringify(post.published));
-    formData.append("reading_time", JSON.stringify(post.reading_time));
+
+    if (post.content && JSON.parse(post.content)) {
+        const wordCount = post.content.blocks?.reduce(
+            (acc: number, block: any) =>
+                acc + block.data.text.trim().split(/\s+/).length,
+            0
+        );
+
+        const reading_time = wordCount === 0 ? Math.ceil(wordCount / 250) : 1;
+
+        formData.append("reading_time", JSON.stringify(reading_time));
+    }
+
     formData.append("slug", post.slug || '');
 
     return API.patch<IPost>(`/posts/${post.id}/patch`, formData)

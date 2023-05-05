@@ -4,16 +4,15 @@ import { useDropzone } from "react-dropzone";
 
 type IDropimageProps = {
   imageUrl?: Blob | string;
-  onRemoveImageUrl?: () => void;
   setImageFile: (file?: Blob | string) => void;
   isCircle?: boolean;
   size?: "sm" | "md" | "lg";
   previewSize?: "sm" | "md" | "lg";
+  onChange?: Function;
 };
 
 const Dropimage: React.FC<IDropimageProps> = ({
   imageUrl,
-  onRemoveImageUrl,
   setImageFile,
   isCircle,
   size,
@@ -53,9 +52,6 @@ const Dropimage: React.FC<IDropimageProps> = ({
   }, [imageUrl]);
 
   const removeImageFromState = () => {
-    if (imageUrl && onRemoveImageUrl) {
-      onRemoveImageUrl();
-    }
     setImagePreview(undefined);
     setImageFile(undefined);
   };

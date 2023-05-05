@@ -137,6 +137,7 @@ def post_data_x(request, id):
 @permission_classes([IsAuthenticated, IsAuthorOrAdminOrModerator])
 def patch_post(request, id):
     try:
+        print(request.data.get('content', 'No hay nada'))
         post = get_post(id=id)
         post_validate_slug = Post.objects.filter(slug=request.data.get('slug'))
         if post_validate_slug.exists() and post != post_validate_slug.first():

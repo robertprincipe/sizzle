@@ -11,10 +11,10 @@ import MarkerTool from "../plugin/InlineWizz";
 
 type IRichTextEditorProps = {
   initialBlocks?: any;
-  onChange: (blocks: any) => void;
+  setBlocks: (blocks: any) => void;
 };
 
-const RichTextEditor = ({ initialBlocks, onChange }: IRichTextEditorProps) => {
+const RichTextEditor = ({ initialBlocks, setBlocks }: IRichTextEditorProps) => {
   const ref = useRef<EditorJS>();
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
@@ -27,7 +27,7 @@ const RichTextEditor = ({ initialBlocks, onChange }: IRichTextEditorProps) => {
           ref.current = editor;
         },
         onChange: async () => {
-          onChange(JSON.stringify(await editor.saver.save()));
+          setBlocks(await editor.saver.save());
         },
         placeholder: "Type here to write your post...",
         inlineToolbar: true,
@@ -77,3 +77,18 @@ const RichTextEditor = ({ initialBlocks, onChange }: IRichTextEditorProps) => {
 };
 
 export default RichTextEditor;
+
+
+if (error instanceof AxiosError) {
+  toast({
+    description: Object.values(error.response?.data)
+      .map((msg) => msg)
+      .join("\n"),
+    variant: "destructive",
+  });
+} else {
+  toast({
+    description: "Algo salio mal, intente más tarde",
+    variant: "destructive",
+  });
+}
