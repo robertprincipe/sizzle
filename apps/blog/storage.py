@@ -14,7 +14,10 @@ class ImageKitStorage(Storage):
             file=b64encode(content.read()),
             file_name=name,
         )
-        return image_info.response_metadata.raw["url"]
+
+        print(image_info.response_metadata.raw)
+
+        return image_info.response_metadata.raw["fileId"]
 
     def url(self, name):
         return name
@@ -29,10 +32,11 @@ class ImageKitStorage(Storage):
         # print(remote_file_url_metadata.response_metadata.raw)
         pass
 
-    def delete(self, name):
+    def _delete(self, name):
+
         # if self.exists(name):
         print(name)
-            # deleted_file = self.imagekit.delete_file(file_id='file_id')
-            # print(deleted_file.response_metadata.raw)
+        deleted_file = self.imagekit.delete_file(file_id=name)
+        # print(deleted_file.response_metadata.raw)
             # return True
-        return False
+        return True

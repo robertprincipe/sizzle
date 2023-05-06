@@ -6,6 +6,7 @@ export interface ITag {
     description?: string;
     color?: string;
     bg?: string;
+    posts?: IPost[];
 }
 
 export interface IPost {

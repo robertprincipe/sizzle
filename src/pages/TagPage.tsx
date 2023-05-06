@@ -1,59 +1,51 @@
+import ArticlesSkeleton from "@/components/loaders/ArticlesSkeleton";
+import { toastError } from "@/lib/errors";
+import { tagDetail } from "@/services/blog";
+import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
 
-import Head from "@/components/shared/Head";
-import { useQuery } from "@tanstack/react-query";
-import { profileUser } from "@/services/user";
-import ArticlesSkeleton from "@/components/loaders/ArticlesSkeleton";
-
-const ProfilePage = () => {
-  const { username } = useParams();
-  const { data: user, isLoading } = useQuery(
-    ["profileUser", username],
-    () => profileUser(username || ""),
+const TagPage = () => {
+  const { name } = useParams();
+  const { data: tag, isLoading } = useQuery(
+    ["allTags", name],
+    () => tagDetail(name || ""),
     {
       retry: false,
       refetchOnWindowFocus: false,
+      onError: (err) => {
+        toastError(err);
+      },
     }
   );
-  console.log(user);
-
   return (
-    <div className="max-w-4xl px-4 py-10 mx-auto sm:px-6 lg:px-8 lg:py-14">
-      <div className="bg-white shadow rounded-xl dark:bg-slate-900">
-        <div className="relative h-40 rounded-t-xl bg-[url('https://cdn.midjourney.com/6fcdb019-5fbe-468f-8537-f1f65e364465/0_3_640_N.webp')] bg-no-repeat bg-cover bg-center">
-          <div className="absolute top-0 right-0 p-4"></div>
-        </div>
-
-        <div className="p-4 pt-0 sm:pt-0 sm:p-7">
-          <div className="space-y-1 sm:space-y-3">
-            <div>
-              <div className="grid items-center sm:flex sm:gap-x-3">
-                <img
-                  className="relative z-10 inline-block w-24 h-24 mx-auto -mt-8 rounded-full sm:mx-0 ring-4 ring-white dark:ring-gray-800"
-                  src="https://cdn.midjourney.com/6fcdb019-5fbe-468f-8537-f1f65e364465/0_3_640_N.webp"
-                  alt="Image Description"
-                />
-
-                <div className="flex flex-col items-center justify-center mt-2 md:mt-0 md:items-start">
-                  <div className="font-bold text-gray-800">
-                    @{user?.username}
-                  </div>
-                  <p>{user?.profile_info}</p>
-                </div>
-              </div>
-            </div>
+    <section className="container max-w-4xl mx-auto ">
+      <div
+        className={`flex flex-col mt-5 relative shadow-lg dark:shadow-md dark:shadow-gray-600 rounded-2xl overflow-hidden`}
+      >
+        <div className="flex items-center space-x-4">
+          <img
+            src="https://cdn.midjourney.com/704e45be-ee8e-4043-aba2-0887105a2885/0_3_640_N.webp"
+            alt=""
+            className="h-52"
+          />
+          <div>
+            <h1 className="mb-3 text-4xl font-black">#{tag?.name}</h1>
+            <p className="font-medium text-gray-400">{tag?.description}</p>
           </div>
         </div>
+
+        <div className="w-full h-4" style={{ backgroundColor: tag?.color }} />
       </div>
+
       <div className="max-w-4xl py-6">
         <h2 className="text-3xl font-bold text-center">Publicaciones</h2>
         {isLoading ? (
           <ArticlesSkeleton />
         ) : (
           <>
-            {user?.posts?.length ? (
+            {tag?.posts?.length ? (
               <div className="grid gap-10 mt-6 sm:grid-cols-2">
-                {user?.posts?.map((post) => (
+                {tag?.posts?.map((post) => (
                   <Link
                     className="overflow-hidden group rounded-xl"
                     to={`/post/${post.slug}`}
@@ -98,8 +90,8 @@ const ProfilePage = () => {
           </>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 
-export default ProfilePage;
+export default TagPage;

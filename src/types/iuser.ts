@@ -1,3 +1,5 @@
+import { IPost } from "./iblog";
+
 export enum ROLES {
     ADMIN = "ADMIN",
     USER = "USER",
@@ -14,6 +16,7 @@ export interface IUser {
     banner?: Blob | string;
     token?: string;
     role?: ROLES;
+    posts: IPost[];
     password?: string;
     re_password?: string;
 }

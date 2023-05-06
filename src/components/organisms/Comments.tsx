@@ -102,9 +102,9 @@ const Comments = ({ post: { id: post_id, comment_count } }: ICommentsProps) => {
     <section className="py-8 bg-white dark:bg-gray-900 lg:py-16" id="comments">
       <div className="max-w-2xl px-4 mx-auto">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-gray-900 lg:text-2xl dark:text-white">
+          <h4 className="text-lg font-bold text-gray-900 lg:text-2xl dark:text-white">
             Comentarios ({comment_count || 0})
-          </h2>
+          </h4>
         </div>
         <form
           className="mb-6"

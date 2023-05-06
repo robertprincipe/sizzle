@@ -1,5 +1,5 @@
 import API from "@/lib/api";
-import { IComment, IPost } from "@/types/iblog";
+import { IComment, IPost, ITag } from "@/types/iblog";
 import { number } from "zod";
 
 export const postCreate = (data: IPost) => API.post<IPost>("/posts/create", data);
@@ -55,6 +55,10 @@ export const deletePost = (id: string) => API.delete(`/posts/${id}/delete`)
 export const deleteImagePost = (id: string) => API.delete(`/posts/${id}/remove-image`)
 
 export const allPosts = () => API.get<IPost[]>('/posts')
+
+export const allTags = () => API.get<ITag[]>('/tags')
+export const tagDetail = (name: string) =>
+    API.get<ITag>(`/tags/${name}`).then(res => res.data);
 
 export const editorPosts = () => API.get<IPost[]>('/posts/editor/all')
 

@@ -13,6 +13,7 @@ import EditPostPage from "@/pages/Blog/EditPostPage";
 const EditorPostsPage = lazy(() => import("@/pages/Admin/EditorPostsPage"));
 const OverViewPage = lazy(() => import("@/pages/Admin/OverviewPage"));
 import NotificationsPage from "@/pages/Admin/NotificationsPage";
+import TagPage from "@/pages/TagPage";
 const AdminLayout = lazy(() => import("./layouts/Admin"));
 
 const ProfilePage = lazy(() => import("@/pages/ProfilePage"));
@@ -34,6 +35,7 @@ const MainRoutesList: RouteObject[] = [
       { path: "", element: <Suspense children={<HomePage />} /> },
       { path: "blog", element: <BlogPage /> },
       { path: "post/:slug", element: <Suspense children={<PostPage />} /> },
+      { path: "tag/:name", element: <Suspense children={<TagPage />} /> },
       {
         path: "",
         element: <ProtectedRoute redirectTo="/auth/login" />,

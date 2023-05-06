@@ -14,3 +14,6 @@ export const updateUser = (user: IUser) => {
 
 export const removeImageProfileUser = (id: string, image: "picture" | "banner") =>
     API.delete(`/users/${id}/${image}/remove`)
+
+export const profileUser = (username: string) =>
+    API.get<IUser>(`/users/${username}/profile`).then(res => res.data)
