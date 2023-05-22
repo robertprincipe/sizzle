@@ -6,8 +6,6 @@ from django.forms import SelectMultiple
 # from django.forms import CheckboxSelectMultiple
 from django.db import models
 
-from django_select2.forms import Select2MultipleWidget
-
 from django.contrib import admin
 
 from unfold.admin import StackedInline, TabularInline, ModelAdmin

@@ -11,8 +11,6 @@ urlpatterns = [
     path("api/auth/", include("djoser.urls.jwt")),
     path("api/", include("apps.blog.urls")),
     path("api/users/", include("apps.user.urls")),
-    path("editorjs/", include("django_editorjs_fields.urls")),
-    path("select2/", include("django_select2.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [re_path(r"^.*", TemplateView.as_view(template_name="index.html"))]

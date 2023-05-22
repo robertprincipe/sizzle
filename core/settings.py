@@ -40,10 +40,7 @@ THIRD_PARTY_APPS = [
     "rest_framework_simplejwt.token_blacklist",
     "django_editorjs",
     "colorfield",
-    "django_quill",
-    "django_editorjs_fields",
-    "django_select2",
-]
+] 
 
 SAAS_APPS = [
     "apps.user",
@@ -139,79 +136,6 @@ UNFOLD = {
     # ],
 }
 
-QUILL_CONFIGS = {
-    "default": {
-        "theme": "snow",
-        "modules": {
-            "syntax": True,
-            "toolbar": [
-                [
-                    {"header": []},
-                    {"align": []},
-                ],
-                ["bold", "italic", "underline", "strike", "blockquote"],
-                [
-                    {"color": []},
-                    {"background": []},
-                ],
-                ["image", "link"],
-                ["clean"],
-            ],
-        },
-    }
-}
-
-
-JAZZMIN_SETTINGS = {
-    # title of the window (Will default to current_admin_site.site_title if absent or None)
-    "site_title": "Wariv",
-    "site_header": "Wariv",
-    "site_brand": "Wariv",
-    "site_logo": "android-chrome-192x192-dba14c5c.png",
-    "icons": {
-        "blog.post": "fas fa-pager",
-        "blog.tag": "fas fa-tags",
-        "user.user": "fas fa-user",
-        "auth": "fas fa-users-cog",
-        "token_blacklist.blacklistedtoken": "fas fa-exclamation-triangle",
-        "token_blacklist.outstandingtoken": "fas fa-list-ol",
-        "auth.Group": "fas fa-users",
-    },
-    "show_ui_builder": True,
-}
-
-JAZZMIN_UI_TWEAKS = {
-    "navbar_small_text": False,
-    "footer_small_text": False,
-    "body_small_text": False,
-    "brand_small_text": False,
-    "brand_colour": "navbar-light",
-    "accent": "accent-navy",
-    "navbar": "navbar-white navbar-light",
-    "no_navbar_border": True,
-    "navbar_fixed": False,
-    "layout_boxed": False,
-    "footer_fixed": False,
-    "sidebar_fixed": True,
-    "sidebar": "sidebar-light-navy",
-    "sidebar_nav_small_text": False,
-    "sidebar_disable_expand": False,
-    "sidebar_nav_child_indent": False,
-    "sidebar_nav_compact_style": False,
-    "sidebar_nav_legacy_style": False,
-    "sidebar_nav_flat_style": False,
-    "theme": "flatly",
-    "dark_mode_theme": None,
-    "button_classes": {
-        "primary": "btn-outline-primary",
-        "secondary": "btn-outline-secondary",
-        "info": "btn-info",
-        "warning": "btn-warning",
-        "danger": "btn-danger",
-        "success": "btn-success",
-    },
-}
-
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
@@ -233,7 +157,7 @@ TEMPLATES = [
             os.path.join(
                 BASE_DIR, "dist"
             ),  # hacemos referencia a nuestra aplicacion de reactjs
-            os.path.join(BASE_DIR, "templates"),
+            # os.path.join(BASE_DIR, "templates"),
         ],
         "APP_DIRS": True,
         "OPTIONS": {
