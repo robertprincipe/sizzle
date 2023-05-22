@@ -1,4 +1,4 @@
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { activation } from "@/services/auth";
 import { useMutation } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
@@ -8,13 +8,11 @@ import { useNavigate, useParams } from "react-router-dom";
 const ActivatePage = () => {
   const { uid, token } = useParams();
   const router = useNavigate();
-  const { toast } = useToast();
+
   const { mutate, isError, error, isLoading } = useMutation(activation, {
     onSuccess: () => {
       router("/auth/login");
-      toast({
-        description: "Tu registro se realizo correctamente",
-      });
+      toast("Tu registro se realizo correctamente");
     },
   });
   useEffect(() => {

@@ -6,16 +6,8 @@ import { Link, useParams } from "react-router-dom";
 
 const TagPage = () => {
   const { name } = useParams();
-  const { data: tag, isLoading } = useQuery(
-    ["allTags", name],
-    () => tagDetail(name || ""),
-    {
-      retry: false,
-      refetchOnWindowFocus: false,
-      onError: (err) => {
-        toastError(err);
-      },
-    }
+  const { data: tag, isLoading } = useQuery(["tagDetail", name], () =>
+    tagDetail(name || "")
   );
   return (
     <section className="container max-w-4xl mx-auto ">

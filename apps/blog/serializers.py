@@ -1,12 +1,22 @@
 from rest_framework import serializers
 from .models import Post, Tag, Comment, Reaction
-from apps.user.serializers import UserSerializer
+from apps.user.models import User
 
 
-class TagLittleSerializer(serializers.ModelSerializer):
+class TinyUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            "id",
+            "username",
+            "picture",
+        )
+
+
+class TinyTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ["name"]
+        fields = ["id", "name", "color"]
 
 
 class RelatedPostSerializer(serializers.ModelSerializer):
@@ -19,7 +29,7 @@ class RelatedPostSerializer(serializers.ModelSerializer):
     def get_tags(self, obj):
         related_posts = obj.tags.all()
         if related_posts.exists():
-            serializer = TagLittleSerializer(related_posts, many=True)
+            serializer = TinyTagSerializer(related_posts, many=True)
             return serializer.data
 
 
@@ -28,7 +38,7 @@ class TagSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tag
-        fields = ["id", "name", "color", "description", "posts"]
+        fields = ["id", "name", "color", "image", "description", "posts"]
 
     def get_posts(self, obj):
         related_posts = obj.posts_tags.all()
@@ -38,11 +48,18 @@ class TagSerializer(serializers.ModelSerializer):
         return None
 
 
+class TagAllSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ["id", "name", "color", "image", "description"]
+
+
 class PostSerializer(serializers.ModelSerializer):
-    # user = UserSerializer(read_only=True)
+    # user = TinyUserSerializer(read_only=True)
     author = serializers.SerializerMethodField()
-    tags = TagSerializer(many=True, read_only=True)
+    tags = TinyTagSerializer(many=True, read_only=True)
     comment_count = serializers.SerializerMethodField()
+    reaction_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
@@ -51,8 +68,11 @@ class PostSerializer(serializers.ModelSerializer):
     def get_comment_count(self, obj):
         return obj.comments.count()
 
+    def get_reaction_count(self, obj):
+        return obj.reactions.count()
+
     def get_author(self, obj):
-        serializer = UserSerializer(obj.user)
+        serializer = TinyUserSerializer(obj.user)
         return serializer.data
 
     # def update(self, instance, validated_data):
@@ -83,7 +103,7 @@ class CommentSerializer(serializers.ModelSerializer):
         return serializer.data
 
     def get_user(self, obj):
-        serializer = UserSerializer(obj.user)
+        serializer = TinyUserSerializer(obj.user)
         return serializer.data
 
 

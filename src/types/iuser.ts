@@ -16,7 +16,7 @@ export interface IUser {
     banner?: Blob | string;
     token?: string;
     role?: ROLES;
-    posts: IPost[];
+    posts?: IPost[];
     password?: string;
     re_password?: string;
 }

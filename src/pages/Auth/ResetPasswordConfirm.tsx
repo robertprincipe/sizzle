@@ -62,7 +62,7 @@ const ResetPasswordConfirm = () => {
           <h1 className="text-2xl font-semibold tracking-tight">
             Cambiar contreña
           </h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-gray-300">
             Ponga una contraseña dificil pero a la vez que pueda recordar
           </p>
         </div>
@@ -103,13 +103,11 @@ const ResetPasswordConfirm = () => {
             to={"/auth/resetPasswordConfirm"}
             className="relative flex justify-center text-xs uppercase"
           >
-            <span className="px-2 bg-background text-muted-foreground">
-              O registrate
-            </span>
+            <span className="px-2 bggray-900 text-gray-300">O registrate</span>
           </Link>
         </div>
 
-        <p className="px-8 text-sm text-center text-muted-foreground">
+        <p className="px-8 text-sm text-center text-gray-300">
           By clicking continue, you agree to our{" "}
           <Link
             to="/terms"

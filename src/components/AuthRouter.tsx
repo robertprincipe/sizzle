@@ -1,18 +1,11 @@
-import { Suspense, lazy } from "react";
+import { lazy } from "react";
 import { RouteObject } from "react-router-dom";
 
 import AuthLayout from "./layouts/Auth";
 import { UserLogged } from "./shared/ProtectedRoutes";
-const ResendActivation = lazy(() => import("@/pages/Auth/ResendActivation"));
-const ResetPassword = lazy(() => import("@/pages/Auth/ResetPassword"));
-const ResetPasswordConfirm = lazy(
-  () => import("@/pages/Auth/ResetPasswordConfirm")
-);
+import LazyLoading from "./HOC/LazyLoading";
 
-const LoginPage = lazy(() => import("@/pages/Auth/LoginPage"));
-const SignUpPage = lazy(() => import("@/pages/Auth/SignUpPage"));
-
-const AuthRoutesList: RouteObject[] = [
+const AuthRoutesList = (): RouteObject[] => [
   {
     path: "/auth",
     element: <AuthLayout />,
@@ -23,28 +16,40 @@ const AuthRoutesList: RouteObject[] = [
         children: [
           {
             path: "login",
-            element: <Suspense children={<LoginPage />} />,
+            element: <LoginPage />,
           },
           {
             path: "signup",
-            element: <Suspense children={<SignUpPage />} />,
+            element: <SignUpPage />,
           },
           {
             path: "resend-activation",
-            element: <Suspense children={<ResendActivation />} />,
+            element: <ResendActivation />,
           },
           {
             path: "forgot-password",
-            element: <Suspense children={<ResetPassword />} />,
+            element: <ResetPassword />,
           },
         ],
       },
       {
         path: "forgot-password-confirm",
-        element: <Suspense children={<ResetPasswordConfirm />} />,
+        element: <ResetPasswordConfirm />,
       },
     ],
   },
 ];
 
 export default AuthRoutesList;
+
+const LoginPage = LazyLoading(lazy(() => import("@/pages/Auth/LoginPage")));
+const SignUpPage = LazyLoading(lazy(() => import("@/pages/Auth/SignUpPage")));
+const ResendActivation = LazyLoading(
+  lazy(() => import("@/pages/Auth/ResendActivation"))
+);
+const ResetPassword = LazyLoading(
+  lazy(() => import("@/pages/Auth/ResetPassword"))
+);
+const ResetPasswordConfirm = LazyLoading(
+  lazy(() => import("@/pages/Auth/ResetPasswordConfirm"))
+);

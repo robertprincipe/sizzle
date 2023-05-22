@@ -59,7 +59,7 @@ const LoginPage = () => {
           <h1 className="text-2xl font-semibold tracking-tight">
             Hola de nuevo
           </h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-gray-300">
             Ingresa tu nombre de usuario y contraseña
           </p>
         </div>
@@ -102,13 +102,13 @@ const LoginPage = () => {
             to={"/auth/signup"}
             className="relative flex justify-center text-xs uppercase"
           >
-            <span className="px-2 bg-background text-muted-foreground">
+            <span className="px-2 bggray-900 text-gray-300">
               Soy nuevo quiero registrarme
             </span>
           </Link>
         </div>
 
-        <p className="px-8 text-sm text-center text-muted-foreground">
+        <p className="px-8 text-sm text-center text-gray-300">
           By clicking continue, you agree to our{" "}
           <Link
             to="/terms"

@@ -5,6 +5,7 @@ import Head from "@/components/shared/Head";
 import { allPosts } from "@/services/blog";
 import { useAuthStore } from "@/store/auth";
 import { useQuery } from "@tanstack/react-query";
+import { BookTemplate } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function BlogPage() {
@@ -75,8 +76,17 @@ export default function BlogPage() {
               ))}
             </div>
           ) : (
-            <div className="flex justify-center mt-4 text-lg font-semibold">
-              No hay publicaciones
+            <div className="flex flex-col items-center justify-center w-full mt-4 bg-gray-300 border-2 border-gray-500 dark:border-gray-500 dark:bg-gray-700 border-dashed rounded-lg min-h-[300px]">
+              <div className="p-6 bg-white rounded-full dark:bg-gray-400">
+                <BookTemplate className="w-20 h-20 dark:text-gray-700" />
+              </div>
+              <h3 className="mt-4 text-lg font-bold text-gray-700 dark:text-white">
+                No hay publicaciones
+              </h3>
+              <p className="mt-2 mb-5 text-sm text-gray-500 dark:text-gray-400">
+                No se han hecho publicaciones todavia.
+              </p>
+              <ButtonPostCreator />
             </div>
           )}
         </>

@@ -14,8 +14,8 @@ const ButtonPostCreator = () => {
     setIsLoading(true);
     try {
       const { data: post } = await postCreate({
-        title: "Nueva publicacion",
-        slug: `${makeSlug("Nueva publicacion", "-")}-${genId(5)}`,
+        title: "Nueva publicación",
+        slug: `${makeSlug("Nueva publicación", "-")}-${genId(5)}`,
       });
 
       setIsLoading(false);
@@ -30,7 +30,7 @@ const ButtonPostCreator = () => {
       className={cn({
         "cursor-not-allowed opacity-60": isLoading,
       })}
-      disabled={isLoading}
+      // disabled={isLoading}
     >
       {isLoading ? (
         <Loader2 className="w-4 h-4 mr-2 animate-spin" />

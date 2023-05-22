@@ -1,7 +1,7 @@
-import { CreditCard, LogOut, PlusCircle, Settings, User } from "lucide-react"
+import { CreditCard, LogOut, PlusCircle, Settings, User } from "lucide-react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 
 export function UserNav() {
   return (
@@ -28,9 +28,7 @@ export function UserNav() {
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">shadcn</p>
-            <p className="text-xs leading-none text-muted-foreground">
-              m@example.com
-            </p>
+            <p className="text-xs leading-none text-gray-300">m@example.com</p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
@@ -63,5 +61,5 @@ export function UserNav() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import { Outlet, useNavigation } from "react-router-dom";
+import { Outlet, useLocation, useNavigation } from "react-router-dom";
 import { SiteHeader } from "../site-header";
 import Footer from "../shared/footer";
 import { useAuthStore } from "@/store/auth";
@@ -14,6 +14,12 @@ const Main = () => {
     check_authenticated();
     me();
   }, [router]);
+
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+  }, [pathname]);
+
   return (
     <>
       <SiteHeader />

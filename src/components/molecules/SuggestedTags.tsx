@@ -1,55 +1,62 @@
 import { ITag } from "@/types/iblog";
+import { Hash } from "lucide-react";
 
 type ISuggestedTagsProps = {
   suggestedTags: ITag[];
   tagsAdded: ITag[];
   openDropdown: boolean;
-  toggleTag: (tag: ITag) => void;
+  addTag: (tag: ITag) => void;
 };
 
 const SuggestedTags: React.FC<ISuggestedTagsProps> = ({
   suggestedTags,
-  toggleTag,
+  addTag,
   openDropdown,
   tagsAdded,
 }) => {
   const onClickAddTag = (tag: ITag) => {
-    toggleTag(tag);
+    addTag(tag);
   };
 
   return (
     <>
-      {openDropdown && tagsAdded.length < 3 && (
-        <div
-          id="dropdownDefaultCheckbox"
-          className="absolute inset-x-0 z-10 block w-full mt-2 bg-white divide-y divide-gray-100 rounded shadow top-14"
-          // style=""
-        >
-          <ul className="p-3 space-y-3 text-sm text-gray-700">
-            {suggestedTags?.map((t, idx) => (
-              <li key={idx}>
-                <label
-                  className="flex items-center w-full px-3 py-2 rounded-md cursor-pointer select-none hover:bg-gray-200"
-                  htmlFor={t.name}
+      <div
+        id="dropdownDefaultCheckbox"
+        className={`h-fit transition-[height] duration-200 ease-in-out absolute inset-x-0 z-10 block w-full mt-2 bg-white dark:text-white dark:bg-gray-800 divide-y divide-gray-100 rounded shadow top-14`}
+        // style=""
+      >
+        <ul className="pl-0 my-0 space-y-1 text-sm list-none">
+          {suggestedTags?.map((t, idx) => (
+            <li className="pl-0 my-0" key={idx}>
+              <div
+                className={`w-full overflow-hidden rounded-md cursor-pointer select-none hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-800 ${
+                  tagsAdded.find((ta) => ta.name === t.name)
+                    ? "bg-gray-300 dark:bg-sky-400/70"
+                    : ""
+                }`}
+                onClick={() => onClickAddTag(t)}
+              >
+                <div
+                  className={`w-full px-3 py-1 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 text-sm font-medium transition-all duration-100`}
                 >
-                  <input
-                    id={t.name}
-                    type="checkbox"
-                    value={t.name}
-                    name={t.name}
-                    checked={!!tagsAdded.find((ta) => ta.name === t.name)}
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
-                    onChange={() => onClickAddTag(t)}
-                  />
-                  <span className="ml-2 text-sm font-medium text-gray-900">
-                    {t.name}
+                  <div className="flex items-center">
+                    <span>#</span>
+                    <span>{t.name}</span>
+                  </div>
+                  <span className="text-xs font-light mt-0.5">
+                    {t?.description}
                   </span>
-                </label>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+                </div>
+
+                <div
+                  className="w-full h-1"
+                  style={{ backgroundColor: t.color }}
+                />
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </>
   );
 };

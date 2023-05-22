@@ -1,20 +1,18 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import Feedback from "../atoms/Feedback";
+import { toast } from "sonner";
 
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import {
   commentPost,
   commentsPost,
   deleteCommentPost,
   updateCommentPost,
 } from "@/services/blog";
-import { useToast } from "@/hooks/use-toast";
-import { AxiosError } from "axios";
 import { IComment } from "@/types/iblog";
 import { useState } from "react";
 import CommentCard from "../molecules/CommentCard";
@@ -38,7 +36,6 @@ type ICommentsProps = {
 const Comments = ({ post: { id: post_id, comment_count } }: ICommentsProps) => {
   const [toReply, setToReply] = useState<IComment>();
   const [editComment, setEditComment] = useState<IComment>();
-  const { toast } = useToast();
 
   const { data, refetch } = useQuery(["comments", post_id], () =>
     commentsPost(post_id || "")
@@ -67,11 +64,7 @@ const Comments = ({ post: { id: post_id, comment_count } }: ICommentsProps) => {
       const { data } = editComment
         ? await updateCommentPost(commentDataPost)
         : await commentPost(commentDataPost);
-      toast({
-        description: `${
-          editComment ? "Comentario editado." : "Comentario creado."
-        }`,
-      });
+      toast(editComment ? "Comentario editado." : "Comentario creado.");
       reset({
         content: "",
       });
@@ -99,7 +92,7 @@ const Comments = ({ post: { id: post_id, comment_count } }: ICommentsProps) => {
   };
 
   return (
-    <section className="py-8 bg-white dark:bg-gray-900 lg:py-16" id="comments">
+    <div className="bg-white dark:bg-gray-900" id="comments">
       <div className="max-w-2xl px-4 mx-auto">
         <div className="flex items-center justify-between mb-4">
           <h4 className="text-lg font-bold text-gray-900 lg:text-2xl dark:text-white">
@@ -147,7 +140,7 @@ const Comments = ({ post: { id: post_id, comment_count } }: ICommentsProps) => {
             </Button>
           </div>
         </form>
-        {data?.data.map((comment) => (
+        {data?.data?.map((comment) => (
           <div key={comment.id}>
             <CommentCard
               comment={comment}
@@ -170,7 +163,7 @@ const Comments = ({ post: { id: post_id, comment_count } }: ICommentsProps) => {
           </div>
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 

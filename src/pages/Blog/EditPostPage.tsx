@@ -1,108 +1,56 @@
-import TextareaAutosize from "react-textarea-autosize";
+import { lazy, Suspense, useState } from "react";
+import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { ChevronLeft, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-import { ChevronLeft, Loader2 } from "lucide-react";
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { lazy, Suspense, useEffect, useState } from "react";
-
-import { z } from "zod";
-
-import { useMutation, useQuery } from "@tanstack/react-query";
-
-import { patchPost, postData } from "@/services/blog";
-import { useToast } from "@/hooks/use-toast";
-
-import { Link, useParams, useSearchParams } from "react-router-dom";
-
-import { toastError } from "@/lib/errors";
 import Feedback from "@/components/atoms/Feedback";
 import Head from "@/components/shared/Head";
 import InputTags from "@/components/organisms/InputTags";
-import { makeSlug } from "@/lib/strings";
+import { formPostData, postPatchSchema } from "@/types/schemas";
+import TextareaAutosize from "react-textarea-autosize";
+import { patchPost, postData } from "@/services/blog";
+import DropImageFile from "@/components/organisms/DropimageFile";
 
-const Dropimage = lazy(() => import("@/components/organisms/Dropimage"));
 const RichTextEditor = lazy(
   () => import("@/components/organisms/RichTextEditor")
 );
 
-const postPatchSchema = z.object({
-  id: z.string().optional(),
-  title: z
-    .string({ required_error: "El titulo es requerido." })
-    .min(3, "El titulo debe tener al menos 3 caracteres.")
-    .max(128, "El titulo debe tener menos de 128 caracteres."),
-  published: z.boolean(),
-  slug: z.string().optional(),
-  cover_image: z.union([z.string(), z.undefined(), z.any()]).optional(),
-  content: z.any().optional(),
-  tags: z
-    .array(
-      z.object({ name: z.string({ required_error: "El tag es requerido." }) })
-    )
-    .optional(),
-});
-
-type formData = z.infer<typeof postPatchSchema>;
-
 const PostEditor = () => {
   const [params] = useSearchParams();
+  const { id } = useParams();
+  const [coverImage, setCoverImage] = useState<any>();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
     control,
-  } = useForm<formData>({
+  } = useForm<formPostData>({
     resolver: zodResolver(postPatchSchema),
     mode: "onSubmit",
   });
 
-  const { toast } = useToast();
-  const [fetchEnabled, setFetchEnabled] = useState(true);
-
-  // mostrar los cambio de estado del formulario
-
-  const { id } = useParams();
-  const { data: preDataFill } = useQuery(
-    ["postData", id],
-    () => postData(id || ""),
-    {
-      cacheTime: 0,
-      staleTime: 0,
-      enabled: fetchEnabled,
-      onSuccess: (data) => {
-        console.log("2 reload");
-        reset({ ...data.data, cover_image: undefined });
-      },
-    }
-  );
-  useEffect(() => {
-    if (!preDataFill) {
-      setFetchEnabled(false);
-    }
-  }, []);
-
+  const { data: post } = useQuery(["postData", id], () => postData(id || ""), {
+    onSuccess: (data) => reset({ ...data, cover_image: undefined }),
+  });
   const { mutate, isLoading } = useMutation(patchPost, {
-    onError: (error) => {
-      console.log(error);
-      toastError(error);
-    },
     onSuccess: () => {
-      toast({
-        description: "Publicación guardada.",
-      });
+      toast("Publicación guardada.");
     },
   });
 
-  const onSubmit = async (data: formData) => {
-    mutate({ ...data, slug: makeSlug(data.title, "-") });
-  };
+  const onSubmit = async (data: formPostData) =>
+    mutate({ ...data, cover_image: coverImage });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Head title="Editor publicación" />
+      <Head title={`${post?.title} | Editor publicación`} />
       <div className="grid w-full gap-4 md:gap-10">
         <div className="container flex items-center justify-between w-full mx-auto mt-5">
           <div className="flex items-center space-x-10">
@@ -131,26 +79,18 @@ const PostEditor = () => {
                 {...register("published")}
               />
             </label>
-            <button className={cn(buttonVariants())}>
+            <button className={cn(buttonVariants())} disabled={isLoading}>
               {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
               <span>Guardar</span>
             </button>
           </div>
         </div>
         <div className="prose prose-stone mx-auto lg:w-[800px] p-2 text-gray-900 dark:prose-invert dark:text-white">
-          <Suspense>
-            <Controller
-              name="cover_image"
-              control={control}
-              render={({ field: { value, onChange } }) => (
-                <Dropimage
-                  imageUrl={preDataFill?.data?.cover_image}
-                  setImageFile={onChange}
-                  previewSize="md"
-                />
-              )}
-            />
-          </Suspense>
+          <DropImageFile
+            defaultImage={post?.cover_image as string}
+            value={coverImage}
+            onChange={setCoverImage}
+          />
           <TextareaAutosize
             autoFocus
             id="title"
@@ -163,22 +103,18 @@ const PostEditor = () => {
           <Controller
             name="tags"
             control={control}
-            render={({ field: { onChange } }) => (
-              <InputTags
-                defaultTags={preDataFill?.data?.tags}
-                onChange={onChange}
-              />
-            )}
+            render={({ field: { value, onChange } }) => {
+              return <InputTags defaultTags={post?.tags} onChange={onChange} />;
+            }}
           />
-
           <Suspense>
-            {preDataFill && (
+            {post && (
               <Controller
                 name="content"
                 control={control}
-                render={({ field: { value, onChange } }) => (
+                render={({ field: { onChange } }) => (
                   <RichTextEditor
-                    initialBlocks={preDataFill?.data?.content}
+                    initialBlocks={post?.content}
                     onChange={onChange}
                   />
                 )}

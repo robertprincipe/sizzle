@@ -54,7 +54,7 @@ export const useAuthStore = create(
                 const { data } = await me()
                 set({ user: data })
             } catch (err) {
-                set({ user: undefined })
+                set({ user: undefined, isAuthenticated: false })
             }
         },
         check_authenticated: async () => {
@@ -63,7 +63,8 @@ export const useAuthStore = create(
                 const { status } = await check_authenticated(get().access || '')
                 if (status === 200) set({ isAuthenticated: true })
             } catch (err) {
-                set({ ...initialState })
+                toastError(err)
+                set({ ...initialState, isAuthenticated: false })
             }
         },
         refresh_access: async () => {
@@ -87,5 +88,6 @@ export const useAuthStore = create(
          * danza
          * EgIIAg%253D%253D
          * make
+         * p139ffjoi30
          * p139ffjoi30
          */

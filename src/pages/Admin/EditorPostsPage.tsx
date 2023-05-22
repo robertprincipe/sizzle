@@ -9,7 +9,7 @@ import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import ConfirmOperation from "@/components/shared/ConfirmOperation";
 import { toastError } from "@/lib/errors";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import ButtonPostCreator from "@/components/shared/ButtonPostCreator";
 import { Skeleton } from "@/components/ui/skeleton";
 import Heading from "@/components/layouts/components/Heading";
@@ -26,6 +26,8 @@ const EditorPostsPage = () => {
     refetch,
   } = useQuery(["editorPosts"], editorPosts, {
     // solo pedir una vez
+    cacheTime: 0,
+    staleTime: 0,
     refetchOnWindowFocus: false,
     retry: false,
   });
@@ -54,6 +56,8 @@ const EditorPostsPage = () => {
     }
   };
 
+  // console.log()
+
   return (
     <div className="">
       <Heading
@@ -78,7 +82,7 @@ const EditorPostsPage = () => {
           </div>
         </>
       ) : (
-        <div className="border border-gray-300 dark:border-gray-600 divide-y rounded-md divide-gray-300 dark:divide-gray-600">
+        <div className="border border-gray-300 divide-y divide-gray-300 rounded-md dark:border-gray-600 dark:divide-gray-600">
           {posts?.data.map((post) => (
             <div
               className="grid items-center justify-between grid-cols-8 p-4"
@@ -93,7 +97,7 @@ const EditorPostsPage = () => {
                   {post.title}
                 </a>
                 <div>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-gray-300">
                     {fromNow(post.created_at || new Date())}
                   </p>
                 </div>

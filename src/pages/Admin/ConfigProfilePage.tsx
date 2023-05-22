@@ -20,9 +20,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
-import { isAxiosError } from "axios";
+
 import { removeImageProfileUser, updateUser } from "@/services/user";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import Feedback from "@/components/atoms/Feedback";
 import { toastError } from "@/lib/errors";
 
@@ -40,8 +40,6 @@ const ConfigProfilePage = () => {
   const [banner, setBanner] = useState<Blob | string>();
   const user = useAuthStore((state) => state.user);
 
-  const { toast } = useToast();
-
   const {
     register,
     handleSubmit,
@@ -53,25 +51,8 @@ const ConfigProfilePage = () => {
   });
 
   const { mutate, isLoading } = useMutation(updateUser, {
-    onError: (error) => {
-      if (isAxiosError(error)) {
-        toast({
-          description: Object.values(error.response?.data)
-            .map((msg) => msg)
-            .join("\n"),
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          description: "Algo salio mal, intente más tarde",
-          variant: "destructive",
-        });
-      }
-    },
     onSuccess: () => {
-      toast({
-        description: "Publicación guardada.",
-      });
+      toast("Información actualizada.");
     },
   });
 
@@ -90,7 +71,7 @@ const ConfigProfilePage = () => {
   const removePictureProfile = async () => {
     try {
       const { data } = await removeImageProfileUser(user?.id || "", "picture");
-      toast({ description: data.message });
+      toast(data.message);
     } catch (error) {
       toastError(error);
     }
@@ -99,7 +80,7 @@ const ConfigProfilePage = () => {
   const removeBannerProfile = async () => {
     try {
       const { data } = await removeImageProfileUser(user?.id || "", "banner");
-      toast({ description: data.message });
+      toast(data.message);
     } catch (error) {
       toastError(error);
     }

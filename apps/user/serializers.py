@@ -7,14 +7,14 @@ from apps.blog.models import Tag, Post
 User = get_user_model()
 
 
-class TagLittleSerializer(serializers.ModelSerializer):
+class TinyTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ["name"]
+        fields = ["name", "color"]
 
 
 class RelatedPostSerializer(serializers.ModelSerializer):
-    tags = TagLittleSerializer(many=True)
+    tags = TinyTagSerializer(many=True)
 
     class Meta:
         model = Post

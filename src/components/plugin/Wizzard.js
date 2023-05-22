@@ -69,66 +69,64 @@ export default class Wizzard {
   }
 
   save(blockContent) {
-    const image = blockContent.querySelector("img");
+    const generated = blockContent.querySelector("div");
 
     const sanitizerConfig = {
-      b: true,
-      a: {
-        href: true,
-      },
+      div: true,
+      p: true,
       i: true,
     };
 
     return Object.assign(this.data, {
-      generatedText: image.src,
+      generatedText: generated,
     });
   }
 
-  static get pasteConfig() {
-    return {
-      tags: ["IMG"],
-      files: {
-        mimeTypes: ["image/*"],
-        extensions: ["gif", "jpg", "png"], // You can specify extensions instead of mime-types
-      },
-      patterns: {
-        image: /https?:\/\/\S+\.(gif|jpe?g|tiff|png)$/i,
-      },
-    };
-  }
+  // static get pasteConfig() {
+  //   return {
+  //     tags: ["IMG"],
+  //     files: {
+  //       mimeTypes: ["image/*"],
+  //       extensions: ["gif", "jpg", "png"], // You can specify extensions instead of mime-types
+  //     },
+  //     patterns: {
+  //       image: /https?:\/\/\S+\.(gif|jpe?g|tiff|png)$/i,
+  //     },
+  //   };
+  // }
 
-  onPaste(event) {
-    switch (event.type) {
-      case "tag":
-        const imgTag = event.detail.data;
+  // onPaste(event) {
+  //   switch (event.type) {
+  //     case "tag":
+  //       const imgTag = event.detail.data;
 
-        this._genetedText(imgTag.src);
-        break;
-      case "file":
-        /* We need to read file here as base64 string */
-        const file = event.detail.file;
-        const reader = new FileReader();
+  //       this._genetedText(imgTag.src);
+  //       break;
+  //     case "file":
+  //       /* We need to read file here as base64 string */
+  //       const file = event.detail.file;
+  //       const reader = new FileReader();
 
-        reader.onload = (loadEvent) => {
-          this._genetedText(loadEvent.target.result);
-        };
+  //       reader.onload = (loadEvent) => {
+  //         this._genetedText(loadEvent.target.result);
+  //       };
 
-        reader.readAsDataURL(file);
-        break;
-      case "pattern":
-        const src = event.detail.data;
+  //       reader.readAsDataURL(file);
+  //       break;
+  //     case "pattern":
+  //       const src = event.detail.data;
 
-        this._genetedText(src);
-        break;
-    }
-  }
+  //       this._genetedText(src);
+  //       break;
+  //   }
+  // }
 
   _toggleTune(tune) {
     this.data[tune] = !this.data[tune];
   }
 
   validate(savedData) {
-    if (!savedData.url.trim()) {
+    if (savedData) {
       return false;
     }
 

@@ -59,7 +59,7 @@ const ResendActivation = () => {
           <h1 className="text-2xl font-semibold tracking-tight">
             Todavía no has activado tu cuenta
           </h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-gray-300">
             Ingresa tu email y volveremos a enviarte el link de activación.
           </p>
         </div>
@@ -99,13 +99,11 @@ const ResendActivation = () => {
             to={"/auth/signup"}
             className="relative flex justify-center text-xs uppercase"
           >
-            <span className="px-2 bg-background text-muted-foreground">
-              O registrate
-            </span>
+            <span className="px-2 bggray-900 text-gray-300">O registrate</span>
           </Link>
         </div>
 
-        <p className="px-8 text-sm text-center text-muted-foreground">
+        <p className="px-8 text-sm text-center text-gray-300">
           By clicking continue, you agree to our{" "}
           <Link
             to="/terms"

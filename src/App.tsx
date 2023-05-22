@@ -1,13 +1,28 @@
 import { RouterProvider } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
-import { Toaster as ToasterRX } from "./components/ui/toaster";
 import { HelmetProvider } from "react-helmet-async";
 import router from "./components/router";
-import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "./hooks/useTheme";
+import { isAxiosError } from "axios";
+import ToasterConfig from "./components/shared/ToasterConfig";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 0,
+      cacheTime: 0,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      retry: false,
+      onError: (error) => {
+        if (isAxiosError(error)) {
+          console.log(error.response?.data);
+        }
+      },
+    },
+  },
+});
 
 const App = () => {
   return (
@@ -15,27 +30,7 @@ const App = () => {
       <HelmetProvider>
         <ThemeProvider>
           <RouterProvider router={router} />
-          <ToasterRX />
-          <Toaster
-            position="bottom-right"
-            reverseOrder={false}
-            gutter={8}
-            containerClassName=""
-            containerStyle={{}}
-            toastOptions={{
-              // Define default options
-              className: "",
-              duration: 5000,
-              style: {
-                background: "#363636",
-                color: "#fff",
-              },
-              // Default options for specific types
-              success: {
-                duration: 3000,
-              },
-            }}
-          />
+          <ToasterConfig />
         </ThemeProvider>
       </HelmetProvider>
     </QueryClientProvider>

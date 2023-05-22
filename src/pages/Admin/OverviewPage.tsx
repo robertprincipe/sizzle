@@ -26,49 +26,41 @@ const OverViewPage = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
             <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-            <DollarSign className="w-4 h-4 text-muted-foreground" />
+            <DollarSign className="w-4 h-4 text-gray-300" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">$45,231.89</div>
-            <p className="text-xs text-muted-foreground">
-              +20.1% from last month
-            </p>
+            <p className="text-xs text-gray-300">+20.1% from last month</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
             <CardTitle className="text-sm font-medium">Subscriptions</CardTitle>
-            <Users className="w-4 h-4 text-muted-foreground" />
+            <Users className="w-4 h-4 text-gray-300" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">+2350</div>
-            <p className="text-xs text-muted-foreground">
-              +180.1% from last month
-            </p>
+            <p className="text-xs text-gray-300">+180.1% from last month</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
             <CardTitle className="text-sm font-medium">Sales</CardTitle>
-            <CreditCard className="w-4 h-4 text-muted-foreground" />
+            <CreditCard className="w-4 h-4 text-gray-300" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">+12,234</div>
-            <p className="text-xs text-muted-foreground">
-              +19% from last month
-            </p>
+            <p className="text-xs text-gray-300">+19% from last month</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
             <CardTitle className="text-sm font-medium">Active Now</CardTitle>
-            <Activity className="w-4 h-4 text-muted-foreground" />
+            <Activity className="w-4 h-4 text-gray-300" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">+573</div>
-            <p className="text-xs text-muted-foreground">
-              +201 since last hour
-            </p>
+            <p className="text-xs text-gray-300">+201 since last hour</p>
           </CardContent>
         </Card>
       </div>

@@ -53,7 +53,7 @@ const ResetPassword = () => {
           <h1 className="text-2xl font-semibold tracking-tight">
             Olvido su contraseña
           </h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-gray-300">
             Le enviaremos un email para que pueda cambiarla nuevamente.
           </p>
         </div>
@@ -90,7 +90,7 @@ const ResetPassword = () => {
           </Link>
         </div>
 
-        <p className="px-8 text-sm text-center text-muted-foreground">
+        <p className="px-8 text-sm text-center text-gray-300">
           By clicking continue, you agree to our{" "}
           <Link
             to="/terms"

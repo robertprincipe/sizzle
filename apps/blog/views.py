@@ -1,3 +1,4 @@
+from base64 import b64encode
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -8,12 +9,20 @@ from .serializers import (
     TagSerializer,
     ReactionSerializer,
     CommentSerializer,
+    TagAllSerializer,
 )
 from .permissions import IsAuthorOrAdminOrModerator
 from django.db.models import Count
-from apps.user.models import User
+from imagekitio import ImageKit
+from core import settings
 
 import json
+
+imagekit = ImageKit(
+    private_key=settings.IMAGEKIT_PRIVATE_KEY,
+    public_key=settings.IMAGEKIT_PUBLIC_KEY,
+    url_endpoint=settings.IMAGEKIT_URL_ENDPOINT,
+)
 
 
 def get_tags(tags):
@@ -106,13 +115,13 @@ def all_post(request):
     return Response(posts.data, status=status.HTTP_200_OK)
 
 
-@api_view(["GET"])
-def all_tags(request):
-    tags = Tag.objects.all().order_by("-created_at")
+# @api_view(["GET"])
+# def all_tags(request):
+#     tags = Tag.objects.all().order_by("-created_at")
 
-    tags = TagSerializer(tags, many=True)
+#     tags = TagSerializer(tags, many=True)
 
-    return Response(tags.data, status=status.HTTP_200_OK)
+#     return Response(tags.data, status=status.HTTP_200_OK)
 
 
 @api_view(["GET"])
@@ -417,29 +426,120 @@ def reactions_post(request, post_id):
 
 
 @api_view(["GET"])
-def reaction_list(request, post_id):
+def user_reaction(request, post_id):
     reactions = Reaction.objects.filter(post_id=post_id)
-
-    # Obtener la lista de reacciones y el recuento total
-    counted_reactions = reactions.values("emoji").annotate(count=Count("emoji"))
-    total_count = reactions.count()
-    # reaction_list = [{'emoji': item['emoji'], 'count': item['count']} for item in counted_reactions]
-
-    # Obtener las tres reacciones más repetidas
-    top_reactions = sorted(counted_reactions, key=lambda x: x["count"], reverse=True)[
-        :3
-    ]
-
     user_reaction = None
+    # total_count = reactions.count()
     if request.user.is_authenticated:
         user_reaction = reactions.filter(user=request.user).first()
 
-    # Crear la respuesta
+    response_data = {
+        "user_reaction": user_reaction.emoji if user_reaction else None,
+    }
+    return Response(response_data)
+
+
+@api_view(["GET"])
+def reaction_list(request, post_id):
+    reactions = Reaction.objects.filter(post_id=post_id)
+    counted_reactions = reactions.values("emoji").annotate(count=Count("emoji"))
+    # total_count = reactions.count()
+    top_reactions = sorted(counted_reactions, key=lambda x: x["count"], reverse=True)
+    # user_reaction = None
+    # if request.user.is_authenticated:
+    #     user_reaction = reactions.filter(user=request.user).first()
+
     response_data = {
         "reactions": [
             {"emoji": item["emoji"], "count": item["count"]} for item in top_reactions
         ],
-        "count": total_count,
-        "user_reaction": user_reaction.emoji if user_reaction else None,
+        # "count": total_count,
+        # "user_reaction": user_reaction.emoji if user_reaction else None,
     }
     return Response(response_data)
+
+
+@api_view(["GET"])
+def all_tags(request):
+    try:
+        tags = Tag.objects.all().order_by("name")
+        if len(tags) == 0:
+            return Response(
+                {"message": "No hay etiquetas"}, status=status.HTTP_404_NOT_FOUND
+            )
+        tags = TagAllSerializer(tags, many=True)
+        return Response(tags.data, status=status.HTTP_200_OK)
+    except Tag.DoesNotExist:
+        return Response(
+            {"message": "Hubo un error, intente más tarde."},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
+
+
+@api_view(["GET"])
+def search_tags(request):
+    # get param name tag by query
+    query = request.query_params.get("query")
+    if query == "":
+        return Response([], status=status.HTTP_200_OK)
+    try:
+        # search tags by name
+        tags = Tag.objects.filter(name__icontains=query).order_by("name")
+
+        tags = TagSerializer(tags, many=True)
+        return Response(tags.data, status=status.HTTP_200_OK)
+    except Tag.DoesNotExist:
+        return Response(
+            {"message": "Hubo un error, intente más tarde."},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
+
+
+@api_view(["POST"])
+def upload_image(request):
+    try:
+        image = request.FILES["image"]
+        image_info = imagekit.upload_file(
+            file=b64encode(image.read()),
+            file_name=image.name,
+        )
+        return Response(
+            {"image_id": image_info.file_id, "name": image_info.name},
+            status=status.HTTP_200_OK,
+        )
+    except:
+        return Response(
+            {"message": "Hubo un error, intente más tarde."},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
+
+
+@api_view(["DELETE"])
+def remove_image(request, file_id):
+    try:
+        imagekit.delete_file(file_id=file_id)
+        return Response(
+            {"message": "Imagen eliminada correctamente."}, status=status.HTTP_200_OK
+        )
+    except:
+        return Response(
+            {"message": "Hubo un error, intente más tarde."},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
+
+
+@api_view(["POST"])
+def bulk_delete_images(request):
+    try:
+        file_ids = request.data.get("file_ids")
+        # file_ids = json.loads(file_ids)
+        imagekit.bulk_delete(file_ids=file_ids)
+        return Response(
+            {"message": "Imagenes eliminadas correctamente."}, status=status.HTTP_200_OK
+        )
+    except Exception as e:
+        print(e)
+        return Response(
+            {"message": "Hubo un error, intente más tarde."},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )

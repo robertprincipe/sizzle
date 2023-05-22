@@ -4,7 +4,7 @@ from django.core.validators import FileExtensionValidator, validate_slug
 from django.core.exceptions import ValidationError
 import re
 from uuid import uuid4
-from apps.blog.storage import ImageKitStorage
+
 from colorfield.fields import ColorField
 from django_editorjs import EditorJsField
 
@@ -27,6 +27,12 @@ class Tag(models.Model):
         max_length=120, db_index=True, validators=[validate_tag_name]
     )
     color = ColorField(default="#FF0000")
+    image = models.ImageField(
+        max_length=200,
+        upload_to="tags",
+        blank=True,
+        null=True,
+    )
     description = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
@@ -57,11 +63,12 @@ class Post(models.Model):
     )
     cover_image = models.ImageField(
         upload_to="posts",
-        storage=ImageKitStorage,
+        max_length=200,
         null=True,
         blank=True,
         validators=[FileExtensionValidator(["jpg", "jpeg", "png", "webp", "gif"])],
     )
+    image_field_name = "cover_image"
     content = EditorJsField(
         editorjs_config={
             "tools": {
@@ -87,15 +94,6 @@ class Post(models.Model):
 
     post_objects = PostObjects()
     objects = models.Manager()
-
-    # def image_preview(self):
-    #     print(self.cover_image)
-    #     if self.cover_image:
-    #         return mark_safe(
-    #             '<img src="%s" style="max-width: 300px;" />' % (self.cover_image.url)
-    #         )
-    #     else:
-    #         return "(No image)"
 
     def __str__(self):
         return self.title
@@ -145,3 +143,7 @@ class Reaction(models.Model):
 
     def __str__(self):
         return self.emoji
+
+
+# register_image_signals(Tag)
+# register_image_signals(Post)

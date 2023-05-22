@@ -1,15 +1,21 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
-type Theme = "system" | "dark" | "light";
+type INativeTheme = "system" | "light" | "dark";
+type IAppTHeme = "light" | "dark";
 
 interface ThemeContextProps {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
+  theme: INativeTheme;
+  systemTheme: IAppTHeme;
+  resolvedTheme?: IAppTHeme;
+  setTheme: (theme: INativeTheme) => void;
+  toggleTheme: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextProps>({
   theme: "system",
+  systemTheme: "dark",
   setTheme: () => {},
+  toggleTheme: () => {},
 });
 
 interface ThemeProviderProps {
@@ -17,50 +23,35 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [theme, setTheme] = useState<Theme>(() => {
-    const savedTheme = localStorage.getItem("theme") as Theme;
-    return savedTheme || "system";
-  });
+  const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+
+  const [theme, setTheme] = useState<INativeTheme>(
+    () => (localStorage.getItem("front-theme") as INativeTheme) || "system"
+  );
+
+  const [resolvedTheme, setResolvedTheme] = useState<IAppTHeme>(
+    theme === "system" ? systemTheme : theme
+  );
 
   useEffect(() => {
-    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-      .matches
-      ? "dark"
-      : "light";
-    setTheme(theme || systemTheme); // Aquí se utiliza la variable theme en lugar de savedTheme
-    localStorage.setItem("theme", theme || systemTheme);
+    const resolveTheme = theme === "system" ? systemTheme : theme;
+    document.documentElement.classList.value = resolveTheme;
+    localStorage.setItem("front-theme", theme);
+    setResolvedTheme(resolveTheme);
   }, [theme]);
 
-  useEffect(() => {
-    const html = document.querySelector("html");
-    if (html) {
-      html.classList.remove("dark", "light");
-      html.classList.add(theme);
-    }
-  }, [theme]);
+  const toggleTheme = () =>
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider
+      value={{ theme, systemTheme, setTheme, toggleTheme, resolvedTheme }}
+    >
       {children}
     </ThemeContext.Provider>
   );
 };
 
-export const useTheme = () => {
-  const { theme, setTheme } = useContext(ThemeContext);
-
-  const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
-
-  const savedTheme = localStorage.getItem("theme") as Theme;
-  console.log(savedTheme);
-  const resolvedTheme = theme === "system" ? savedTheme || systemTheme : theme;
-
-  const updateTheme = (newTheme: Theme) => {
-    localStorage.setItem("theme", newTheme);
-    setTheme(newTheme);
-  };
-
-  return { systemTheme, resolvedTheme, theme, setTheme: updateTheme };
-};
+export const useTheme = () => useContext(ThemeContext);

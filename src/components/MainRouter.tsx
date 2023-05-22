@@ -1,41 +1,22 @@
-import { Suspense, lazy } from "react";
+import { lazy } from "react";
 import { RouteObject } from "react-router-dom";
-
 import Main from "@/components/layouts/Main";
-
 import BlogPage from "@/pages/Blog/IndexPage";
-
 import PostPage from "@/pages/Blog/PostPage";
-
 import { ProtectedRoute } from "./shared/ProtectedRoutes";
 import HomePage from "@/pages/HomePage";
 import EditPostPage from "@/pages/Blog/EditPostPage";
-const EditorPostsPage = lazy(() => import("@/pages/Admin/EditorPostsPage"));
-const OverViewPage = lazy(() => import("@/pages/Admin/OverviewPage"));
-import NotificationsPage from "@/pages/Admin/NotificationsPage";
 import TagPage from "@/pages/TagPage";
-const AdminLayout = lazy(() => import("./layouts/Admin"));
 
-const ProfilePage = lazy(() => import("@/pages/ProfilePage"));
-
-const ContactPage = lazy(() => import("@/pages/ContactPage"));
-const PricingPage = lazy(() => import("@/pages/PricingPage"));
-
-const ConfigProfilePage = lazy(() => import("@/pages/Admin/ConfigProfilePage"));
-
-const ActivatePage = lazy(() => import("@/pages/Auth/ActivatePage"));
-
-const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"));
-
-const MainRoutesList: RouteObject[] = [
+const MainRoutesList = (): RouteObject[] => [
   {
     path: "/",
     element: <Main />,
     children: [
-      { path: "", element: <Suspense children={<HomePage />} /> },
+      { path: "", element: <HomePage /> },
       { path: "blog", element: <BlogPage /> },
-      { path: "post/:slug", element: <Suspense children={<PostPage />} /> },
-      { path: "tag/:name", element: <Suspense children={<TagPage />} /> },
+      { path: "post/:slug", element: <PostPage /> },
+      { path: "tag/:name", element: <TagPage /> },
       {
         path: "",
         element: <ProtectedRoute redirectTo="/auth/login" />,
@@ -46,12 +27,12 @@ const MainRoutesList: RouteObject[] = [
           },
           {
             path: "config",
-            element: <Suspense children={<ConfigProfilePage />} />,
+            element: <ConfigProfilePage />,
           },
 
           {
             path: "/dashboard/",
-            element: <Suspense children={<AdminLayout />} />,
+            element: <AdminLayout />,
             children: [
               {
                 path: "",
@@ -59,7 +40,7 @@ const MainRoutesList: RouteObject[] = [
               },
               {
                 path: "posts",
-                element: <Suspense children={<EditorPostsPage />} />,
+                element: <EditorPostsPage />,
               },
               {
                 path: "notifications",
@@ -69,14 +50,18 @@ const MainRoutesList: RouteObject[] = [
           },
         ],
       },
-      { path: "@/:username", element: <Suspense children={<ProfilePage />} /> },
-      { path: "contact", element: <Suspense children={<ContactPage />} /> },
-      { path: "pricing", element: <Suspense children={<PricingPage />} /> },
+      { path: "@/:username", element: <ProfilePage /> },
+      { path: "contact", element: <ContactPage /> },
+      { path: "pricing", element: <PricingPage /> },
       {
         path: "activate/:uid/:token",
-        element: <Suspense children={<ActivatePage />} />,
+        element: <ActivatePage />,
       },
     ],
+  },
+  {
+    path: "not-found",
+    element: <NotFoundPage />,
   },
   {
     path: "*",
@@ -85,3 +70,24 @@ const MainRoutesList: RouteObject[] = [
 ];
 
 export default MainRoutesList;
+
+const EditorPostsPage = LazyLoading(
+  lazy(() => import("@/pages/Admin/EditorPostsPage"))
+);
+const OverViewPage = LazyLoading(
+  lazy(() => import("@/pages/Admin/OverviewPage"))
+);
+import NotificationsPage from "@/pages/Admin/NotificationsPage";
+import LazyLoading from "./HOC/LazyLoading";
+const AdminLayout = LazyLoading(lazy(() => import("./layouts/Admin")));
+const ProfilePage = LazyLoading(lazy(() => import("@/pages/ProfilePage")));
+const ContactPage = LazyLoading(lazy(() => import("@/pages/ContactPage")));
+const PricingPage = LazyLoading(lazy(() => import("@/pages/PricingPage")));
+
+const ConfigProfilePage = LazyLoading(
+  lazy(() => import("@/pages/Admin/ConfigProfilePage"))
+);
+const ActivatePage = LazyLoading(
+  lazy(() => import("@/pages/Auth/ActivatePage"))
+);
+const NotFoundPage = LazyLoading(lazy(() => import("@/pages/NotFoundPage")));

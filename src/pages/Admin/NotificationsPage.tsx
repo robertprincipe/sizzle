@@ -22,7 +22,7 @@ const NotificationsPage = () => {
           <Bell className="h-5 w-5" />
           <div className="space-y-1">
             <p className="text-sm font-medium leading-none">Everything</p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-gray-300">
               Email digest, mentions & all activity.
             </p>
           </div>
@@ -31,18 +31,14 @@ const NotificationsPage = () => {
           <AtSign className="h-5 w-5" />
           <div className="space-y-1">
             <p className="text-sm font-medium leading-none">Available</p>
-            <p className="text-sm text-muted-foreground">
-              Only mentions and comments.
-            </p>
+            <p className="text-sm text-gray-300">Only mentions and comments.</p>
           </div>
         </div>
         <div className="flex items-center space-x-4 rounded-md p-2 dark:hover:bg-gray-900 hover:bg-gray-400 dark:hover:text-gray-50 hover:text-gray-800">
           <BellOff className="h-5 w-5" />
           <div className="space-y-1">
             <p className="text-sm font-medium leading-none">Ignoring</p>
-            <p className="text-sm text-muted-foreground">
-              Turn off all notifications.
-            </p>
+            <p className="text-sm text-gray-300">Turn off all notifications.</p>
           </div>
         </div>
       </div>

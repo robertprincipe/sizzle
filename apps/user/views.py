@@ -20,16 +20,11 @@ def update_profile(request, id):
         )
 
     try:
-        user.username = request.data.get("username")
-        user.email = request.data.get("email")
-        user.profile_info = request.data.get("profile_info", None)
+        user = UserSerializer(user, request.data, partial=True)
+        if user.is_valid():
+            user.save()
 
-        user.picture = request.data.get("picture", user.picture)
-        user.banner = request.data.get("banner", user.banner)
-
-        user.save()
-
-        return Response(UserSerializer(user).data, status=status.HTTP_200_OK)
+        return Response(user.data, status=status.HTTP_200_OK)
     except Exception as e:
         print(e)
         return Response(

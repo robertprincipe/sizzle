@@ -61,7 +61,7 @@ UNFOLD = {
     # "DASHBOARD_CALLBACK": "sample_app.dashboard_callback",
     "LOGIN": {
         "image": lambda r: static("android-chrome-192x192-dba14c5c.png"),
-        "redirect_after": lambda r: reverse_lazy("admin:APP_MODEL_changelist"),
+        "redirect_after": lambda r: reverse_lazy("admin:login"),
     },
     "STYLES": [
         lambda request: "https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css",
@@ -249,6 +249,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "core.wsgi.application"
 
+CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
+
 DATABASES = {
     "default": env.db("DATABASE_URL", default="postgres:///ninerogues"),
 }
@@ -346,3 +348,9 @@ if not DEBUG:
     EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
     EMAIL_PORT = env("EMAIL_PORT")
     EMAIL_USE_TLS = env("EMAIL_USE_TLS")
+
+IMAGEKIT_PRIVATE_KEY = os.environ.get("IMAGEKIT_PRIVATE_KEY")
+IMAGEKIT_PUBLIC_KEY = os.environ.get("IMAGEKIT_PUBLIC_KEY")
+IMAGEKIT_URL_ENDPOINT = os.environ.get("IMAGEKIT_URL_ENDPOINT")
+
+DEFAULT_FILE_STORAGE = "apps.blog.storage.ImageKitStorage"

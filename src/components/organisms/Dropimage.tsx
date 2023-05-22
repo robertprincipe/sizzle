@@ -3,8 +3,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 type IDropimageProps = {
-  imageUrl?: Blob | string;
-  setImageFile: (file?: Blob | string) => void;
+  imageUrl?: Blob | string | null;
+  setImageFile: (file?: Blob | string | null) => void;
   isCircle?: boolean;
   size?: "sm" | "md" | "lg";
   previewSize?: "sm" | "md" | "lg";
@@ -53,7 +53,7 @@ const Dropimage: React.FC<IDropimageProps> = ({
 
   const removeImageFromState = () => {
     setImagePreview(undefined);
-    setImageFile(undefined);
+    setImageFile(null);
   };
 
   const SIZES = {
@@ -64,7 +64,7 @@ const Dropimage: React.FC<IDropimageProps> = ({
 
   const PREVIEW_SIZES = {
     sm: "h-8 w-8",
-    md: "h-40",
+    md: "h-64",
     lg: "h-12 w-12",
   };
 

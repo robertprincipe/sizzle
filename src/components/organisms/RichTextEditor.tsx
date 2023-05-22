@@ -1,13 +1,15 @@
 import Table from "@editorjs/table";
 import Header from "@editorjs/header";
-import Image from "@editorjs/image";
 
 import { useRef, useState, useCallback, useEffect } from "react";
 
-import EditorJS from "@editorjs/editorjs";
+import EditorJS, { ToolConstructable } from "@editorjs/editorjs";
 
 import Wizzard from "../plugin/Wizzard";
 import MarkerTool from "../plugin/InlineWizz";
+import ImageKit from "../plugin/CustomImage";
+import { uploadByFile } from "@/services/image";
+import API from "@/lib/api";
 
 type IRichTextEditorProps = {
   initialBlocks?: any;
@@ -33,9 +35,27 @@ const RichTextEditor = ({ initialBlocks, onChange }: IRichTextEditorProps) => {
         inlineToolbar: true,
         tools: {
           image: {
-            class: Image,
+            class: ImageKit as unknown as ToolConstructable,
             inlineToolbar: true,
+            config: {
+              uploader: {
+                uploadByFile: (file: File) => {
+                  const formData = new FormData();
+                  formData.append("image", file);
+                  return API.post("upload-image", formData).then(({ data }) => {
+                    return {
+                      success: 1,
+                      file: {
+                        url: `https://ik.imagekit.io/huvmeuk1y/${data.name}`,
+                        imageId: data.image_id,
+                      },
+                    };
+                  });
+                },
+              },
+            },
           },
+
           header: Header,
           table: Table,
           wizzard: Wizzard,

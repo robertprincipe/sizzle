@@ -37,7 +37,7 @@ export function SiteHeader() {
                 </button>
               </SheetTrigger>
               <SheetContent position={"top"} size="content">
-                <div className="flex items-center">
+                <div className="flex items-center px-10">
                   <Input
                     id="username"
                     placeholder="Buscar..."

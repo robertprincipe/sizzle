@@ -46,11 +46,12 @@ const CommentCard = ({
               src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
               alt="Michael Gough"
             /> */}
-            <div className="relative w-8 h-8 rounded-full overflow-hidden flex justify-center items-center">
-              <Avatar className="w-6 h-6">
+            <div className="relative flex items-center justify-center w-8 h-8 overflow-hidden rounded-full">
+              <Avatar className="overflow-hidden rounded-full">
                 <AvatarImage
                   src={comment?.user?.picture as string}
                   alt={`@${comment?.user?.username}`}
+                  className="object-cover w-6 h-6"
                 />
                 <AvatarFallback>
                   {comment?.user?.username

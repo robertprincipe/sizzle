@@ -2,19 +2,11 @@ import { useTheme } from "@/hooks/useTheme";
 import { Switch } from "./ui/switch";
 
 export function ThemeToggle() {
-  const { systemTheme, resolvedTheme, theme, setTheme } = useTheme();
-
-  const changeTheme = () =>
-    setTheme(resolvedTheme === "dark" ? "light" : "dark");
-
-  const getTheme = () => {
-    return theme === "system" ? systemTheme : theme;
-  };
-
+  const { resolvedTheme, toggleTheme } = useTheme();
   return (
     <Switch
-      onCheckedChange={() => changeTheme()}
-      checked={getTheme() === "dark"}
+      onCheckedChange={() => toggleTheme()}
+      checked={resolvedTheme === "dark"}
     />
   );
 }
