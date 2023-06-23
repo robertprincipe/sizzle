@@ -11,7 +11,7 @@ const Sidebar = forwardRef<
     <aside
       className={`fixed left-0 bottom-0 ${
         isOpenSidebar ? "" : "-translate-x-full"
-      } lg:w-64 pt-4 pb-10 overflow-y-auto left-0 bg-white dark:bg-gray-900 transition-all duration-300 transform border-r border-gray-200 lg:static hs-overlay hs-overlay-open:translate-x-0 top-16 scrollbar-y lg:block lg:translate-x-0 lg:right-auto lg:bottom-0 dark:scrollbar-y dark:border-gray-700`}
+      } lg:w-64 pt-4 pb-10 overflow-y-auto left-0 dark:bg-indigo-500 transition-all duration-300 transform border-r border-muted lg:static hs-overlay hs-overlay-open:translate-x-0 top-16 scrollbar-y lg:block lg:translate-x-0 lg:right-auto lg:bottom-0 dark:scrollbar-y dark:border-dark`}
       ref={ref}
     >
       <nav className="flex flex-col flex-wrap w-full px-6">
@@ -21,8 +21,8 @@ const Sidebar = forwardRef<
               to="/dashboard/"
               className={({ isActive }) =>
                 `${
-                  isActive ? "dark:text-white" : "dark:text-slate-400"
-                }  flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md dark:hover:text-slate-300`
+                  isActive ? "dark:text-light" : "dark:text-slate-400"
+                }  flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-dark rounded-md dark:hover:text-slate-300`
               }
               onClick={() => setIsOpenSidebar(false)}
             >
@@ -36,8 +36,8 @@ const Sidebar = forwardRef<
               to="/dashboard/posts"
               className={({ isActive }) =>
                 `${
-                  isActive ? "dark:text-white" : "dark:text-slate-400"
-                }  flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md dark:hover:text-slate-300`
+                  isActive ? "dark:text-light" : "dark:text-slate-400"
+                }  flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-dark rounded-md dark:hover:text-slate-300`
               }
               onClick={() => setIsOpenSidebar(false)}
             >
@@ -51,8 +51,8 @@ const Sidebar = forwardRef<
               to="/dashboard/notifications"
               className={({ isActive }) =>
                 `${
-                  isActive ? "dark:text-white" : "dark:text-slate-400"
-                }  flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md dark:hover:text-slate-300`
+                  isActive ? "dark:text-light" : "dark:text-slate-400"
+                }  flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-dark rounded-md dark:hover:text-slate-300`
               }
               onClick={() => setIsOpenSidebar(false)}
             >

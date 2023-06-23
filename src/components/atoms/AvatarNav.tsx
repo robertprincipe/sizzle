@@ -40,7 +40,7 @@ const AvatarNav = () => {
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">{user?.username}</p>
-            <p className="text-xs leading-none text-gray-300">{user?.email}</p>
+            <p className="text-xs leading-none text-muted">{user?.email}</p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
@@ -52,7 +52,7 @@ const AvatarNav = () => {
               <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
           </Link>
-          <Link to={"/dashboard"}>
+          <Link to={"/admin"}>
             <DropdownMenuItem>
               <Gauge className="w-4 h-4 mr-2" />
               <span>Dashboard</span>

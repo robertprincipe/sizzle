@@ -59,14 +59,14 @@ const ReactPost = ({ postId, reaction_count }: IReactPostProps) => {
       {isOpenReactions && (
         <Suspense
           fallback={
-            <Skeleton className="h-40 w-[352px] absolute bottom-20 left-1/2 -translate-x-1/2 bg-gray-100 dark:bg-gray-600" />
+            <Skeleton className="h-40 w-[352px] absolute bottom-20 left-1/2 -translate-x-1/2 bg-muted dark:bg-dark" />
           }
         >
           <EmojiPickerComponent reactToPost={reactToPost} />
         </Suspense>
       )}
 
-      <div className="flex items-center text-gray-500 dark:text-gray-400">
+      <div className="flex items-center text-muted dark:text-muted">
         {isLoading ? (
           <div className="flex py-2 pl-2 pr-4">
             <Loader2 className="animate-spin" />
@@ -76,19 +76,19 @@ const ReactPost = ({ postId, reaction_count }: IReactPostProps) => {
             {reaction?.user_reaction && (
               <div className="flex items-center">
                 <button
-                  className={`hover:text-gray-800 dark:hover:text-gray-200 bg-blue-400/40 p-1 rounded-full`}
+                  className={`hover:text-dark dark:hover:text-muted bg-blue-400/40 p-1 rounded-full`}
                   onClick={() => reactToPost(reaction?.user_reaction)}
                 >
                   {reaction?.user_reaction}
                 </button>
-                <div className="block h-3 mx-3 border-r border-gray-300 dark:border-gray-600"></div>
+                <div className="block h-3 mx-3 border-r border-muted dark:border-dark"></div>
               </div>
             )}
           </div>
         )}
 
         <button
-          className="flex items-center h-full justify-center hover:text-gray-800 dark:hover:text-gray-200 py-2.5"
+          className="flex items-center h-full justify-center hover:text-dark dark:hover:text-muted py-2.5"
           onClick={() => setIsOpenReactions(!isOpenReactions)}
         >
           <SmilePlus className="h-5 mr-2.5" />

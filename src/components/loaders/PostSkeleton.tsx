@@ -5,18 +5,18 @@ const PostSkeleton = () => {
     <section className="container relative max-w-3xl py-6 lg:py-10">
       <div className="flex items-center justify-between mb-6">
         <div className="flex w-full sm:items-center gap-x-5 sm:gap-x-3">
-          <Skeleton className="w-12 h-12 rounded-full bg-gray-800 dark:bg-gray-200" />
+          <Skeleton className="w-12 h-12 rounded-full bg-dark dark:bg-muted" />
 
           <div className="grow">
             <div className="grid gap-2 sm:flex sm:justify-between sm:items-center">
               <div>
                 <div className="hs-tooltip inline-block">
-                  <Skeleton className="bg-gray-600 dark:bg-gray-200 w-40 h-4" />
+                  <Skeleton className="bg-dark dark:bg-muted w-40 h-4" />
                 </div>
 
                 <ul className="grid grid-cols-2 gap-1">
-                  <Skeleton className="bg-gray-600 dark:bg-gray-200 w-20 h-2.5" />
-                  <Skeleton className="bg-gray-600 dark:bg-gray-200 w-16 h-2.5" />
+                  <Skeleton className="bg-dark dark:bg-muted w-20 h-2.5" />
+                  <Skeleton className="bg-dark dark:bg-muted w-16 h-2.5" />
                 </ul>
               </div>
 

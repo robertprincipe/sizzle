@@ -44,6 +44,7 @@ class Post(models.Model):
         db_table = "posts"
         verbose_name = "publicación"
         verbose_name_plural = "publicaciones"
+        ordering = ("-created_at",)
 
     class PostObjects(models.Manager):
         def get_queryset(self):
@@ -68,7 +69,7 @@ class Post(models.Model):
         blank=True,
         validators=[FileExtensionValidator(["jpg", "jpeg", "png", "webp", "gif"])],
     )
-    image_field_name = "cover_image"
+    keywords = models.CharField(max_length=255, blank=True, null=True)
     content = EditorJsField(
         editorjs_config={
             "tools": {
@@ -85,9 +86,10 @@ class Post(models.Model):
         blank=True,
         null=True,
     )
-    view_count = models.IntegerField(default=0)
+
     reading_time = models.IntegerField(default=0)
     published = models.BooleanField(default=False)
+    views = models.IntegerField(default=0, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField(Tag, blank=True, related_name="posts_tags")
@@ -98,12 +100,24 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def get_view_count(self):
+        views = ViewCount.objects.filter(post=self).count()
+        return views
+
 
 # maick@make.com.pe
 # |o293fh2ijisdj
-
-
 # robert196@+
+
+
+class ViewCount(models.Model):
+    post = models.ForeignKey(
+        Post, related_name="post_view_count", on_delete=models.CASCADE
+    )
+    ip_address = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.ip_address}"
 
 
 class Comment(models.Model):

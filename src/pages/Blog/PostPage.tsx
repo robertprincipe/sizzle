@@ -1,26 +1,22 @@
 import { fromNow } from "@/lib/date";
 import { postDetail } from "@/services/blog";
 import { useQuery } from "@tanstack/react-query";
-
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 import Head from "@/components/shared/Head";
-
-// import tinycolor from "tinycolor2";
-
 import Comments from "@/components/organisms/Comments";
 import { Button } from "@/components/ui/button";
 import Owner from "@/components/shared/Owner";
-
 import PostSkeleton from "@/components/loaders/PostSkeleton";
 import { Suspense, lazy } from "react";
 import ActionsPost from "@/components/molecules/ActionsPost";
 import ContentPostSkeleton from "@/components/loaders/ContentPostSkeleton";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { TOC } from "@/components/TOC";
-import ContentPost from "@/components/molecules/ContentPost";
 import ReactionPost from "@/components/molecules/ReactionsPost";
-// const ContentPost = lazy(() => import("@/components/molecules/ContentPost"));
+import { getContrastColor1 } from "@/lib/colors";
+import { Input } from "@/components/ui/input";
+const ContentPost = lazy(() => import("@/components/molecules/ContentPost"));
 
 export default function PostPage() {
   const { slug } = useParams();
@@ -37,60 +33,12 @@ export default function PostPage() {
     }
   );
 
-  const getContrastColor1 = (color: string): string => {
-    // Convierte el color a sus componentes RGB
-    const [r, g, b] =
-      color
-        .slice(1)
-        .match(/.{1,2}/g)
-        ?.map((c) => parseInt(c, 16)) || [];
-
-    // Calcula la luminosidad del color
-    const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-
-    // Decide si el color es claro o oscuro basándose en su luminosidad
-    const isLight = luminance > 128;
-
-    // Si el color es saturado, genera un tono más claro o más oscuro
-    const saturation = Math.max(r, g, b) - Math.min(r, g, b);
-    if (saturation > 64) {
-      const factor = isLight ? -0.2 : 0.2;
-      const [newR, newG, newB] = [r, g, b].map((c) =>
-        Math.round(Math.min(Math.max(0, c + c * factor), 255))
-      );
-
-      console.log(
-        `#${newR.toString(16)}${newG.toString(16)}${newB.toString(16)}`
-      );
-
-      return `#${newR.toString(16)}${newG.toString(16)}${newB.toString(16)}`;
-    }
-
-    // Si el color es poco saturado, genera un tono oscuro
-    const [newR, newG, newB] = [r, g, b].map((c) => Math.round(c * 0.5));
-    console.log(
-      `#${newR.toString(16)}${newG.toString(16)}${newB.toString(16)}`
-    );
-    return `#${newR.toString(16)}${newG.toString(16)}${newB.toString(16)}`;
-  };
-
-  function getContrastColor(hexColor: string): string {
-    const r = parseInt(hexColor.substr(0, 2), 16);
-    const g = parseInt(hexColor.substr(2, 2), 16);
-    const b = parseInt(hexColor.substr(4, 2), 16);
-
-    const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-
-    return luma < 128 ? "#fff" : "#000";
-  }
-
   return (
     <>
       <Head title={post?.title || ""} />
       <section className="container py-6 max-w-7xl lg:py-10">
         <div className="relative">
           <div className="flex flex-col gap-4 lg:flex-row">
-            {/* {post && <ReactionPost postId={post.id} />} */}
             <ReactionPost postId={post?.id || ""} />
             <div className="order-2">
               {isLoading && !post ? (
@@ -124,17 +72,17 @@ export default function PostPage() {
                             to={`/@/${post?.author?.username}`}
                             className="block text-left cursor-pointer hs-tooltip-toggle sm:mb-1"
                           >
-                            <span className="font-semibold text-gray-800 dark:text-gray-200">
+                            <span className="font-semibold text-dark dark:text-muted">
                               @{post?.author?.username}
                             </span>
                           </Link>
                         </div>
 
-                        <ul className="text-xs text-gray-500">
-                          <li className="relative inline-block pr-6 last:pr-0 last-of-type:before:hidden before:absolute before:top-1/2 before:right-2 before:-translate-y-1/2 before:w-1 before:h-1 before:bg-gray-300 before:rounded-full dark:text-gray-400 dark:before:bg-gray-600">
+                        <ul className="text-xs text-muted">
+                          <li className="relative inline-block pr-6 last:pr-0 last-of-type:before:hidden before:absolute before:top-1/2 before:right-2 before:-translate-y-1/2 before:w-1 before:h-1 before:bg-muted before:rounded-full dark:text-muted dark:before:bg-dark">
                             {fromNow(post?.created_at || new Date())}
                           </li>
-                          <li className="relative inline-block pr-6 last:pr-0 last-of-type:before:hidden before:absolute before:top-1/2 before:right-2 before:-translate-y-1/2 before:w-1 before:h-1 before:bg-gray-300 before:rounded-full dark:text-gray-400 dark:before:bg-gray-600">
+                          <li className="relative inline-block pr-6 last:pr-0 last-of-type:before:hidden before:absolute before:top-1/2 before:right-2 before:-translate-y-1/2 before:w-1 before:h-1 before:bg-muted before:rounded-full dark:text-muted dark:before:bg-dark">
                             {post?.reading_time === 0 ? 1 : post?.reading_time}{" "}
                             min
                           </li>
@@ -144,14 +92,14 @@ export default function PostPage() {
 
                     <Owner authorId={post?.author?.id || ""}>
                       <Link
-                        to={`/post/${post?.id}/edit`}
-                        // className="inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-gray-600 transition-all bg-white border border-transparent rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+                        to={`/admin/post/${post?.id}/edit`}
+                        // className="inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold transition-all bg-white border border-transparent rounded-md text-dark hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 dark:focus:ring-offset-dark"
                       >
                         <Button>Editar publicación</Button>
                       </Link>
                     </Owner>
                   </div>
-                  <h1 className="inline-block mt-2 text-4xl font-extrabold leading-tight text-4 lg:text-5xl dark:text-white">
+                  <h1 className="inline-block mt-2 text-4xl font-extrabold leading-tight text-4 lg:text-5xl dark:text-light">
                     {post?.title}
                   </h1>
 
@@ -160,14 +108,14 @@ export default function PostPage() {
                       src={post?.cover_image as string}
                       alt={post?.title}
                       height={405}
-                      className="mt-8 transition-colors rounded-md bg-slate-200 group-hover:border-slate-900"
+                      className="w-full mt-8 transition-colors rounded-md bg-muted group-hover:border-dark"
                     />
                   )}
                   <div className="my-3">
                     {post?.tags &&
                       post?.tags.map((tag) => (
                         <Link
-                          className="m-1 inline-flex items-center gap-0.5 py-2 px-3 rounded-full text-sm bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-200 font-semibold"
+                          className="m-1 inline-flex items-center gap-0.5 py-2 px-3 rounded-full text-sm bg-muted hover:bg-muted dark:bg-dark dark:hover:bg-dark dark:text-muted font-semibold"
                           to={`/tag/${tag.name}`}
                           key={tag.id}
                           style={{
@@ -183,17 +131,39 @@ export default function PostPage() {
                       ))}
                   </div>
                   <div className="prose prose-h2:mt-0 prose-h3:mt-0 prose-cyan max-w-none dark:prose-invert">
-                    {/* <Suspense fallback={<ContentPostSkeleton />}>
-                    
-                  </Suspense> */}
-                    <ContentPost content={post?.content} />
+                    <Suspense fallback={<ContentPostSkeleton />}>
+                      <ContentPost content={post?.content} />
+                    </Suspense>
                   </div>
                 </>
               )}
             </div>
             <div className="order-1 text-sm xl:block lg:order-3">
-              <div className="sticky pt-5 -mt-10 overflow-y-auto top-16 lg:w-72">
+              <div className="sticky pt-5 -mt-10 top-16 lg:w-72">
                 {post && <TOC selector=".prose" />}
+                <div className="flex flex-col bg-[#5b68a7] text-light shadow-sm rounded-xl p-4 md:p-5">
+                  <h3 className="text-lg font-bold text-gray-800 dark:text-white">
+                    Stay in the loop
+                  </h3>
+                  <p className="mt-1">
+                    Get free expert insights and tips to grow your knowledge
+                    business sent right to your inbox.
+                  </p>
+
+                  <form className="mt-3 text-xs font-medium">
+                    <div className="flex flex-col space-y-2">
+                      <Input placeholder="ej: make@gmail.com" />
+                      <Button variant="link">Uneté al newsletter</Button>
+                    </div>
+                  </form>
+                  <p className="mt-2 text-gray-800 dark:text-gray-400">
+                    By submitting you agree to receive our monthly Knowledge
+                    Economy Newsletter as well as other promotional emails from
+                    Kajabi. You may withdraw your consent at any time via the
+                    “Unsubscribe” link in any email or view our privacy policy
+                    at any time.
+                  </p>
+                </div>
               </div>
             </div>
           </div>

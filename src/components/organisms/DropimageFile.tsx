@@ -1,6 +1,8 @@
 import { X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
 
 type IDropImageFileProps = {
   value?: any;
@@ -38,7 +40,7 @@ const ImagePreview = ({ image, onRemove }: IImagePreviewProps) => {
   return (
     <>
       {preview ? (
-        <div className="relative w-full">
+        <div className="relative w-full h-40">
           <img
             alt="Image preview"
             src={preview}
@@ -46,7 +48,7 @@ const ImagePreview = ({ image, onRemove }: IImagePreviewProps) => {
           />
           <div className={`absolute top-1.5 right-1.5`}>
             <button
-              className="inline-flex items-center text-sm font-medium text-center text-white bg-red-600 rounded-md px-0.5 hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-600"
+              className="inline-flex items-center text-sm font-medium text-center text-light bg-red-600 rounded-md px-0.5 hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-600"
               type="button"
               onClick={() => remove()}
             >
@@ -99,7 +101,10 @@ const DropImageFile: React.FC<IDropImageFileProps> = ({
   return (
     <div
       {...getRootProps({ className: "dropzone" })}
-      className={`flex cursor-pointer items-center justify-center overflow-hidden bg-gray-50 dark:bg-gray-800 dark:text-white`}
+      className={cn(
+        `flex cursor-pointer items-center justify-center overflow-hidden bg-light border border-dotted rounded-lg shadow-lg border-muted dark:bg-dark dark:text-app`,
+        preview ? "h-64" : "h-20"
+      )}
     >
       {!preview ? (
         <>
@@ -118,7 +123,7 @@ const DropImageFile: React.FC<IDropImageFileProps> = ({
               <span className="text-xs font-light">Suelta la imágen</span>
             ) : (
               <span className="text-xs">
-                <span className="font-bold text-gray-900 dark:text-white">
+                <span className="font-bold text-app-dark dark:text-light">
                   Abrir imagen
                 </span>{" "}
                 o arrastra y suelta las imágenes que deseas subir
@@ -127,20 +132,21 @@ const DropImageFile: React.FC<IDropImageFileProps> = ({
           </div>
         </>
       ) : (
-        <div className="relative w-full">
+        <div className="relative w-full h-full">
           <img
             alt="Image preview"
             src={preview}
-            className={`object-cover w-full h-64 scale-110 rounded-xl m-0`}
+            className={`object-cover object-center w-full m-0`}
           />
-          <div className={`absolute top-1.5 right-1.5`}>
-            <button
-              className="inline-flex items-center text-sm font-medium text-center text-white bg-red-600 rounded-md px-0.5 hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-600"
+          <div className={`absolute top-1.5 right-1.5 z-10`}>
+            <Button
+              variant="destructive"
               type="button"
+              size="sm"
               onClick={() => remove()}
             >
               <X className="w-5" />
-            </button>
+            </Button>
           </div>
         </div>
       )}

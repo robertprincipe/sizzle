@@ -1,14 +1,12 @@
-import { FieldError } from "react-hook-form";
-
 type IFeedbackProps = {
-  field?: FieldError;
+  field?: any;
 };
 
 const Feedback = ({ field }: IFeedbackProps) => {
   return (
     <>
       {field && (
-        <span className="text-red-500 text-xs">
+        <span className="text-xs text-red-500">
           {field.message || "Hubo un error"}
         </span>
       )}

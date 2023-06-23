@@ -19,7 +19,7 @@ const AuthLayout = () => {
       <div className="flex z-20 items-center inset-x-4 lg:inset-x-10 justify-between absolute top-4 lg:right-8 md:top-8">
         <Link
           to="/"
-          className="z-20 flex items-center text-lg text-gray-900 md:text-white dark:text-white md:dark:text-gray-900 font-medium"
+          className="z-20 flex items-center text-lg text-app-dark md:text-light dark:text-light md:dark:text-app-dark font-medium"
         >
           <img src={Logo} className="w-8 mr-1" /> Wariv
         </Link>
@@ -50,7 +50,7 @@ const AuthLayout = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="relative flex-col hidden h-screen p-10 text-white bg-muted md:flex">
+      <div className="relative flex-col hidden h-screen p-10 text-light bg-muted md:flex">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{

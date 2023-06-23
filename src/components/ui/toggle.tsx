@@ -5,13 +5,12 @@ import { cn } from "@/lib/utils";
 import { forwardRef } from "react";
 
 const toggleVariants = cva(
-  "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors data-[state=on]:bg-slate-200 dark:hover:bg-slate-800 dark:data-[state=on]:bg-slate-700 focus:outline-none dark:text-slate-100 focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:focus:ring-offset-slate-900 hover:bg-slate-100  dark:hover:text-slate-100 dark:data-[state=on]:text-slate-100",
+  "inline-flex items-center bg-light justify-center rounded-md text-sm font-medium transition-colors data-[state=on]:bg-light dark:hover:bg-dark dark:data-[state=on]:bg-dark focus:outline-none dark:text-light focus:ring-2 focus:ring-app-dark focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:focus:ring-offset--dark hover:bg-light  dark:hover:text-light dark:data-[state=on]:text-light",
   {
     variants: {
       variant: {
         default: "bg-transparent",
-        outline:
-          "bg-transparent border border-slate-200 hover:bg-slate-100 dark:border-slate-700",
+        outline: "bg-transparent border border-dark hover:bg-light",
       },
       size: {
         default: "h-10 px-3",

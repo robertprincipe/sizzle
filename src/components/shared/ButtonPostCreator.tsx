@@ -19,7 +19,7 @@ const ButtonPostCreator = () => {
       });
 
       setIsLoading(false);
-      router(`/post/${post.id}/edit`);
+      router(`/admin/post/${post.id}/edit`);
     } catch (error) {
       toastError(error);
     }

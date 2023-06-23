@@ -131,7 +131,7 @@ const InputTag = ({ defaultTags, onChange }: InputTagProps) => {
   return (
     <label
       htmlFor="input-tags"
-      className="relative block text-sm text-gray-900 bg-transparent cursor-text dark:text-white"
+      className="relative block text-sm text-app-dark bg-transparent cursor-text dark:text-light"
     >
       <div className="flex mb-2">
         <div className="flex space-x-1">

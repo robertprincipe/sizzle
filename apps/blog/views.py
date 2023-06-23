@@ -3,13 +3,14 @@ from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from .models import Tag, Post, Comment, Reaction
+from .models import Tag, Post, Comment, Reaction, ViewCount
 from .serializers import (
     PostSerializer,
     TagSerializer,
     ReactionSerializer,
     CommentSerializer,
     TagAllSerializer,
+    PostEditorSerializer,
 )
 from .permissions import IsAuthorOrAdminOrModerator
 from django.db.models import Count
@@ -148,7 +149,7 @@ def editor_posts(request):
             {"message": "No tienes publicaciones"}, status=status.HTTP_404_NOT_FOUND
         )
 
-    posts = PostSerializer(posts, many=True)
+    posts = PostEditorSerializer(posts, many=True)
 
     return Response(posts.data, status=status.HTTP_200_OK)
 
@@ -157,7 +158,18 @@ def editor_posts(request):
 def post_detail(request, slug):
     try:
         post = Post.post_objects.get(slug__iexact=slug)
-        post.view_count += 1
+
+        address = request.META.get("HTTP_X_FORWARDED_FOR")
+        if address:
+            ip = address.split(",")[-1].strip()
+        else:
+            ip = request.META.get("REMOTE_ADDR")
+
+        if not ViewCount.objects.filter(post=post, ip_address=ip).exists():
+            view = ViewCount(post=post, ip_address=ip)
+            view.save()
+
+        post.views += 1
         post.save()
         post = PostSerializer(post)
         return Response(post.data, status=status.HTTP_200_OK)
@@ -190,7 +202,6 @@ def post_data_x(request, id):
 @permission_classes([IsAuthenticated, IsAuthorOrAdminOrModerator])
 def patch_post(request, id):
     try:
-        print(request.data.get("content", "No hay nada"))
         post = get_post(id=id)
         post_validate_slug = Post.objects.filter(slug=request.data.get("slug"))
         if post_validate_slug.exists() and post != post_validate_slug.first():
@@ -221,7 +232,6 @@ def patch_post(request, id):
 @api_view(["DELETE"])
 @permission_classes([IsAuthenticated, IsAuthorOrAdminOrModerator])
 def delete_image_post(request, post_id):
-    print(request.data)
     try:
         post = get_post(id=post_id)
         try:
@@ -538,7 +548,6 @@ def bulk_delete_images(request):
             {"message": "Imagenes eliminadas correctamente."}, status=status.HTTP_200_OK
         )
     except Exception as e:
-        print(e)
         return Response(
             {"message": "Hubo un error, intente más tarde."},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR,

@@ -13,7 +13,7 @@ from apps.blog.storage import ImageKitStorage
 @receiver(pre_save)
 def pre_save_handler(sender, instance, **kwargs):
     for field in instance._meta.fields:
-        if isinstance(field, ImageField) or isinstance(field, FileField):
+        if isinstance(field, (ImageField, FileField)):
             try:
                 old_instance = sender.objects.get(pk=instance.pk)
                 old_value = getattr(old_instance, field.name)
@@ -28,7 +28,7 @@ def pre_save_handler(sender, instance, **kwargs):
 def pre_delete_handler(sender, instance, **kwargs):
     # Busca todos los campos de imagen y archivos del modelo
     for field in instance._meta.fields:
-        if isinstance(field, ImageField) or isinstance(field, FileField):
+        if isinstance(field, (ImageField, FileField)):
             try:
                 # Elimina la imagen o archivo asociado a cada campo
                 if getattr(instance, field.name):

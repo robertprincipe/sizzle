@@ -1,12 +1,15 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { Link, Outlet } from "react-router-dom";
+import { Input } from "../ui/input";
+import { UserNav } from "@/pages/Admin/components/user-nav";
+import TeamSwitcher from "@/pages/Admin/components/team-switcher";
 
 export default function DashboardLayout() {
   return (
     <>
-      <div className="flex-col flex container mx-auto">
-        <div className="flex-1 md:p-8 md:pt-6 space-y-4">
+      <div className="container flex flex-col mx-auto">
+        <div className="flex-1 space-y-4 md:p-8 md:pt-6">
           <div className="flex items-center justify-between space-y-2">
             <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
           </div>

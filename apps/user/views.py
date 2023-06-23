@@ -26,7 +26,6 @@ def update_profile(request, id):
 
         return Response(user.data, status=status.HTTP_200_OK)
     except Exception as e:
-        print(e)
         return Response(
             {"message": "hubo un error"}, status=status.HTTP_400_BAD_REQUEST
         )
@@ -64,7 +63,6 @@ def remove_image_profile(request, id, image):
             {"message": "Removido correctamente"}, status=status.HTTP_200_OK
         )
     except Exception as e:
-        print(e)
         return Response(
             {"message": "hubo un error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )

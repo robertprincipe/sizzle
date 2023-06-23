@@ -12,7 +12,7 @@ const TagPage = () => {
   return (
     <section className="container max-w-4xl mx-auto ">
       <div
-        className={`flex flex-col mt-5 relative shadow-lg dark:shadow-md dark:shadow-gray-600 rounded-2xl overflow-hidden`}
+        className={`flex flex-col mt-5 relative shadow-lg dark:shadow-md dark:shadow-dark rounded-2xl overflow-hidden`}
       >
         <div className="flex items-center space-x-4">
           <img
@@ -22,7 +22,7 @@ const TagPage = () => {
           />
           <div>
             <h1 className="mb-3 text-4xl font-black">#{tag?.name}</h1>
-            <p className="font-medium text-gray-400">{tag?.description}</p>
+            <p className="font-medium text-muted">{tag?.description}</p>
           </div>
         </div>
 
@@ -49,13 +49,13 @@ const TagPage = () => {
                         src={post.cover_image as string}
                         alt="Image Description"
                       />
-                      {/* <span className="absolute top-0 right-0 rounded-tr-xl rounded-bl-xl text-xs font-medium bg-gray-800 text-white py-1.5 px-3 dark:bg-gray-900">
+                      {/* <span className="absolute top-0 right-0 rounded-tr-xl rounded-bl-xl text-xs font-medium bg-dark text-light py-1.5 px-3 dark:bg-indigo-500">
                     Sponsored
                   </span> */}
                     </div>
 
                     <div className="mt-2">
-                      <h3 className="text-2xl font-bold text-gray-800 group-hover:text-gray-600 dark:text-gray-200">
+                      <h3 className="text-2xl font-bold text-dark group-hover:text-dark dark:text-muted">
                         {post.title}
                       </h3>
                       {post.tags && (

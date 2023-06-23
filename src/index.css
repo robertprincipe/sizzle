@@ -2,6 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --color-primary: #ea137f;
+    --color-secondary: #7f5eea;
+    --color-success: #5eea13;
+    --color-warning: #eaea13;
+    --color-default: #eaeaea;
+    --color-destructive: #e6567a;
+    --color-link: #13eaea;
+    --color-ghost: #f8f8f8;
+    --color-muted: #384445;
+    --color-dark: #042c30;
+    --color-light: #f6faff;
+    /* --color-app-dark: #031922; */
+    --color-app-dark: #0d1415;
+    /* --color-app-light: #defcff; */
+    --color-app-light: #fff;
+    --color-forms: #d8fcff;
+    --color-border: #e5e7eb;
+    --color-muted-light: #d8fcff;
+    /* placeholder:text-[#84858a] */
+  }
+  /*a9a8e0*/
+}
+
 /* @layer base {
   :root {
     --background: 0 0% 100%;
@@ -86,7 +111,7 @@
   }
 
   .step:before {
-    @apply absolute w-8 h-8 bg-muted rounded-full font-medium text-center text-base inline-flex items-center justify-center -indent-px;
+    @apply absolute inline-flex items-center justify-center w-8 h-8 text-base font-medium text-center rounded-full bg-muted -indent-px;
     @apply ml-[-41px];
     content: counter(step);
   }
@@ -107,11 +132,11 @@
 }
 
 .wizzard input {
-  @apply w-full p-2 rounded-sm text-sm focus:outline-none border;
+  @apply w-full p-2 text-sm border rounded-sm focus:outline-none;
 }
 
 .inline-wizz {
-  @apply w-full p-2 rounded-sm text-sm focus:outline-none border;
+  @apply w-full p-2 text-sm border rounded-sm focus:outline-none;
 }
 
 .wizzard.withBorder img {
@@ -194,4 +219,8 @@
 .dark .cdx-notify__cross::after,
 .dark .cdx-notify__cross::before {
   background: white;
+}
+
+.prose img {
+  width: 100%;
 }

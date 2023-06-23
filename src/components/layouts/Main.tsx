@@ -1,6 +1,6 @@
 import { Outlet, useLocation, useNavigation } from "react-router-dom";
 import { SiteHeader } from "../site-header";
-import Footer from "../shared/footer";
+import Footer from "../shared/Footer";
 import { useAuthStore } from "@/store/auth";
 import { useEffect } from "react";
 

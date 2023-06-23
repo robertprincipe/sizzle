@@ -31,7 +31,7 @@ const ReactionPost = ({ postId }: IReactionPostProps) => {
 
   return (
     <div className="relative order-3 lg:order-1">
-      <div className="sticky flex items-center pt-10 -mt-10 overflow-y-auto text-gray-500 top-16 dark:text-gray-400 lg:w-40 justify-center">
+      <div className="sticky flex items-center pt-10 -mt-10 overflow-y-auto text-muted top-16 dark:text-muted lg:w-40 justify-center">
         {isLoading ? (
           <div className="flex py-2 pl-2 pr-4">
             <Loader2 className="animate-spin" />
@@ -43,7 +43,7 @@ const ReactionPost = ({ postId }: IReactionPostProps) => {
                 {reaction_list?.reactions?.map((r, idx) => (
                   <button
                     key={idx}
-                    className={`flex flex-col items-center hover:text-gray-800 dark:hover:text-gray-200 p-1 rounded-full ${
+                    className={`flex flex-col items-center hover:text-dark dark:hover:text-muted p-1 rounded-full ${
                       reaction_list?.user_reaction == r.emoji
                         ? "bg-blue-400/40"
                         : ""

@@ -1,0 +1,17 @@
+https://github.com/AlexandroMtzG/remix-page-blocks/tree/e9bb204ae822adab2bad7bf74109933a74cc424e
+
+como crear un creador de sitios web tipo page block builder, en reactjs y django como backend para guardar los datos de usuarios, la base de datos es postgres, como serian el guardado de la paginas en base de datos?, que ejemplos puedo tomar
+
+quiero crear una aplicacion multitenant para la creación de paginas web tipo page block builder 
+usando tecnologias con nextjs como frontend y django como backend, haciendo uso tailwindcss para los estilos
+dnd-kit para el dragndrop de los bloques y zod conjuntamente a react-hook-form para la validacion de los formularios 
+quiero que se puedan tener multiples paginas, y que existan elementos dinamicos en cada pagina 
+tambien que si existen formularios estos sean funcionales, tambien tener el page block builder, tener una forma de probar 
+la web en pantallas pequeñas medianas y grandes para verificar el responsive
+
+quiero crear un page block builder con nextjs como frontend y django como backend usar 
+librerias como tailwindcss y dnd-kit para el dragndrop de los bloques de cada pagina,
+quiero poder crear multiples paginas y que estos sean
+
+f5bd34
+1fb6ff

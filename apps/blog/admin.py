@@ -57,7 +57,7 @@ class TagAdmin(ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(ModelAdmin):
-    list_display = ("title", "published", "view_count", "formatted_created_at")
+    list_display = ("title", "published", "views", "formatted_created_at")
     list_display_links = ("title",)
     search_fields = ("title", "content")
     list_filter = ["published"]

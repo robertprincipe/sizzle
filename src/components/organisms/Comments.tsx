@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import Feedback from "../atoms/Feedback";
+// import Feedback from "../atoms/Feedback";
 import { toast } from "sonner";
 
 import { Textarea } from "../ui/textarea";
@@ -61,7 +61,7 @@ const Comments = ({ post: { id: post_id, comment_count } }: ICommentsProps) => {
     };
 
     try {
-      const { data } = editComment
+      const data = editComment
         ? await updateCommentPost(commentDataPost)
         : await commentPost(commentDataPost);
       toast(editComment ? "Comentario editado." : "Comentario creado.");
@@ -92,77 +92,71 @@ const Comments = ({ post: { id: post_id, comment_count } }: ICommentsProps) => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900" id="comments">
-      <div className="max-w-2xl px-4 mx-auto">
-        <div className="flex items-center justify-between mb-4">
-          <h4 className="text-lg font-bold text-gray-900 lg:text-2xl dark:text-white">
-            Comentarios ({comment_count || 0})
-          </h4>
-        </div>
-        <form
-          className="mb-6"
-          onSubmit={handleSubmit(onSubmit)}
-          id="to-comment"
-        >
-          {toReply && (
-            <div className="px-2 pb-2">
-              <div className="text-sm mb-1">Contestar a:</div>
+    <div className="max-w-2xl px-4 mx-auto" id="comments">
+      <div className="flex items-center justify-between mb-4">
+        <h4 className="text-lg font-bold text-app-dark lg:text-2xl dark:text-light">
+          Comentarios ({comment_count || 0})
+        </h4>
+      </div>
+      <form className="mb-6" onSubmit={handleSubmit(onSubmit)} id="to-comment">
+        {toReply && (
+          <div className="px-2 pb-2">
+            <div className="mb-1 text-sm">Contestar a:</div>
+            <div className="flex items-center space-x-2">
+              <div className="w-1 h-8 bg-muted rounded-full dark:bg-muted" />
               <div className="flex items-center space-x-2">
-                <div className="bg-gray-500 dark:bg-gray-300 w-1 h-8 rounded-full" />
-                <div className="flex items-center space-x-2">
-                  <div className="flex space-x-1 items-center">
-                    <img
-                      className="w-6 h-6 rounded-full"
-                      src={toReply.user?.picture as string}
-                      alt="Michael Gough"
-                    />
-                    <span className="font-semibold">
-                      {toReply.user?.username}
-                    </span>
-                    :
-                  </div>
-                  <p className="inline-flex items-center text-sm text-gray-600 dark:text-gray-300">
-                    {toReply.content}
-                  </p>
+                <div className="flex items-center space-x-1">
+                  <img
+                    className="w-6 h-6 rounded-full"
+                    src={toReply.user?.picture as string}
+                    alt="Michael Gough"
+                  />
+                  <span className="font-semibold">
+                    {toReply.user?.username}
+                  </span>
+                  :
                 </div>
+                <p className="inline-flex items-center text-sm text-dark dark:text-muted">
+                  {toReply.content}
+                </p>
               </div>
             </div>
-          )}
-          <div className="grid w-full gap-2">
-            <Textarea
-              placeholder="Type your message here."
-              {...register("content")}
-            />
-            <Feedback field={errors.content} />
-            <Button>
-              {/* {&& <Loader2 className="animate-spin" />} */}
-              Comentar
-            </Button>
           </div>
-        </form>
-        {data?.data?.map((comment) => (
-          <div key={comment.id}>
-            <CommentCard
-              comment={comment}
-              setToReply={setToReply}
-              onDelete={deleteComment}
-              onEdit={updatePost}
-              children={
-                comment.replies &&
-                comment.replies.map((reply) => (
-                  <CommentCard
-                    key={reply.id}
-                    comment={reply}
-                    setToReply={setToReply}
-                    onDelete={deleteComment}
-                    onEdit={updatePost}
-                  />
-                ))
-              }
-            />
-          </div>
-        ))}
-      </div>
+        )}
+        <div className="grid w-full gap-2">
+          <Textarea
+            placeholder="Type your message here."
+            {...register("content")}
+          />
+          {/* <Feedback field={errors.content} /> */}
+          <Button>
+            {/* {&& <Loader2 className="animate-spin" />} */}
+            Comentar
+          </Button>
+        </div>
+      </form>
+      {data?.map((comment) => (
+        <div key={comment.id}>
+          <CommentCard
+            comment={comment}
+            setToReply={setToReply}
+            onDelete={deleteComment}
+            onEdit={updatePost}
+            children={
+              comment.replies &&
+              comment.replies.map((reply) => (
+                <CommentCard
+                  key={reply.id}
+                  comment={reply}
+                  setToReply={setToReply}
+                  onDelete={deleteComment}
+                  onEdit={updatePost}
+                />
+              ))
+            }
+          />
+        </div>
+      ))}
     </div>
   );
 };

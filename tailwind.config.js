@@ -3,10 +3,7 @@ const { fontFamily } = require("tailwindcss/defaultTheme");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-  content: [
-    "./index.html", // <= add this
-    "./src/**/*.{js,ts,jsx,tsx}", // <= no spaces
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     container: {
       center: true,
@@ -15,45 +12,26 @@ module.exports = {
         "2xl": "1360px",
       },
     },
+    colors: {
+      transparent: "transparent",
+      currentColor: "currentColor",
+      primary: "var(--color-primary)",
+      secondary: "var(--color-secondary)",
+      success: "var(--color-success)",
+      warning: "var(--color-warning)",
+      default: "var(--color-default)",
+      destructive: "var(--color-destructive)",
+      link: "var(--color-link)",
+      ghost: "var(--color-ghost)",
+      muted: "var(--color-muted)",
+      dark: "var(--color-dark)",
+      "app-dark": "var(--color-app-dark)",
+      "app-light": "var(--color-app-light)",
+      light: "var(--color-light)",
+      forms: "var(--color-forms)",
+      border: "var(--color-border)",
+    },
     extend: {
-      // fontFamily: {
-      //   sans: ["var(--font-sans)", ...fontFamily.sans],
-      // },
-      // colors: {
-      //   border: "hsl(var(--border))",
-      //   input: "hsl(var(--input))",
-      //   ring: "hsl(var(--ring))",
-      //   background: "hsl(var(--background))",
-      //   foreground: "hsl(var(--foreground))",
-      //   primary: {
-      //     DEFAULT: "hsl(var(--primary))",
-      //     foreground: "hsl(var(--primary-foreground))",
-      //   },
-      //   secondary: {
-      //     DEFAULT: "hsl(var(--secondary))",
-      //     foreground: "hsl(var(--secondary-foreground))",
-      //   },
-      //   destructive: {
-      //     DEFAULT: "hsl(var(--destructive))",
-      //     foreground: "hsl(var(--destructive-foreground))",
-      //   },
-      //   muted: {
-      //     DEFAULT: "hsl(var(--muted))",
-      //     foreground: "hsl(var(--muted-foreground))",
-      //   },
-      //   accent: {
-      //     DEFAULT: "hsl(var(--accent))",
-      //     foreground: "hsl(var(--accent-foreground))",
-      //   },
-      //   popover: {
-      //     DEFAULT: "hsl(var(--popover))",
-      //     foreground: "hsl(var(--popover-foreground))",
-      //   },
-      //   card: {
-      //     DEFAULT: "hsl(var(--card))",
-      //     foreground: "hsl(var(--card-foreground))",
-      //   },
-      // },
       keyframes: {
         "accordion-down": {
           from: { height: 0 },

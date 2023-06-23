@@ -10,7 +10,7 @@ import { useAuthStore } from "@/store/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import Feedback from "@/components/atoms/Feedback";
+// import Feedback from "@/components/atoms/Feedback";
 import { resetPassword } from "@/services/auth";
 import { toastError } from "@/lib/errors";
 
@@ -53,7 +53,7 @@ const ResetPassword = () => {
           <h1 className="text-2xl font-semibold tracking-tight">
             Olvido su contraseña
           </h1>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-muted">
             Le enviaremos un email para que pueda cambiarla nuevamente.
           </p>
         </div>
@@ -72,7 +72,7 @@ const ResetPassword = () => {
                 disabled={isLoading}
                 {...register("email")}
               />
-              <Feedback field={errors.email} />
+              {/* <Feedback field={errors.email} /> */}
             </div>
             <Button disabled={isLoading}>
               {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
@@ -84,13 +84,13 @@ const ResetPassword = () => {
         <div className="flex flex-col">
           <Link
             to={"/auth/login"}
-            className="text-center uppercase text-xs mb-2"
+            className="mb-2 text-xs text-center uppercase"
           >
             Creo que me acuerdo
           </Link>
         </div>
 
-        <p className="px-8 text-sm text-center text-gray-300">
+        <p className="px-8 text-sm text-center text-muted">
           By clicking continue, you agree to our{" "}
           <Link
             to="/terms"

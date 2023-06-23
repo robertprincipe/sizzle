@@ -18,19 +18,19 @@ export function MainNav({
       </Link>
       <Link
         to="/examples/dashboard"
-        className="text-sm font-medium transition-colors text-gray-300 hover:text-primary"
+        className="text-sm font-medium transition-colors text-muted hover:text-primary"
       >
         Customers
       </Link>
       <Link
         to="/examples/dashboard"
-        className="text-sm font-medium transition-colors text-gray-300 hover:text-primary"
+        className="text-sm font-medium transition-colors text-muted hover:text-primary"
       >
         Products
       </Link>
       <Link
         to="/examples/dashboard"
-        className="text-sm font-medium transition-colors text-gray-300 hover:text-primary"
+        className="text-sm font-medium transition-colors text-muted hover:text-primary"
       >
         Settings
       </Link>

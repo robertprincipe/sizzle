@@ -31,7 +31,7 @@ const AnotherDropImage = ({ value, onChange }: any) => {
     <>
       <div
         {...getRootProps({ className: "dropzone" })}
-        className={`flex cursor-pointer items-center justify-center overflow-hidden border border-gray-300 bg-gray-50 dark:bg-gray-800 dark:text-white`}
+        className={`flex cursor-pointer items-center justify-center overflow-hidden border border-muted bg-gray-50 dark:bg-dark dark:text-light`}
       >
         <input
           type="file"
@@ -46,7 +46,7 @@ const AnotherDropImage = ({ value, onChange }: any) => {
             <span className="text-xs font-light">Suelta la imágen</span>
           ) : (
             <span className="text-xs">
-              <span className="font-bold text-gray-900 dark:text-white">
+              <span className="font-bold text-app-dark dark:text-light">
                 Abrir imagen
               </span>{" "}
               o arrastra y suelta las imágenes que deseas subir

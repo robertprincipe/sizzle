@@ -1,4 +1,7 @@
 import Head from "@/components/shared/Head";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 const ContactPage = () => {
   return (
@@ -6,115 +9,72 @@ const ContactPage = () => {
       <Head title="Contacto" />
       <div className="max-w-2xl mx-auto lg:max-w-5xl">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-800 dark:text-white sm:text-4xl">
+          <h1 className="text-3xl font-bold text-dark dark:text-light sm:text-4xl">
             Contact us
           </h1>
-          <p className="mt-1 text-gray-600 dark:text-gray-400">
-            Wed love to talk about how we can help you.
-          </p>
+          <p className="mt-1">Wed love to talk about how we can help you.</p>
         </div>
 
         <div className="grid items-center gap-6 mt-12 lg:grid-cols-2 lg:gap-16">
-          <div className="flex flex-col p-4 border rounded-xl dark:border-gray-700 sm:p-6 lg:p-8">
-            <h2 className="mb-8 text-xl font-semibold text-gray-800 dark:text-gray-200">
-              Fill in the form
-            </h2>
+          <div className="flex flex-col p-4 border dark:bg-app-dark rounded-xl border-border dark:border-[#2e2d2d] bg-light sm:p-6 lg:p-8">
+            <h2 className="mb-8 text-xl font-semibold">Fill in the form</h2>
 
-            <form>
+            <form autoComplete="off">
               <div className="grid gap-4">
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
-                    <label
-                      htmlFor="hs-firstname-contacts-1"
-                      className="sr-only"
-                    >
-                      First Name
-                    </label>
-                    <input
-                      type="text"
-                      name="hs-firstname-contacts-1"
-                      id="hs-firstname-contacts-1"
-                      className="block w-full px-4 py-3 text-sm border border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400"
-                      placeholder="First Name"
-                    />
+                    <label className="sr-only">First Name</label>
+                    <Input type="text" placeholder="First Name" />
                   </div>
 
                   <div>
-                    <label htmlFor="hs-lastname-contacts-1" className="sr-only">
-                      Last Name
-                    </label>
-                    <input
-                      type="text"
-                      name="hs-lastname-contacts-1"
-                      id="hs-lastname-contacts-1"
-                      className="block w-full px-4 py-3 text-sm border border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400"
-                      placeholder="Last Name"
-                    />
+                    <label className="sr-only">Last Name</label>
+                    <Input type="text" placeholder="Last Name" />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="hs-email-contacts-1" className="sr-only">
-                    Email
-                  </label>
-                  <input
+                  <label className="sr-only">Email</label>
+                  <Input
                     type="email"
-                    name="hs-email-contacts-1"
-                    id="hs-email-contacts-1"
                     autoComplete="email"
-                    className="block w-full px-4 py-3 text-sm border border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400"
                     placeholder="Email"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="hs-phone-number-1" className="sr-only">
-                    Phone Number
-                  </label>
-                  <input
-                    type="text"
-                    name="hs-phone-number-1"
-                    id="hs-phone-number-1"
-                    className="block w-full px-4 py-3 text-sm border border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400"
-                    placeholder="Phone Number"
-                  />
+                  <label className="sr-only">Phone Number</label>
+                  <Input type="text" placeholder="Phone Number" />
                 </div>
 
                 <div>
-                  <label htmlFor="hs-about-contacts-1" className="sr-only">
-                    Details
-                  </label>
-                  <textarea
-                    id="hs-about-contacts-1"
-                    name="hs-about-contacts-1"
-                    rows={4}
-                    className="block w-full px-4 py-3 text-sm border border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400"
-                    placeholder="Details"
-                  ></textarea>
+                  <label className="sr-only">Details</label>
+                  <Textarea rows={4} placeholder="Details"></Textarea>
                 </div>
               </div>
 
               <div className="grid mt-4">
-                <button
+                <Button
                   type="submit"
-                  className="inline-flex items-center justify-center px-4 py-3 text-sm font-medium text-center text-white transition bg-blue-600 border border-transparent rounded-md gap-x-3 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 lg:text-base"
+                  variant={"success"}
+                  // className="inline-flex items-center justify-center px-4 py-3 text-sm font-medium text-center text-light transition bg-blue-600 border border-transparent rounded-md gap-x-3 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-dark lg:text-base"
                 >
                   Send inquiry
-                </button>
+                </Button>
               </div>
 
               <div className="mt-3 text-center">
-                <p className="text-sm text-gray-500">
+                <p className="text-sm dark:text-border">
                   Well get back to you in 1-2 business days.
                 </p>
               </div>
             </form>
           </div>
 
-          <div className="divide-y divide-gray-200 dark:divide-gray-800">
+          <div className="divide-y divide-border dark:divide-border">
             <div className="flex py-6 gap-x-7">
               <svg
-                className="mt-1.5 h-6 w-6 shrink-0 text-gray-800 dark:text-gray-200"
+                className="mt-1.5 h-6 w-6 shrink-0"
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
@@ -125,14 +85,12 @@ const ContactPage = () => {
                 <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
               </svg>
               <div>
-                <h3 className="font-semibold text-gray-800 dark:text-gray-200">
-                  Knowledgebase
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">
+                <h3 className="font-semibold">Knowledgebase</h3>
+                <p className="mt-1 text-sm dark:text-border">
                   Were here to help with any questions or code.
                 </p>
                 <a
-                  className="inline-flex items-center mt-2 text-sm font-medium text-gray-600 gap-x-2 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
+                  className="inline-flex items-center mt-2 text-sm font-medium text-link gap-x-2 hover dark:hover:text-muted"
                   href="#"
                 >
                   Contact support
@@ -157,7 +115,7 @@ const ContactPage = () => {
 
             <div className="flex py-6 gap-x-7">
               <svg
-                className="mt-1.5 h-6 w-6 shrink-0 text-gray-800 dark:text-gray-200"
+                className="mt-1.5 h-6 w-6 shrink-0"
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
@@ -168,14 +126,12 @@ const ContactPage = () => {
                 <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
               </svg>
               <div>
-                <h3 className="font-semibold text-gray-800 dark:text-gray-200">
-                  FAQ
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">
+                <h3 className="font-semibold">FAQ</h3>
+                <p className="mt-1 text-sm dark:text-border">
                   Search our FAQ for answers to anything you might ask.
                 </p>
                 <a
-                  className="inline-flex items-center mt-2 text-sm font-medium text-gray-600 gap-x-2 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
+                  className="inline-flex items-center mt-2 text-sm font-medium text-link gap-x-2 hover dark:hover:text-muted"
                   href="#"
                 >
                   Visit FAQ
@@ -200,7 +156,7 @@ const ContactPage = () => {
 
             <div className="flex py-6 gap-x-7">
               <svg
-                className="mt-1.5 h-6 w-6 shrink-0 text-gray-800 dark:text-gray-200"
+                className="mt-1.5 h-6 w-6 shrink-0"
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
@@ -211,14 +167,12 @@ const ContactPage = () => {
                 <path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2zm12 1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h12z" />
               </svg>
               <div>
-                <h3 className="font-semibold text-gray-800 dark:text-gray-200">
-                  Developer APIs
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">
+                <h3 className="font-semibold">Developer APIs</h3>
+                <p className="mt-1 text-sm dark:text-border">
                   Check out our development quickstart guide.
                 </p>
                 <a
-                  className="inline-flex items-center mt-2 text-sm font-medium text-gray-600 gap-x-2 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
+                  className="inline-flex items-center mt-2 text-sm font-medium text-link gap-x-2 hover dark:hover:text-muted"
                   href="#"
                 >
                   Contact sales
@@ -243,7 +197,7 @@ const ContactPage = () => {
 
             <div className="flex py-6 gap-x-7">
               <svg
-                className="mt-1.5 h-6 w-6 shrink-0 text-gray-800 dark:text-gray-200"
+                className="mt-1.5 h-6 w-6 shrink-0"
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
@@ -253,14 +207,12 @@ const ContactPage = () => {
                 <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
               </svg>
               <div>
-                <h3 className="font-semibold text-gray-800 dark:text-gray-200">
-                  Contact us by email
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">
+                <h3 className="font-semibold">Contact us by email</h3>
+                <p className="mt-1 text-sm dark:text-border">
                   If you wish to write us an email instead please use
                 </p>
                 <a
-                  className="inline-flex items-center mt-2 text-sm font-medium text-gray-600 gap-x-2 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
+                  className="inline-flex items-center mt-2 text-sm font-medium text-link gap-x-2 hover dark:hover:text-muted"
                   href="#"
                 >
                   example@site.com

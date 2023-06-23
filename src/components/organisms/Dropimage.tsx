@@ -73,8 +73,8 @@ const Dropimage: React.FC<IDropimageProps> = ({
       <div
         {...getRootProps({ className: "dropzone" })}
         className={`flex cursor-pointer items-center justify-center overflow-hidden ${
-          imagePreview ? "" : "border border-gray-300"
-        } bg-gray-50 dark:bg-gray-800 dark:text-white ${
+          imagePreview ? "" : "border border-muted"
+        } bg-gray-50 dark:bg-dark dark:text-light ${
           isCircle
             ? `${SIZES[size || "md"]} rounded-full`
             : imagePreview
@@ -94,7 +94,7 @@ const Dropimage: React.FC<IDropimageProps> = ({
                 <span className="text-xs font-light">Suelta la imágen</span>
               ) : (
                 <span className="text-xs">
-                  <span className="font-bold text-gray-900 dark:text-white">
+                  <span className="font-bold text-app-dark dark:text-light">
                     Abrir imagen
                   </span>{" "}
                   o arrastra y suelta las imágenes que deseas subir
@@ -120,7 +120,7 @@ const Dropimage: React.FC<IDropimageProps> = ({
           }`}
         >
           <button
-            className="inline-flex items-center text-sm font-medium text-center text-white bg-red-600 rounded-md px-0.5 hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-600"
+            className="inline-flex items-center text-sm font-medium text-center text-light bg-red-600 rounded-md px-0.5 hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-600"
             type="button"
             onClick={removeImageFromState}
           >

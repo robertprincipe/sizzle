@@ -21,12 +21,12 @@ interface MainNavProps {
 export function MainNav({ items }: MainNavProps) {
   return (
     <div className="flex gap-6 md:gap-10">
-      <a href="/" className="items-center hidden space-x-2 md:flex">
+      <Link to="/" className="items-center hidden space-x-2 md:flex">
         <img src={Logo} className="w-8" />
         <span className="hidden font-bold sm:inline-block">
           {siteConfig.name}
         </span>
-      </a>
+      </Link>
       {items?.length ? (
         <nav className="hidden gap-6 md:flex">
           {items?.map(
@@ -36,7 +36,7 @@ export function MainNav({ items }: MainNavProps) {
                   key={index}
                   to={item.href}
                   className={cn(
-                    "flex items-center text-lg font-semibold text-slate-600 hover:text-slate-900 dark:text-slate-100 sm:text-sm",
+                    "flex items-center text-lg font-semibold text-dark hover:text--dark dark:text-slate-100 sm:text-sm",
                     item.disabled && "cursor-not-allowed opacity-80"
                   )}
                 >
@@ -61,17 +61,17 @@ export function MainNav({ items }: MainNavProps) {
           className="w-[300px] overflow-scroll"
         >
           <DropdownMenuLabel>
-            <a href="/" className="flex items-center">
+            <Link to="/" className="flex items-center">
               <img src="/apple-touch-icon.png" className="w-8 mr-2" />{" "}
               {siteConfig.name}
-            </a>
+            </Link>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           {items?.map(
             (item, index) =>
               item.href && (
                 <DropdownMenuItem key={index} asChild>
-                  <a href={item.href}>{item.title}</a>
+                  <Link to={item.href}>{item.title}</Link>
                 </DropdownMenuItem>
               )
           )}

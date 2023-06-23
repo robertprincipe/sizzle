@@ -52,6 +52,7 @@ const EditorPostsPage = () => {
         refetch();
       }
     } catch (error) {
+      console.log(error);
       toastError(error);
     }
   };
@@ -82,8 +83,8 @@ const EditorPostsPage = () => {
           </div>
         </>
       ) : (
-        <div className="border border-gray-300 divide-y divide-gray-300 rounded-md dark:border-gray-600 dark:divide-gray-600">
-          {posts?.data.map((post) => (
+        <div className="border border-muted divide-y divide-muted rounded-md dark:border-dark dark:divide-dark">
+          {posts?.map((post) => (
             <div
               className="grid items-center justify-between grid-cols-8 p-4"
               key={post.id}
@@ -97,7 +98,7 @@ const EditorPostsPage = () => {
                   {post.title}
                 </a>
                 <div>
-                  <p className="text-sm text-gray-300">
+                  <p className="text-sm text-muted">
                     {fromNow(post.created_at || new Date())}
                   </p>
                 </div>
@@ -121,7 +122,7 @@ const EditorPostsPage = () => {
 
               <div className="flex justify-end col-start-8 col-end-9 space-x-2">
                 <Link
-                  to={`/post/${post.id}/edit?backTo=${pathname}`}
+                  to={`/admin/post/${post.id}/edit?backTo=${pathname}`}
                   className="font-semibold hover:underline"
                 >
                   <Edit3 className="text-blue-400" />

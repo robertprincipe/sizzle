@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Feedback from "@/components/atoms/Feedback";
+// import Feedback from "@/components/atoms/Feedback";
 import { useAuthStore } from "@/store/auth";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { signup } from "@/services/auth";
@@ -67,7 +67,7 @@ const SignUpPage = () => {
             <h1 className="text-2xl font-semibold tracking-tight">
               Registrase
             </h1>
-            <p className="text-sm text-gray-300">
+            <p className="text-sm text-muted">
               Podrás acceder a muchas herramientas y publicaciones ocultas.
             </p>
           </div>
@@ -82,7 +82,7 @@ const SignUpPage = () => {
                   disabled={isLoading}
                   {...register("username")}
                 />
-                <Feedback field={errors.username} />
+                {/* <Feedback field={errors.username} /> */}
                 <Input
                   placeholder="Correo electrónico"
                   type="email"
@@ -92,7 +92,7 @@ const SignUpPage = () => {
                   disabled={isLoading}
                   {...register("email")}
                 />
-                <Feedback field={errors.email} />
+                {/* <Feedback field={errors.email} /> */}
                 <Input
                   placeholder="Contraseña"
                   type="password"
@@ -107,7 +107,7 @@ const SignUpPage = () => {
                   disabled={isLoading}
                   {...register("re_password")}
                 />
-                <Feedback field={errors.password} />
+                {/* <Feedback field={errors.password} /> */}
               </div>
               <Button disabled={isLoading}>
                 {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
@@ -119,7 +119,7 @@ const SignUpPage = () => {
           <div className="flex flex-col">
             <Link
               to={"/auth/resend-activation"}
-              className="text-center uppercase text-xs mb-2"
+              className="mb-2 text-xs text-center uppercase"
             >
               He perdido el correo de activación
             </Link>
@@ -128,13 +128,13 @@ const SignUpPage = () => {
               to={"/auth/login"}
               className="relative flex justify-center text-xs uppercase"
             >
-              <span className="px-2 bggray-900 text-gray-300">
+              <span className="px-2 text-muted bgapp-dark">
                 Ya tengo una cuenta
               </span>
             </Link>
           </div>
 
-          <p className="px-8 text-sm text-center text-gray-300">
+          <p className="px-8 text-sm text-center text-muted">
             By clicking continue, you agree to our{" "}
             <Link
               to="/terms"
@@ -160,14 +160,14 @@ const SignUpPage = () => {
       >
         <DialogContent>
           <DialogHeader>
-            <div className="px-4 text-center overflow-y-auto">
-              <h3 className="mb-2 text-xl font-bold text-gray-800 dark:text-gray-200">
+            <div className="px-4 overflow-y-auto text-center">
+              <h3 className="mb-2 text-xl font-bold text-dark dark:text-muted">
                 Registo exitoso!!
               </h3>
               <span className="mb-4 inline-flex justify-center items-center w-[46px] h-[46px] rounded-full border-4 border-green-50 bg-green-100 text-green-500 dark:bg-green-700 dark:border-green-600 dark:text-green-100">
                 <MailCheck className="text-green-600" />
               </span>
-              <p className="text-gray-500 mb-3">
+              <p className="mb-3 text-muted">
                 Revisa tu inbox para poder activar tu cuenta
               </p>
 
@@ -176,7 +176,7 @@ const SignUpPage = () => {
                   <a
                     href="https://gmail.com"
                     target="_blank"
-                    className="px-3 py-2 w-fit rounded-lg hover:ring-2 border border-gray-200 ring-offset-2 ring-gray-500 flex items-center justify-center"
+                    className="flex items-center justify-center px-3 py-2 border border-muted rounded-lg w-fit hover:ring-2 ring-offset-2 ring-muted"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -208,7 +208,7 @@ const SignUpPage = () => {
                   <a
                     href="https://hotmail.com"
                     target="_blank"
-                    className="px-3 py-2 w-fit rounded-lg hover:ring-2 border border-gray-200 ring-offset-2 ring-gray-500 flex items-center justify-center"
+                    className="flex items-center justify-center px-3 py-2 border border-muted rounded-lg w-fit hover:ring-2 ring-offset-2 ring-muted"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -345,9 +345,9 @@ const SignUpPage = () => {
                 </li>
               </ul>
 
-              <div className="mt-3 flex justify-center gap-x-4">
+              <div className="flex justify-center mt-3 gap-x-4">
                 <Link
-                  className="py-2.5 px-4 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
+                  className="py-2.5 px-4 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-dark shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-dark dark:hover:bg-dark dark:border-dark dark:text-muted dark:hover:text-light dark:focus:ring-offset-dark"
                   to={"/auth/login"}
                 >
                   Ingresar

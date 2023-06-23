@@ -1,7 +1,7 @@
-import { SiteHeader } from "@/components/site-header"
+import { SiteHeader } from "@/components/site-header";
 
 interface LayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export function Layout({ children }: LayoutProps) {
@@ -14,7 +14,7 @@ export function Layout({ children }: LayoutProps) {
         <div className="text-center">
           <div>
             <a
-              className="flex-none text-xl font-semibold text-black dark:text-white"
+              className="flex-none text-xl font-semibold text-dark dark:text-light"
               href="#"
               aria-label="Brand"
             >
@@ -23,7 +23,7 @@ export function Layout({ children }: LayoutProps) {
           </div>
 
           <div className="mt-3">
-            <p className="text-gray-500">
+            <p className="text-muted">
               We&#39;re part of the{" "}
               <a
                 className="font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-400"
@@ -33,14 +33,14 @@ export function Layout({ children }: LayoutProps) {
               </a>{" "}
               family.
             </p>
-            <p className="text-gray-500">
+            <p className="text-muted">
               © Preline. 2022 Htmlstream. All rights reserved.
             </p>
           </div>
 
           <div className="mt-3 space-x-2">
             <a
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-center text-gray-500 transition hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-center text-muted transition hover:bg-muted focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:text-muted dark:hover:bg-dark dark:hover:text-muted"
               href="#"
             >
               <svg
@@ -55,7 +55,7 @@ export function Layout({ children }: LayoutProps) {
               </svg>
             </a>
             <a
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-center text-gray-500 transition hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-center text-muted transition hover:bg-muted focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:text-muted dark:hover:bg-dark dark:hover:text-muted"
               href="#"
             >
               <svg
@@ -70,7 +70,7 @@ export function Layout({ children }: LayoutProps) {
               </svg>
             </a>
             <a
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-center text-gray-500 transition hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-center text-muted transition hover:bg-muted focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:text-muted dark:hover:bg-dark dark:hover:text-muted"
               href="#"
             >
               <svg
@@ -85,7 +85,7 @@ export function Layout({ children }: LayoutProps) {
               </svg>
             </a>
             <a
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-center text-gray-500 transition hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-center text-muted transition hover:bg-muted focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:text-muted dark:hover:bg-dark dark:hover:text-muted"
               href="#"
             >
               <svg
@@ -103,5 +103,5 @@ export function Layout({ children }: LayoutProps) {
         </div>
       </footer>
     </>
-  )
+  );
 }

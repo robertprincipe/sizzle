@@ -1,11 +1,9 @@
 import { lazy } from "react";
 import { RouteObject } from "react-router-dom";
 import Main from "@/components/layouts/Main";
-import BlogPage from "@/pages/Blog/IndexPage";
-import PostPage from "@/pages/Blog/PostPage";
+import BlogPage from "@/pages/Blog/BlogPage";
 import { ProtectedRoute } from "./shared/ProtectedRoutes";
 import HomePage from "@/pages/HomePage";
-import EditPostPage from "@/pages/Blog/EditPostPage";
 import TagPage from "@/pages/TagPage";
 
 const MainRoutesList = (): RouteObject[] => [
@@ -17,39 +15,6 @@ const MainRoutesList = (): RouteObject[] => [
       { path: "blog", element: <BlogPage /> },
       { path: "post/:slug", element: <PostPage /> },
       { path: "tag/:name", element: <TagPage /> },
-      {
-        path: "",
-        element: <ProtectedRoute redirectTo="/auth/login" />,
-        children: [
-          {
-            path: "post/:id/edit",
-            element: <EditPostPage />,
-          },
-          {
-            path: "config",
-            element: <ConfigProfilePage />,
-          },
-
-          {
-            path: "/dashboard/",
-            element: <AdminLayout />,
-            children: [
-              {
-                path: "",
-                element: <OverViewPage />,
-              },
-              {
-                path: "posts",
-                element: <EditorPostsPage />,
-              },
-              {
-                path: "notifications",
-                element: <NotificationsPage />,
-              },
-            ],
-          },
-        ],
-      },
       { path: "@/:username", element: <ProfilePage /> },
       { path: "contact", element: <ContactPage /> },
       { path: "pricing", element: <PricingPage /> },
@@ -83,6 +48,12 @@ const AdminLayout = LazyLoading(lazy(() => import("./layouts/Admin")));
 const ProfilePage = LazyLoading(lazy(() => import("@/pages/ProfilePage")));
 const ContactPage = LazyLoading(lazy(() => import("@/pages/ContactPage")));
 const PricingPage = LazyLoading(lazy(() => import("@/pages/PricingPage")));
+
+const EditPostPage = LazyLoading(
+  lazy(() => import("@/pages/Blog/EditPostPage"))
+);
+
+const PostPage = LazyLoading(lazy(() => import("@/pages/Blog/PostPage")));
 
 const ConfigProfilePage = LazyLoading(
   lazy(() => import("@/pages/Admin/ConfigProfilePage"))

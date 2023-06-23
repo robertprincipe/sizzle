@@ -15,11 +15,18 @@ class ImageKitStorage(Storage):
         )
 
     def _save(self, name, content):
-        image_info = self.imagekit.upload_file(
-            file=b64encode(content.read()),
-            file_name=name,
-        )
-        return f"{image_info.file_id}-{image_info.name}"
+        try:
+            image_info = self.imagekit.upload_file(
+                file=b64encode(content.read()),
+                file_name=name,
+            )
+            return f"{image_info.file_id}-{image_info.name}"
+            # print(image_info.name)
+            # return "ge-fe.png"
+        
+        except Exception as e:
+            print("null ll ll l", e)
+        
 
     def url(self, name):
         url = name[25:] if "-" in name else ""

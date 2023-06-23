@@ -22,7 +22,7 @@ const ProfilePage = () => {
 
   return (
     <div className="max-w-4xl px-4 py-10 mx-auto sm:px-6 lg:px-8 lg:py-14">
-      <div className="relative bg-white shadow rounded-xl dark:bg-slate-900">
+      <div className="relative bg-white shadow rounded-xl dark:bg--dark">
         <img
           src={user?.banner as string}
           alt=""
@@ -32,9 +32,9 @@ const ProfilePage = () => {
         <IsAuthenticatedSameUserProfile username={user?.username || ""}>
           <Link
             to={`/config`}
-            className="absolute right-2 top-2 active:scale-95 inline-flex items-center justify-center text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:hover:bg-slate-800 dark:hover:text-slate-100 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-slate-800 bg-slate-900 text-white hover:bg-slate-700 dark:bg-slate-50 dark:text-slate-900 h-9 px-2 rounded-md"
+            className="absolute right-2 top-2 active:scale-95 inline-flex items-center justify-center text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:hover:bg-dark dark:hover:text-slate-100 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset--dark data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-dark bg--dark text-light hover:bg-dark dark:bg-slate-50 dark:text--dark h-9 px-2 rounded-md"
           >
-            <CogIcon className="hover:text-white" />
+            <CogIcon className="hover:text-light" />
           </Link>
         </IsAuthenticatedSameUserProfile>
 
@@ -43,13 +43,13 @@ const ProfilePage = () => {
             <div>
               <div className="grid items-center sm:flex sm:gap-x-3">
                 <img
-                  className="relative z-10 inline-block object-cover w-24 h-24 mx-auto -mt-8 rounded-full sm:mx-0 ring-4 ring-white dark:ring-gray-800"
+                  className="relative z-10 inline-block object-cover w-24 h-24 mx-auto -mt-8 rounded-full sm:mx-0 ring-4 ring-white dark:ring-dark"
                   src={user?.picture as string}
                   alt="Image Description"
                 />
 
                 <div className="flex flex-col items-center justify-center mt-2 md:mt-0 md:items-start">
-                  <div className="font-bold text-gray-800 dark:text-white">
+                  <div className="font-bold text-dark dark:text-light">
                     @{user?.username}
                   </div>
                   <p>{user?.profile_info}</p>
@@ -79,13 +79,13 @@ const ProfilePage = () => {
                         src={post.cover_image as string}
                         alt="Image Description"
                       />
-                      {/* <span className="absolute top-0 right-0 rounded-tr-xl rounded-bl-xl text-xs font-medium bg-gray-800 text-white py-1.5 px-3 dark:bg-gray-900">
+                      {/* <span className="absolute top-0 right-0 rounded-tr-xl rounded-bl-xl text-xs font-medium bg-dark text-light py-1.5 px-3 dark:bg-indigo-500">
                     Sponsored
                   </span> */}
                     </div>
 
                     <div className="mt-2">
-                      <h3 className="text-2xl font-bold text-gray-800 group-hover:text-gray-600 dark:text-gray-200">
+                      <h3 className="text-2xl font-bold text-dark group-hover:text-dark dark:text-muted">
                         {post.title}
                       </h3>
                       {post.tags && (

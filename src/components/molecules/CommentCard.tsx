@@ -30,7 +30,7 @@ const CommentCard = ({
 }) => {
   return (
     <article
-      className={`py-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-900${
+      className={`py-6 mb-6 text-base rounded-lg ${
         comment.parent_id ? " ml-6 lg:ml-12" : ""
       }`}
       id={`comment-${comment.id}`}
@@ -38,7 +38,7 @@ const CommentCard = ({
       <footer className="flex items-center justify-between mb-2">
         <div className="flex items-center">
           <Link
-            className="inline-flex items-center text-sm text-gray-900 dark:text-white"
+            className="inline-flex items-center text-sm text-app-dark dark:text-light"
             to={`/@/${comment.user?.username}`}
           >
             {/* <img
@@ -64,7 +64,7 @@ const CommentCard = ({
           </Link>
 
           <span className="mx-1.5">•</span>
-          <p className="text-xs text-gray-600 dark:text-gray-400">
+          <p className="text-xs text-dark dark:text-muted">
             <time dateTime="2022-02-08" title="February 8th, 2022">
               {fromNow(comment.created_at || new Date())}
             </time>
@@ -72,8 +72,8 @@ const CommentCard = ({
         </div>
         <DropdownMenu>
           <Owner authorId={comment.user?.id || ""}>
-            <DropdownMenuTrigger className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-              <Settings2 />
+            <DropdownMenuTrigger className="inline-flex items-center px-0.5 py-1 text-sm font-medium text-center text-muted bg-white rounded-lg hover:bg-muted focus:ring-2 focus:outline-none focus:ring-gray-50 dark:bg-dark dark:hover:bg-dark dark:focus:ring-dark">
+              <Settings2 className="h-5" />
               <span className="sr-only">Comment settings</span>
             </DropdownMenuTrigger>
           </Owner>
@@ -96,10 +96,10 @@ const CommentCard = ({
           </DropdownMenuContent>
         </DropdownMenu>
       </footer>
-      <p className="text-gray-500 dark:text-gray-400">{comment.content}</p>
+      <p className="text-muted dark:text-muted">{comment.content}</p>
       <div className="flex items-center mt-4 space-x-4">
         <a
-          className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400"
+          className="flex items-center text-sm text-muted hover:underline dark:text-muted"
           onClick={() => setToReply(comment)}
           href="#comments"
         >

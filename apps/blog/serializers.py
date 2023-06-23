@@ -89,6 +89,22 @@ class PostSerializer(serializers.ModelSerializer):
     #     return super().update(instance, validated_data)
 
 
+class PostEditorSerializer(serializers.ModelSerializer):
+    # user = TinyUserSerializer(read_only=True)
+
+    class Meta:
+        model = Post
+        fields = [
+            "id",
+            "title",
+            "slug",
+            "published",
+            "views",
+            "reading_time",
+            "created_at",
+        ]
+
+
 class CommentSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
     replies = serializers.SerializerMethodField()

@@ -103,10 +103,10 @@ export const TOC = ({ selector }: TOSType) => {
                 <a
                   data-id={heading.dataset.id}
                   onClick={() => goToSection(heading)}
-                  className={`inline-flex no-underline text-sm text-gray-400 cursor-pointer ${
+                  className={`inline-flex no-underline text-sm text-muted cursor-pointer ${
                     currentHeadingID === heading.dataset.id
-                      ? "text-white font-semibold"
-                      : "hover:text-gray-200"
+                      ? "text-light font-semibold"
+                      : "hover:text-muted"
                   }`}
                 >
                   {heading.innerHTML}

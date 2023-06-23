@@ -12,7 +12,7 @@ type ITagFieldProps = {
 const TagField = ({ tag, removeTag }: ITagFieldProps) => {
   return (
     <div
-      className={`flex items-center whitespace-nowrap rounded-lg border border-gray-200 p-1.5 text-xs font-bold text-gray-800 bg-gray-300 cursor-default select-none`}
+      className={`flex items-center whitespace-nowrap rounded-lg border border-muted p-1.5 text-xs font-bold text-light bg-dark cursor-default select-none`}
     >
       #
       <div className={`bg-transparent border-none focus:outline-none`}>

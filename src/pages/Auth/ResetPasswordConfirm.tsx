@@ -8,7 +8,7 @@ import { useAuthStore } from "@/store/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import Feedback from "@/components/atoms/Feedback";
+// import Feedback from "@/components/atoms/Feedback";
 import { resetPasswordConfirm } from "@/services/auth";
 import { toastError } from "@/lib/errors";
 
@@ -62,7 +62,7 @@ const ResetPasswordConfirm = () => {
           <h1 className="text-2xl font-semibold tracking-tight">
             Cambiar contreña
           </h1>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-muted">
             Ponga una contraseña dificil pero a la vez que pueda recordar
           </p>
         </div>
@@ -75,14 +75,14 @@ const ResetPasswordConfirm = () => {
                 disabled={isLoading}
                 {...register("new_password")}
               />
-              <Feedback field={errors.new_password} />
+              {/* <Feedback field={errors.new_password} /> */}
               <Input
                 placeholder="Repetir nueva contraseña"
                 type="password"
                 disabled={isLoading}
                 {...register("re_new_password")}
               />
-              <Feedback field={errors.re_new_password} />
+              {/* <Feedback field={errors.re_new_password} /> */}
             </div>
             <Button disabled={isLoading}>
               {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
@@ -94,7 +94,7 @@ const ResetPasswordConfirm = () => {
         <div className="flex flex-col">
           <Link
             to={"/auth/forgot-password"}
-            className="text-center uppercase text-xs mb-2"
+            className="mb-2 text-xs text-center uppercase"
           >
             Olvidaste tu contraseña?
           </Link>
@@ -103,11 +103,11 @@ const ResetPasswordConfirm = () => {
             to={"/auth/resetPasswordConfirm"}
             className="relative flex justify-center text-xs uppercase"
           >
-            <span className="px-2 bggray-900 text-gray-300">O registrate</span>
+            <span className="px-2 text-muted bgapp-dark">O registrate</span>
           </Link>
         </div>
 
-        <p className="px-8 text-sm text-center text-gray-300">
+        <p className="px-8 text-sm text-center text-muted">
           By clicking continue, you agree to our{" "}
           <Link
             to="/terms"

@@ -12,7 +12,7 @@ export const postPatchSchema = z.object({
     content: z.any().optional(),
     tags: z
         .array(
-            z.object({ name: z.string({ required_error: "El tag es requerido." }) })
+            z.object({ name: z.string({ required_error: "El tag es requerido." }).min(3, "El nombre debe tener 3 caracteres como minimo.") })
         )
         .optional(),
 });

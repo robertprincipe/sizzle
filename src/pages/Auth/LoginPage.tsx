@@ -10,7 +10,7 @@ import { useAuthStore } from "@/store/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import Feedback from "@/components/atoms/Feedback";
+// import Feedback from "@/components/atoms/Feedback";
 
 const signUpSchema = z.object({
   username: z
@@ -59,7 +59,7 @@ const LoginPage = () => {
           <h1 className="text-2xl font-semibold tracking-tight">
             Hola de nuevo
           </h1>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-muted">
             Ingresa tu nombre de usuario y contraseña
           </p>
         </div>
@@ -74,14 +74,14 @@ const LoginPage = () => {
                 disabled={isLoading}
                 {...register("username")}
               />
-              <Feedback field={errors.username} />
+              {/* <Feedback field={errors.username} /> */}
               <Input
                 placeholder="Contraseña"
                 type="password"
                 disabled={isLoading}
                 {...register("password")}
               />
-              <Feedback field={errors.password} />
+              {/* <Feedback field={errors.password} /> */}
             </div>
             <Button disabled={isLoading}>
               {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
@@ -93,7 +93,7 @@ const LoginPage = () => {
         <div className="flex flex-col">
           <Link
             to={"/auth/forgot-password"}
-            className="text-center uppercase text-xs mb-2"
+            className="mb-2 text-xs text-center uppercase"
           >
             Olvidaste tu contraseña?
           </Link>
@@ -102,13 +102,13 @@ const LoginPage = () => {
             to={"/auth/signup"}
             className="relative flex justify-center text-xs uppercase"
           >
-            <span className="px-2 bggray-900 text-gray-300">
+            <span className="px-2 text-muted bgapp-dark">
               Soy nuevo quiero registrarme
             </span>
           </Link>
         </div>
 
-        <p className="px-8 text-sm text-center text-gray-300">
+        <p className="px-8 text-sm text-center text-muted">
           By clicking continue, you agree to our{" "}
           <Link
             to="/terms"

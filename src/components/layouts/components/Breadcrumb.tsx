@@ -11,7 +11,7 @@ const Breadcrumb = () => {
         <Link
           key={index}
           to={`${steps.slice(0, index + 1).join("/")}`}
-          className={`text-sm items-center text-gray-800 flex truncate dark:text-gray-400 ${
+          className={`text-sm items-center text-dark flex truncate dark:text-muted ${
             steps.length - 1 === index ? "font-semibold" : ""
           }`}
         >

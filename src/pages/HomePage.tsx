@@ -1,56 +1,17 @@
+import Hero from "@/components/molecules/Hero";
 import Head from "@/components/shared/Head";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const HomePage = () => {
   return (
     <>
       <Head title="Inicio" />
-      <div className="mx-auto mt-5 max-w-[85rem] px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-7 lg:items-center lg:gap-x-8 xl:gap-x-12">
-          <div className="lg:col-span-3">
-            <h1 className="block text-3xl font-bold text-gray-800 dark:text-white sm:text-4xl md:text-5xl lg:text-6xl">
-              Comunidad de Prompt Enginier
-            </h1>
-            <p className="mt-3 text-lg text-gray-800 dark:text-gray-400">
-              Bienvenido ha esta nueva comunidad de IA, conoces tuts, tools y
-              mucho más.
-            </p>
-
-            <div className="flex flex-col items-center gap-2 mt-5 sm:flex-row sm:gap-3 lg:mt-8">
-              <div className="w-full sm:w-auto">
-                <label htmlFor="hero-input" className="sr-only">
-                  Search
-                </label>
-                <input
-                  type="text"
-                  id="hero-input"
-                  name="hero-input"
-                  className="block w-full rounded-md border border-gray-200 py-3 px-4 shadow-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 xl:min-w-[18rem]"
-                  placeholder="maick@gmail.com"
-                />
-              </div>
-              <a
-                className="inline-flex items-center justify-center w-full px-4 py-3 font-medium text-center text-white transition bg-blue-600 border border-transparent rounded-md gap-x-3 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 sm:w-auto"
-                href="#"
-              >
-                Registrarme
-              </a>
-            </div>
-          </div>
-
-          <div className="mt-10 lg:col-span-4 lg:mt-0">
-            <img
-              className="w-full rounded-xl"
-              src="https://cdn.discordapp.com/attachments/1084662690460467210/1088865145029152848/ser_An_albino_tiger_blue_color_hardware_logo_app_icon_icon_flat_405a3b63-2451-4dcc-8140-d75ea5c24bd7.png"
-              alt="Image Description"
-            />
-          </div>
-        </div>
-      </div>
-
+      <Hero />
       <div className="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <div className="group flex h-full flex-col rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-slate-900 dark:shadow-slate-700/[.7]">
-            <div className="flex flex-col items-center justify-center bg-blue-600 h-52 rounded-t-xl">
+          <div className="group flex h-full flex-col rounded-xl border border-border shadow-sm dark:border-muted dark:bg-dark bg-[#fff]">
+            <div className="flex flex-col items-center justify-center bg-link h-52 rounded-t-xl">
               <svg
                 className="h-28 w-28"
                 width="56"
@@ -84,26 +45,26 @@ const HomePage = () => {
               </svg>
             </div>
             <div className="p-4 md:p-6">
-              <span className="block mb-1 text-xs font-semibold text-blue-600 uppercase dark:text-blue-500">
+              <span className="block mb-1 text-xs font-semibold uppercase text-link dark:text-link">
                 Atlassian API
               </span>
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-300 dark:hover:text-white">
+              <h3 className="text-xl font-semibold dark:text-light dark:hover:text-light">
                 Atlassian
               </h3>
-              <p className="mt-3 text-gray-500">
+              <p className="mt-3 text-[#5d6668] dark:text-[#bdcece]">
                 A software that develops products for software developers and
                 developments.
               </p>
             </div>
-            <div className="flex mt-auto border-t border-gray-200 divide-x divide-gray-200 dark:divide-gray-700 dark:border-gray-700">
+            <div className="flex mt-auto border-t divide-x border-border divide-border dark:divide-muted dark:border-muted">
               <a
-                className="inline-flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-medium text-gray-700 align-middle transition-all bg-white shadow-sm rounded-bl-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:hover:bg-slate-800 dark:hover:text-white dark:focus:ring-offset-gray-800 sm:p-4"
+                className="inline-flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-medium align-middle transition-all shadow-sm rounded-bl-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:border-muted dark:bg-dark dark:hover:bg-dark dark:hover:text-light dark:focus:ring-offset-dark sm:p-4"
                 href="#"
               >
                 View sample
               </a>
               <a
-                className="inline-flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-medium text-gray-700 align-middle transition-all bg-white shadow-sm rounded-br-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:hover:bg-slate-800 dark:hover:text-white dark:focus:ring-offset-gray-800 sm:p-4"
+                className="inline-flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-medium align-middle transition-all shadow-sm rounded-br-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:border-muted dark:bg-dark dark:hover:bg-dark dark:hover:text-light dark:focus:ring-offset-dark sm:p-4"
                 href="#"
               >
                 View API
@@ -111,7 +72,7 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className="group flex h-full flex-col rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-slate-900 dark:shadow-slate-700/[.7]">
+          <div className="group flex h-full flex-col rounded-xl border border-border shadow-sm dark:border-muted dark:bg-dark bg-[#fff]">
             <div className="flex flex-col items-center justify-center h-52 rounded-t-xl bg-rose-500">
               <svg
                 className="h-28 w-28"
@@ -156,22 +117,22 @@ const HomePage = () => {
               <span className="block mb-1 text-xs font-semibold uppercase text-rose-600 dark:text-rose-500">
                 Asana API
               </span>
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-300 dark:hover:text-white">
+              <h3 className="text-xl font-semibold dark:hover:text-light">
                 Asana
               </h3>
-              <p className="mt-3 text-gray-500">
+              <p className="mt-3 text-[#c7cdce]">
                 Track tasks and projects, use agile boards, measure progress.
               </p>
             </div>
-            <div className="flex mt-auto border-t border-gray-200 divide-x divide-gray-200 dark:divide-gray-700 dark:border-gray-700">
+            <div className="flex mt-auto border-t divide-x border-border divide-border dark:divide-muted dark:border-muted">
               <a
-                className="inline-flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-medium text-gray-700 align-middle transition-all bg-white shadow-sm rounded-bl-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:hover:bg-slate-800 dark:hover:text-white dark:focus:ring-offset-gray-800 sm:p-4"
+                className="inline-flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-medium align-middle transition-all shadow-sm rounded-bl-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:border-muted dark:bg-dark dark:hover:bg-dark dark:hover:text-light dark:focus:ring-offset-dark sm:p-4"
                 href="#"
               >
                 View sample
               </a>
               <a
-                className="inline-flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-medium text-gray-700 align-middle transition-all bg-white shadow-sm rounded-br-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:hover:bg-slate-800 dark:hover:text-white dark:focus:ring-offset-gray-800 sm:p-4"
+                className="inline-flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-medium align-middle transition-all shadow-sm rounded-br-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:border-muted dark:bg-dark dark:hover:bg-dark dark:hover:text-light dark:focus:ring-offset-dark sm:p-4"
                 href="#"
               >
                 View API
@@ -179,7 +140,7 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className="group flex h-full flex-col rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-slate-900 dark:shadow-slate-700/[.7]">
+          <div className="group flex h-full flex-col rounded-xl border border-border shadow-sm dark:border-muted dark:bg-dark bg-[#fff]">
             <div className="flex flex-col items-center justify-center h-52 rounded-t-xl bg-amber-500">
               <svg
                 className="h-28 w-28"
@@ -220,22 +181,22 @@ const HomePage = () => {
               <span className="block mb-1 text-xs font-semibold uppercase text-amber-500">
                 Slack API
               </span>
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-300 dark:hover:text-white">
+              <h3 className="text-xl font-semibold dark:hover:text-light">
                 Slack
               </h3>
-              <p className="mt-3 text-gray-500">
+              <p className="mt-3 text-[#c7cdce]">
                 Email collaboration and email service desk made easy.
               </p>
             </div>
-            <div className="flex mt-auto border-t border-gray-200 divide-x divide-gray-200 dark:divide-gray-700 dark:border-gray-700">
+            <div className="flex mt-auto border-t divide-x border-border divide-border dark:divide-muted dark:border-muted">
               <a
-                className="inline-flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-medium text-gray-700 align-middle transition-all bg-white shadow-sm rounded-bl-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:hover:bg-slate-800 dark:hover:text-white dark:focus:ring-offset-gray-800 sm:p-4"
+                className="inline-flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-medium align-middle transition-all shadow-sm rounded-bl-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:border-muted dark:bg-dark dark:hover:bg-dark dark:hover:text-light dark:focus:ring-offset-dark sm:p-4"
                 href="#"
               >
                 View sample
               </a>
               <a
-                className="inline-flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-medium text-gray-700 align-middle transition-all bg-white shadow-sm rounded-br-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:hover:bg-slate-800 dark:hover:text-white dark:focus:ring-offset-gray-800 sm:p-4"
+                className="inline-flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-medium align-middle transition-all shadow-sm rounded-br-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:border-muted dark:bg-dark dark:hover:bg-dark dark:hover:text-light dark:focus:ring-offset-dark sm:p-4"
                 href="#"
               >
                 View API
@@ -248,13 +209,13 @@ const HomePage = () => {
       <div className="max-w-5xl px-4 py-10 mx-auto sm:px-6 lg:px-8 lg:py-14">
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           <a
-            className="flex flex-col transition bg-white border shadow-sm group rounded-xl hover:shadow-md dark:border-gray-800 dark:bg-slate-900"
+            className="flex flex-col transition border shadow-sm border-border group rounded-xl hover:shadow-md dark:border-muted dark:bg-dark bg-[#fff]"
             href="#"
           >
             <div className="p-4 md:p-5">
               <div className="flex">
                 <svg
-                  className="w-5 h-5 mt-1 text-gray-800 shrink-0 dark:text-gray-200"
+                  className="w-5 h-5 mt-1 shrink-0"
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="16"
@@ -265,10 +226,8 @@ const HomePage = () => {
                 </svg>
 
                 <div className="ml-5 grow">
-                  <h3 className="font-semibold text-gray-800 group-hover:text-blue-600 dark:text-gray-200 dark:group-hover:text-gray-400">
-                    Ask our community
-                  </h3>
-                  <p className="text-sm text-gray-500">
+                  <h3 className="font-semibold">Ask our community</h3>
+                  <p className="text-sm text-[#c7cdce]">
                     Get help from 40k+ Preline users
                   </p>
                 </div>
@@ -277,13 +236,13 @@ const HomePage = () => {
           </a>
 
           <a
-            className="flex flex-col transition bg-white border shadow-sm group rounded-xl hover:shadow-md dark:border-gray-800 dark:bg-slate-900"
+            className="flex flex-col transition border shadow-sm border-border group rounded-xl hover:shadow-md dark:border-muted dark:bg-dark bg-[#fff]"
             href="#"
           >
             <div className="p-4 md:p-5">
               <div className="flex">
                 <svg
-                  className="w-5 h-5 mt-1 text-gray-800 shrink-0 dark:text-gray-200"
+                  className="w-5 h-5 mt-1 shrink-0"
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="16"
@@ -295,10 +254,8 @@ const HomePage = () => {
                 </svg>
 
                 <div className="ml-5 grow">
-                  <h3 className="font-semibold text-gray-800 group-hover:text-blue-600 dark:text-gray-200 dark:group-hover:text-gray-400">
-                    Get help in the app
-                  </h3>
-                  <p className="text-sm text-gray-500">
+                  <h3 className="font-semibold">Get help in the app</h3>
+                  <p className="text-sm text-[#c7cdce]">
                     Just head to «Help» in the app
                   </p>
                 </div>
@@ -307,13 +264,13 @@ const HomePage = () => {
           </a>
 
           <a
-            className="flex flex-col transition bg-white border shadow-sm group rounded-xl hover:shadow-md dark:border-gray-800 dark:bg-slate-900"
+            className="flex flex-col transition border shadow-sm group border-border rounded-xl hover:shadow-md dark:border-muted dark:bg-dark bg-[#fff]"
             href="#"
           >
             <div className="p-4 md:p-5">
               <div className="flex">
                 <svg
-                  className="w-5 h-5 mt-1 text-gray-800 shrink-0 dark:text-gray-200"
+                  className="w-5 h-5 mt-1 shrink-0"
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="16"
@@ -324,10 +281,8 @@ const HomePage = () => {
                 </svg>
 
                 <div className="ml-5 grow">
-                  <h3 className="font-semibold text-gray-800 group-hover:text-blue-600 dark:text-gray-200 dark:group-hover:text-gray-400">
-                    Email us
-                  </h3>
-                  <p className="text-sm text-gray-500">
+                  <h3 className="font-semibold">Email us</h3>
+                  <p className="text-sm text-[#c7cdce]">
                     Reach us at{" "}
                     <span className="font-medium text-blue-600 dark:text-blue-500">
                       info@site.com

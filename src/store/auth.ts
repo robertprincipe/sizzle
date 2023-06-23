@@ -1,7 +1,6 @@
 import { toastError } from "@/lib/errors";
 import { check_authenticated, login, me, refresh_access } from "@/services/auth";
 import { IUser } from "@/types/iuser";
-
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -11,7 +10,6 @@ type AuthState = {
     refresh?: string;
     isAuthenticated: boolean;
     login: (username: string, password: string) => void;
-    // signup: (data: IUser) => void;
     me: () => void;
     logout: () => void;
     check_authenticated: () => void;
@@ -38,13 +36,6 @@ export const useAuthStore = create(
                 set({ ...initialState })
             }
         },
-        // signup: async (data: IUser) => {
-        //     try {
-        //         await signup(data)
-        //     } catch (error) {
-        //         toastError(error)
-        //     }
-        // },
         logout: () => {
             set({ ...initialState })
         },
@@ -64,7 +55,7 @@ export const useAuthStore = create(
                 if (status === 200) set({ isAuthenticated: true })
             } catch (err) {
                 toastError(err)
-                set({ ...initialState, isAuthenticated: false })
+                set({ isAuthenticated: false })
             }
         },
         refresh_access: async () => {

@@ -11,13 +11,11 @@ from uuid import uuid4
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
-        print(extra_fields)
         if not email:
             raise ValueError("El correo electrónico es requerido.")
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
-        print(extra_fields)
         user.save(using=self._db)
 
         return user

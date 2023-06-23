@@ -2,7 +2,7 @@ const PricingPrice = () => {
   return (
     <section className="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
       <div className="max-w-2xl mx-auto mb-8 text-center lg:mb-14">
-        <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-200 lg:text-4xl">
+        <h2 className="text-3xl font-bold text-dark dark:text-muted lg:text-4xl">
           Solo, agency or team? We’ve got you covered.
         </h2>
       </div>
@@ -10,22 +10,22 @@ const PricingPrice = () => {
       <div className="relative xl:mx-auto xl:w-10/12">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
           <div>
-            <div className="relative z-10 p-4 bg-white border rounded-xl dark:border-gray-700 dark:bg-slate-900 md:p-10">
-              <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200">
+            <div className="relative z-10 p-4 bg-white border rounded-xl dark:border-dark dark:bg--dark md:p-10">
+              <h3 className="text-xl font-bold text-dark dark:text-muted">
                 Professional
               </h3>
-              <div className="text-sm text-gray-500">
+              <div className="text-sm text-muted">
                 Everything a small team needs.
               </div>
 
               <div className="mt-5">
-                <span className="text-6xl font-bold text-gray-800 dark:text-gray-200">
+                <span className="text-6xl font-bold text-dark dark:text-muted">
                   $18
                 </span>
-                <span className="text-lg font-bold text-gray-800 dark:text-gray-200">
+                <span className="text-lg font-bold text-dark dark:text-muted">
                   .00
                 </span>
-                <span className="ml-3 text-gray-500">USD / monthly</span>
+                <span className="ml-3 text-muted">USD / monthly</span>
               </div>
 
               <div className="grid py-4 mt-5 gap-y-2 first:pt-0 last:pb-0 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-0">
@@ -51,7 +51,7 @@ const PricingPrice = () => {
                         fill="currentColor"
                       />
                     </svg>
-                    <span className="text-gray-800 dark:text-gray-200">
+                    <span className="text-dark dark:text-muted">
                       Up to 10 people
                     </span>
                   </li>
@@ -77,7 +77,7 @@ const PricingPrice = () => {
                         fill="currentColor"
                       />
                     </svg>
-                    <span className="text-gray-800 dark:text-gray-200">
+                    <span className="text-dark dark:text-muted">
                       Collect data
                     </span>
                   </li>
@@ -103,7 +103,7 @@ const PricingPrice = () => {
                         fill="currentColor"
                       />
                     </svg>
-                    <span className="text-gray-800 dark:text-gray-200">
+                    <span className="text-dark dark:text-muted">
                       Code extensibility
                     </span>
                   </li>
@@ -112,7 +112,7 @@ const PricingPrice = () => {
                 <ul role="list" className="space-y-2 text-sm sm:text-base">
                   <li className="flex space-x-3">
                     <svg
-                      className="w-5 h-5 text-gray-500 shrink-0"
+                      className="w-5 h-5 text-muted shrink-0"
                       width="18"
                       height="18"
                       viewBox="0 0 18 18"
@@ -129,14 +129,14 @@ const PricingPrice = () => {
                         fill="currentColor"
                       />
                     </svg>
-                    <span className="text-gray-800 dark:text-gray-200">
+                    <span className="text-dark dark:text-muted">
                       Custom reports
                     </span>
                   </li>
 
                   <li className="flex space-x-3">
                     <svg
-                      className="w-5 h-5 text-gray-500 shrink-0"
+                      className="w-5 h-5 text-muted shrink-0"
                       width="18"
                       height="18"
                       viewBox="0 0 18 18"
@@ -153,14 +153,14 @@ const PricingPrice = () => {
                         fill="currentColor"
                       />
                     </svg>
-                    <span className="text-gray-800 dark:text-gray-200">
+                    <span className="text-dark dark:text-muted">
                       Product support
                     </span>
                   </li>
 
                   <li className="flex space-x-3">
                     <svg
-                      className="w-5 h-5 text-gray-500 shrink-0"
+                      className="w-5 h-5 text-muted shrink-0"
                       width="18"
                       height="18"
                       viewBox="0 0 18 18"
@@ -177,7 +177,7 @@ const PricingPrice = () => {
                         fill="currentColor"
                       />
                     </svg>
-                    <span className="text-gray-800 dark:text-gray-200">
+                    <span className="text-dark dark:text-muted">
                       Activity reporting
                     </span>
                   </li>
@@ -186,14 +186,14 @@ const PricingPrice = () => {
 
               <div className="grid grid-cols-2 py-4 mt-5 gap-x-4 first:pt-0 last:pb-0">
                 <div>
-                  <p className="text-sm text-gray-500">Cancel anytime.</p>
-                  <p className="text-sm text-gray-500">No card required.</p>
+                  <p className="text-sm text-muted">Cancel anytime.</p>
+                  <p className="text-sm text-muted">No card required.</p>
                 </div>
 
                 <div className="flex justify-end">
                   <button
                     type="button"
-                    className="inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-gray-700 align-middle transition-all bg-white border rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:hover:bg-slate-800 dark:hover:text-white dark:focus:ring-offset-gray-800"
+                    className="inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-dark align-middle transition-all bg-white border rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:border-dark dark:bg--dark dark:text-muted dark:hover:bg-dark dark:hover:text-light dark:focus:ring-offset-dark"
                   >
                     Start free trial
                   </button>
@@ -203,25 +203,23 @@ const PricingPrice = () => {
           </div>
 
           <div>
-            <div className="relative z-10 rounded-xl border bg-white p-5 shadow-xl shadow-gray-200 dark:border-gray-700 dark:bg-slate-900 dark:shadow-gray-900/[.2] md:p-10">
-              <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200">
+            <div className="relative z-10 rounded-xl border bg-white p-5 shadow-xl shadow-muted dark:border-dark dark:bg--dark dark:shadow-app-dark/[.2] md:p-10">
+              <h3 className="text-xl font-bold text-dark dark:text-muted">
                 Teams
               </h3>
-              <div className="text-sm text-gray-500">
-                For growing businesses.
-              </div>
-              <span className="absolute top-0 right-0 rounded-tr-xl rounded-bl-xl bg-gray-800 py-1.5 px-3 text-xs font-medium text-white dark:bg-gray-900">
+              <div className="text-sm text-muted">For growing businesses.</div>
+              <span className="absolute top-0 right-0 rounded-tr-xl rounded-bl-xl bg-dark py-1.5 px-3 text-xs font-medium text-light dark:bg-indigo-500">
                 Most popular
               </span>
 
               <div className="mt-5">
-                <span className="text-6xl font-bold text-gray-800 dark:text-gray-200">
+                <span className="text-6xl font-bold text-dark dark:text-muted">
                   $36
                 </span>
-                <span className="text-lg font-bold text-gray-800 dark:text-gray-200">
+                <span className="text-lg font-bold text-dark dark:text-muted">
                   .99
                 </span>
-                <span className="ml-3 text-gray-500">USD / monthly</span>
+                <span className="ml-3 text-muted">USD / monthly</span>
               </div>
 
               <div className="grid py-4 mt-5 gap-y-2 first:pt-0 last:pb-0 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-0">
@@ -247,7 +245,7 @@ const PricingPrice = () => {
                         fill="currentColor"
                       />
                     </svg>
-                    <span className="text-gray-800 dark:text-gray-200">
+                    <span className="text-dark dark:text-muted">
                       Up to 10 people
                     </span>
                   </li>
@@ -273,7 +271,7 @@ const PricingPrice = () => {
                         fill="currentColor"
                       />
                     </svg>
-                    <span className="text-gray-800 dark:text-gray-200">
+                    <span className="text-dark dark:text-muted">
                       Collect data
                     </span>
                   </li>
@@ -299,7 +297,7 @@ const PricingPrice = () => {
                         fill="currentColor"
                       />
                     </svg>
-                    <span className="text-gray-800 dark:text-gray-200">
+                    <span className="text-dark dark:text-muted">
                       Code extensibility
                     </span>
                   </li>
@@ -327,7 +325,7 @@ const PricingPrice = () => {
                         fill="currentColor"
                       />
                     </svg>
-                    <span className="text-gray-800 dark:text-gray-200">
+                    <span className="text-dark dark:text-muted">
                       Custom reports
                     </span>
                   </li>
@@ -353,7 +351,7 @@ const PricingPrice = () => {
                         fill="currentColor"
                       />
                     </svg>
-                    <span className="text-gray-800 dark:text-gray-200">
+                    <span className="text-dark dark:text-muted">
                       Product support
                     </span>
                   </li>
@@ -379,7 +377,7 @@ const PricingPrice = () => {
                         fill="currentColor"
                       />
                     </svg>
-                    <span className="text-gray-800 dark:text-gray-200">
+                    <span className="text-dark dark:text-muted">
                       Activity reporting
                     </span>
                   </li>
@@ -388,14 +386,14 @@ const PricingPrice = () => {
 
               <div className="grid grid-cols-2 py-4 mt-5 gap-x-4 first:pt-0 last:pb-0">
                 <div>
-                  <p className="text-sm text-gray-500">Cancel anytime.</p>
-                  <p className="text-sm text-gray-500">No card required.</p>
+                  <p className="text-sm text-muted">Cancel anytime.</p>
+                  <p className="text-sm text-muted">No card required.</p>
                 </div>
 
                 <div className="flex justify-end">
                   <button
                     type="button"
-                    className="inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white transition-all bg-blue-500 border border-transparent rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+                    className="inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-light transition-all bg-blue-500 border border-transparent rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-dark"
                   >
                     Start free trial
                   </button>
@@ -455,7 +453,7 @@ const PricingPrice = () => {
       </div>
 
       <div className="text-center mt-7">
-        <p className="text-xs text-gray-400">Prices in USD. Taxes may apply.</p>
+        <p className="text-xs text-muted">Prices in USD. Taxes may apply.</p>
       </div>
     </section>
   );

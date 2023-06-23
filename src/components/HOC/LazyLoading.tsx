@@ -8,9 +8,7 @@ const LazyLoading =
   (props: T) => {
     return (
       <Suspense
-        fallback={
-          <Skeleton className="w-full h-full bg-gray-200 dark:bg-gray-500" />
-        }
+        fallback={<Skeleton className="w-full h-full bg-muted dark:bg-muted" />}
       >
         <Component {...props} />
       </Suspense>
