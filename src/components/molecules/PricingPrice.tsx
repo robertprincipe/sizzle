@@ -10,7 +10,7 @@ const PricingPrice = () => {
       <div className="relative xl:mx-auto xl:w-10/12">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
           <div>
-            <div className="relative z-10 p-4 bg-white border rounded-xl dark:border-dark dark:bg--dark md:p-10">
+            <div className="relative z-10 p-4 bg-white border rounded-xl dark:border-dark dark:bg-dark md:p-10">
               <h3 className="text-xl font-bold text-dark dark:text-muted">
                 Professional
               </h3>
@@ -193,7 +193,7 @@ const PricingPrice = () => {
                 <div className="flex justify-end">
                   <button
                     type="button"
-                    className="inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-dark align-middle transition-all bg-white border rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:border-dark dark:bg--dark dark:text-muted dark:hover:bg-dark dark:hover:text-light dark:focus:ring-offset-dark"
+                    className="inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-dark align-middle transition-all bg-white border rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:border-dark dark:bg-dark dark:text-muted dark:hover:bg-dark dark:hover:text-light dark:focus:ring-offset-dark"
                   >
                     Start free trial
                   </button>
@@ -203,7 +203,7 @@ const PricingPrice = () => {
           </div>
 
           <div>
-            <div className="relative z-10 rounded-xl border bg-white p-5 shadow-xl shadow-muted dark:border-dark dark:bg--dark dark:shadow-app-dark/[.2] md:p-10">
+            <div className="relative z-10 rounded-xl border bg-white p-5 shadow-xl shadow-muted dark:border-dark dark:bg-dark dark:shadow-app-dark/[.2] md:p-10">
               <h3 className="text-xl font-bold text-dark dark:text-muted">
                 Teams
               </h3>

@@ -111,12 +111,12 @@ const ConfigProfilePage = () => {
 
       <div className="max-w-4xl px-4 py-10 mx-auto sm:px-6 lg:px-8 lg:py-14">
         <form onSubmit={handleSubmit(onSubmit)} className="lg:w-[800px]">
-          <div className="bg-white shadow rounded-xl dark:bg--dark">
+          <div className="bg-white shadow rounded-xl dark:bg-dark">
             <div className="relative h-40 rounded-t-xl bg-[url('https://cdn.midjourney.com/6fcdb019-5fbe-468f-8537-f1f65e364465/0_3_640_N.webp')] bg-no-repeat bg-cover bg-center">
               <div className="absolute top-0 right-0 p-4">
                 <button
                   type="button"
-                  className="inline-flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-dark align-middle transition-all bg-white border rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 dark:bg--dark dark:hover:bg-dark dark:border-dark dark:text-muted dark:hover:text-light dark:focus:ring-offset-dark"
+                  className="inline-flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-dark align-middle transition-all bg-white border rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 dark:bg-dark dark:hover:bg-dark dark:border-dark dark:text-muted dark:hover:text-light dark:focus:ring-offset-dark"
                 >
                   <svg
                     className="w-3 h-3"
@@ -149,7 +149,7 @@ const ConfigProfilePage = () => {
                     <div className="mt-4 sm:mt-auto sm:mb-1.5 flex justify-center sm:justify-start gap-2">
                       <button
                         type="button"
-                        className="inline-flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-dark align-middle transition-all bg-white border rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 dark:bg--dark dark:hover:bg-dark dark:border-dark dark:text-muted dark:hover:text-light dark:focus:ring-offset-dark"
+                        className="inline-flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-dark align-middle transition-all bg-white border rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 dark:bg-dark dark:hover:bg-dark dark:border-dark dark:text-muted dark:hover:text-light dark:focus:ring-offset-dark"
                       >
                         <svg
                           className="w-3 h-3"
@@ -166,7 +166,7 @@ const ConfigProfilePage = () => {
                       </button>
                       <button
                         type="button"
-                        className="inline-flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-red-600 align-middle transition-all bg-white border rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 dark:bg--dark dark:hover:bg-dark dark:border-dark dark:text-red-400 dark:hover:text-light dark:focus:ring-offset-dark"
+                        className="inline-flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-red-600 align-middle transition-all bg-white border rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 dark:bg-dark dark:hover:bg-dark dark:border-dark dark:text-red-400 dark:hover:text-light dark:focus:ring-offset-dark"
                       >
                         Delete
                       </button>

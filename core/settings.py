@@ -25,7 +25,7 @@ BASE_APPS = [
     "unfold.contrib.filters",  # optional, if special filters are needed
     "unfold.contrib.forms",  # optional, if special form elements are needed
     "unfold.contrib.import_export",  # optional, if django-import-export package is used
-    "django.contrib.admin",
+    "django.contrib.admin",  # required
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -61,12 +61,6 @@ UNFOLD = {
         "image": lambda r: static("android-chrome-192x192-dba14c5c.png"),
         "redirect_after": lambda r: reverse_lazy("admin:login"),
     },
-    "STYLES": [
-        lambda request: "https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css",
-    ],
-    "SCRIPTS": [
-        lambda request: "https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js",
-    ],
     "COLORS": {
         "primary": {
             "50": "220 237 255",

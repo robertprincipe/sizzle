@@ -9,6 +9,7 @@ from django.db import models
 from django.contrib import admin
 
 from unfold.admin import StackedInline, TabularInline, ModelAdmin
+from unfold.contrib.forms.widgets import WysiwygWidget
 
 from django import forms
 from .models import Comment
@@ -28,6 +29,12 @@ class CommentInlineForm(forms.ModelForm):
 class CommentInline(StackedInline):
     model = Comment
     form = CommentInlineForm
+
+    formfield_overrides = {
+        models.TextField: {
+            "widget": WysiwygWidget,
+        }
+    }
     # formfield_overrides = {
     #     models.ManyToManyField: {"widget": Textarea(attrs={"rows": 3, "cols": 40})},
     # }
@@ -63,10 +70,6 @@ class PostAdmin(ModelAdmin):
     list_filter = ["published"]
     prepopulated_fields = {"slug": ("title",)}
     inlines = [CommentInline, ReactionInline]
-
-    formfield_overrides = {
-        models.ManyToManyField: {"widget": SelectMultiple(attrs={"class": "select2"})},
-    }
 
     def get_queryset(self, request):
         return self.model.objects.all()

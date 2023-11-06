@@ -22,7 +22,7 @@ const ProfilePage = () => {
 
   return (
     <div className="max-w-4xl px-4 py-10 mx-auto sm:px-6 lg:px-8 lg:py-14">
-      <div className="relative bg-white shadow rounded-xl dark:bg--dark">
+      <div className="relative bg-white shadow rounded-xl dark:bg-dark">
         <img
           src={user?.banner as string}
           alt=""
@@ -32,7 +32,7 @@ const ProfilePage = () => {
         <IsAuthenticatedSameUserProfile username={user?.username || ""}>
           <Link
             to={`/config`}
-            className="absolute right-2 top-2 active:scale-95 inline-flex items-center justify-center text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:hover:bg-dark dark:hover:text-slate-100 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset--dark data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-dark bg--dark text-light hover:bg-dark dark:bg-slate-50 dark:text--dark h-9 px-2 rounded-md"
+            className="absolute right-2 top-2 active:scale-95 inline-flex items-center justify-center text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:hover:bg-dark dark:hover:text-slate-100 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset--dark data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-dark bg-dark text-light hover:bg-dark dark:bg-slate-50 dark:text--dark h-9 px-2 rounded-md"
           >
             <CogIcon className="hover:text-light" />
           </Link>

@@ -27,7 +27,7 @@ const PricingPage = () => {
             <div className="relative xl:w-10/12 xl:mx-auto">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                 <div>
-                  <div className="p-4 relative z-10 bg-white border rounded-xl md:p-10 dark:bg--dark border-muted">
+                  <div className="p-4 relative z-10 bg-white border rounded-xl md:p-10 dark:bg-dark border-muted">
                     <h3 className="text-xl font-bold ">Professional</h3>
                     <div className="text-sm">
                       Everything a small team needs.
@@ -208,7 +208,7 @@ const PricingPage = () => {
                 </div>
 
                 <div>
-                  <div className="shadow-xl p-5 relative z-10 bg-light dark:bg-dark border rounded-xl md:p-10 dark:bg--dark border-muted dark:shadow-dark/[.2]">
+                  <div className="shadow-xl p-5 relative z-10 bg-light dark:bg-dark border rounded-xl md:p-10 dark:bg-dark border-muted dark:shadow-dark/[.2]">
                     <h3 className="text-xl font-bold ">Teams</h3>
                     <div className="text-sm text-[#66696c]">
                       For growing businesses.

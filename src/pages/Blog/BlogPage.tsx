@@ -1,6 +1,7 @@
 import ArticlesSkeleton from "@/components/loaders/ArticlesSkeleton";
 import ButtonPostCreator from "@/components/shared/ButtonPostCreator";
 import Head from "@/components/shared/Head";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { formatDate, fromNow } from "@/lib/date";
 
 import { allPosts } from "@/services/blog";
@@ -38,35 +39,37 @@ export default function BlogPage() {
             <div className="mt-6 columns-2">
               {posts?.map((post) => (
                 <Link className="" to={`/post/${post.slug}`} key={post.id}>
-                  <article className="relative mb-4 transition bg-center bg-cover rounded-[10px] overflow-hidden shadow hover:shadow-sm">
-                    <img
-                      src={(post.cover_image as string) || ""}
-                      className="object-cover object-center w-full h-64"
-                      alt=""
-                    />
-                    <div className="absolute inset-0 bg-[#212931] text-light rounded-[10px] p-4 !pt-20 sm:p-6">
+                  <Card className="mb-4 overflow-hidden">
+                    {post.cover_image && (
+                      <img
+                        src={(post.cover_image as string) || ""}
+                        className="object-cover object-center w-full h-64"
+                        alt=""
+                      />
+                    )}
+                    <CardContent>
+                      <CardTitle className="text-lg font-medium">
+                        {post.title}
+                      </CardTitle>
                       <time
                         // dateTime={post!.created_at}
-                        className="block text-xs text-light"
+                        className="block text-xs text-muted"
                       >
                         {fromNow(post.created_at || new Date())}
                       </time>
-                      <h3 className="mt-0.5 text-lg font-medium">
-                        {post.title}
-                      </h3>
-                      <div className="flex flex-wrap gap-1 mt-4">
+                      <div className="flex flex-wrap gap-1 mt-2">
                         {post.tags && (
                           <div className="space-x-2">
                             {post.tags.map((tag) => (
-                              <span className="whitespace-nowrap rounded-full bg-[#5e89e586] px-2.5 py-0.5 text-xs font-semibold text-[#05277086]">
+                              <span className="whitespace-nowrap bg-[#0e3849] text-[#fff] rounded-xl px-2.5 py-0.5 text-xs font-semibold">
                                 #{tag.name}
                               </span>
                             ))}
                           </div>
                         )}
                       </div>
-                    </div>
-                  </article>
+                    </CardContent>
+                  </Card>
                 </Link>
               ))}
             </div>

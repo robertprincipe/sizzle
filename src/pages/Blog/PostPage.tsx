@@ -141,7 +141,7 @@ export default function PostPage() {
             <div className="order-1 text-sm xl:block lg:order-3">
               <div className="sticky pt-5 -mt-10 top-16 lg:w-72">
                 {post && <TOC selector=".prose" />}
-                <div className="flex flex-col bg-[#5b68a7] text-light shadow-sm rounded-xl p-4 md:p-5">
+                <div className="flex flex-col bg-[#0b102a] text-light shadow-sm rounded-xl p-4 md:p-5">
                   <h3 className="text-lg font-bold text-gray-800 dark:text-white">
                     Stay in the loop
                   </h3>
