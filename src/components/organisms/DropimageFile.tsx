@@ -1,12 +1,11 @@
 import { X } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import { useDropzone } from "react-dropzone";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 
 type IDropImageFileProps = {
-  value?: any;
-  defaultImage?: string | null;
+  value?: File | string | null;
   onChange: (file?: Blob | string | null) => void;
 };
 
@@ -61,52 +60,39 @@ const ImagePreview = ({ image, onRemove }: IImagePreviewProps) => {
   );
 };
 
-const DropImageFile: React.FC<IDropImageFileProps> = ({
-  value,
-  defaultImage,
-  onChange,
-}) => {
-  const [preview, setPreview] = useState<string>();
+const DropImageFile: React.FC<IDropImageFileProps> = ({ value, onChange }) => {
+  const imageUrl = useMemo(() => {
+    if (value && value instanceof File) {
+      return URL.createObjectURL(value);
+    }
+
+    return value;
+  }, [value]);
+
   const [file, setFile] = useState<any>();
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFile(acceptedFiles[0]);
     // console.log(acceptedFiles[0]);
-    setPreview(URL.createObjectURL(acceptedFiles[0]));
   }, []);
+
+  useEffect(() => {
+    onChange(file);
+  }, [file]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     // accept: { images: ["*"] },
   });
 
-  const getPreview = async (image: string) => {
-    if (image && typeof image === "string") {
-      setPreview(URL.createObjectURL(await fetch(image).then((r) => r.blob())));
-    }
-  };
-
-  useEffect(() => {
-    if (defaultImage) getPreview(defaultImage);
-  }, [defaultImage]);
-
-  useEffect(() => {
-    onChange(file);
-    console.log("file", file);
-  }, [file]);
-
-  const remove = () => {
-    setPreview(undefined);
-    setFile(null);
-  };
   return (
     <div
       {...getRootProps({ className: "dropzone" })}
       className={cn(
-        `flex cursor-pointer items-center justify-center overflow-hidden bg-light border border-dotted rounded-lg shadow-lg border-muted dark:bg-dark dark:text-app`,
-        preview ? "h-64" : "h-20"
+        `flex cursor-pointer items-center justify-center overflow-hidden border border-dotted rounded-lg shadow-lg border-border`,
+        imageUrl ? "h-64" : "h-20"
       )}
     >
-      {!preview ? (
+      {!imageUrl ? (
         <>
           <input
             type="file"
@@ -123,10 +109,8 @@ const DropImageFile: React.FC<IDropImageFileProps> = ({
               <span className="text-xs font-light">Suelta la imágen</span>
             ) : (
               <span className="text-xs">
-                <span className="font-bold text-app-dark dark:text-light">
-                  Abrir imagen
-                </span>{" "}
-                o arrastra y suelta las imágenes que deseas subir
+                <span className="font-bold">Abrir imagen</span> o arrastra y
+                suelta las imágenes que deseas subir
               </span>
             )}
           </div>
@@ -135,7 +119,7 @@ const DropImageFile: React.FC<IDropImageFileProps> = ({
         <div className="relative w-full h-full">
           <img
             alt="Image preview"
-            src={preview}
+            src={imageUrl}
             className={`object-cover object-center w-full m-0`}
           />
           <div className={`absolute top-1.5 right-1.5 z-10`}>
@@ -143,7 +127,7 @@ const DropImageFile: React.FC<IDropImageFileProps> = ({
               variant="destructive"
               type="button"
               size="sm"
-              onClick={() => remove()}
+              onClick={() => setFile(null)}
             >
               <X className="w-5" />
             </Button>

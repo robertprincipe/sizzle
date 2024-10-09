@@ -7,7 +7,7 @@ const NotFoundPage = () => {
       <div className="text-center">
         <img src={NotFound} className="mx-auto h-96" alt="alt" />
         <p className="text-base font-semibold text-indigo-600">Error 404</p>
-        <h1 className="mt-4 text-3xl font-bold tracking-tight text-app-dark sm:text-5xl dark:text-light">
+        <h1 className="mt-4 text-3xl font-bold tracking-tight text-card sm:text-5xl dark:text-light">
           Pagina No Encontrada
         </h1>
         <p className="mt-6 text-base leading-7 text-dark dark:text-light">

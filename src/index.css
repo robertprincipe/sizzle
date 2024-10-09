@@ -4,95 +4,81 @@
 
 @layer base {
   :root {
-    --color-primary: #ea137f;
-    --color-secondary: #7f5eea;
-    --color-success: #5eea13;
-    --color-warning: #eaea13;
-    --color-default: #eaeaea;
-    --color-destructive: #e6567a;
-    --color-link: #13eaea;
-    --color-ghost: #f8f8f8;
-    --color-muted: #384445;
-    --color-dark: #042c30;
-    --color-light: #f6faff;
-    /* --color-app-dark: #031922; */
-    --color-app-dark: #0d1415;
-    /* --color-app-light: #defcff; */
-    --color-app-light: #fff;
-    --color-forms: #d8fcff;
-    --color-border: #e5e7eb;
-    --color-muted-light: #d8fcff;
-    /* placeholder:text-[#84858a] */
-  }
-  /*a9a8e0*/
-}
+    /* Name: custom color palette
+       Author: Ilias Ism
+       URL: https://gradient.page */
 
-/* @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 47.4% 11.2%;
+    /* CSS: .bg-gradient { background: var(--gradient) } */
+    --font-mono: "IBM Plex Sans", sans-serif;
+    --gradient: #050e33;
+    --background: 243 99.1% 98.22%;
+    --foreground: 243 8.2% 0.44%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 243 8.2% 91.1%;
+    --muted-foreground: 243 4.1% 41.1%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 47.4% 11.2%;
+    --popover: 243 24.400000000000006% 91.1%;
+    --popover-foreground: 243 8.2% 0.55%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
+    --card: 243 24.400000000000006% 91.1%;
+    --card-foreground: 243 8.2% 0.55%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 47.4% 11.2%;
+    --border: 243 13.2% 89.44%;
+    --input: 243 13.2% 89.44%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 243 82% 11%;
+    --primary-foreground: 243 1.64% 91.1%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 243 4.1% 95.55%;
+    --secondary-foreground: 243 5.92% 11.1%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 243 4.1% 95.55%;
+    --accent-foreground: 243 5.92% 11.1%;
 
-    --destructive: 0 100% 50%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
 
-    --ring: 215 20.2% 65.1%;
+    --ring: 243 82% 11%;
 
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 224 71% 4%;
-    --foreground: 213 31% 91%;
+    --gradient: #0b3bff;
 
-    --muted: 223 47% 11%;
-    --muted-foreground: 215.4 16.3% 56.9%;
+    --background: 242 65% 4.16%;
+    --foreground: 242 10% 97.6%;
 
-    --accent: 216 34% 17%;
-    --accent-foreground: 210 40% 98%;
+    --muted: 242 50% 15.600000000000001%;
+    --muted-foreground: 242 10% 55.2%;
 
-    --popover: 224 71% 4%;
-    --popover-foreground: 215 20.2% 65.1%;
+    --popover: 242 45% 6.76%;
+    --popover-foreground: 242 10% 97.6%;
 
-    --border: 216 34% 17%;
-    --input: 216 34% 17%;
+    --card: 242 45% 6.76%;
+    --card-foreground: 242 10% 97.6%;
 
-    --card: 224 71% 4%;
-    --card-foreground: 213 31% 91%;
+    --border: 242 50% 15.600000000000001%;
+    --input: 242 50% 15.600000000000001%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 1.2%;
+    --primary: 242 100% 52%;
+    --primary-foreground: 242 10% 5.2%;
 
-    --secondary: 222.2 47.4% 11.2%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 242 50% 15.600000000000001%;
+    --secondary-foreground: 242 10% 97.6%;
 
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
+    --accent: 242 50% 15.600000000000001%;
+    --accent-foreground: 242 10% 97.6%;
 
-    --ring: 216 34% 17%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 242 10% 97.6%;
 
-    --radius: 0.5rem;
+    --ring: 242 100% 52%;
   }
+}
+
+body {
+  font-family: "League Spartan", sans-serif;
 }
 
 @layer base {
@@ -115,7 +101,7 @@
     @apply ml-[-41px];
     content: counter(step);
   }
-} */
+}
 
 @media (max-width: 640px) {
   .container {

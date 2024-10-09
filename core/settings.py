@@ -30,10 +30,12 @@ BASE_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "daphne",
     "django.contrib.staticfiles",
 ]
 
 THIRD_PARTY_APPS = [
+    "channels",
     "corsheaders",
     "rest_framework",
     "djoser",
@@ -51,8 +53,8 @@ SAAS_APPS = [
 INSTALLED_APPS = BASE_APPS + THIRD_PARTY_APPS + SAAS_APPS
 
 UNFOLD = {
-    "SITE_TITLE": "Wariv",
-    "SITE_HEADER": "Wariv",
+    "SITE_TITLE": "Sizzle",
+    "SITE_HEADER": "Sizzle",
     "SITE_URL": "/",
     "SITE_ICON": lambda request: static("android-chrome-192x192-dba14c5c.png"),
     "SITE_SYMBOL": "speed",  # symbol from icon set
@@ -167,8 +169,13 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "core.wsgi.application"
+ASGI_APPLICATION = 'core.asgi.application'
 
-CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
+CHANNEL_LAYERS = {
+    'default':{
+        'BACKEND':'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 DATABASES = {
     "default": env.db("DATABASE_URL", default="postgres:///ninerogues"),
@@ -177,6 +184,7 @@ DATABASES = {
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 CORS_ORIGIN_WHITELIST = os.environ.get("CORS_ORIGIN_WHITELIST").split(",")
+CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS").split(",")
 

@@ -11,6 +11,7 @@ from django.contrib import admin
 from unfold.admin import StackedInline, TabularInline, ModelAdmin
 from unfold.contrib.forms.widgets import WysiwygWidget
 
+
 from django import forms
 from .models import Comment
 
@@ -23,18 +24,13 @@ class CommentInlineForm(forms.ModelForm):
             if instance.pk:
                 self.fields["parent"].queryset = Comment.objects.filter(
                     post=instance.post, parent=None
-                )
+                ).exclude(id=instance.id)
 
 
 class CommentInline(StackedInline):
     model = Comment
     form = CommentInlineForm
 
-    formfield_overrides = {
-        models.TextField: {
-            "widget": WysiwygWidget,
-        }
-    }
     # formfield_overrides = {
     #     models.ManyToManyField: {"widget": Textarea(attrs={"rows": 3, "cols": 40})},
     # }

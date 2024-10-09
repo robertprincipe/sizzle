@@ -8,7 +8,7 @@ export function Layout({ children }: LayoutProps) {
   return (
     <>
       <SiteHeader />
-      <main>{children}</main>
+      <main className="container">{children}</main>
 
       <footer className="mx-auto mt-auto w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8">
         <div className="text-center">

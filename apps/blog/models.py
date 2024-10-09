@@ -153,7 +153,7 @@ class Reaction(models.Model):
     post = models.ForeignKey(
         Post, related_name="reactions", on_delete=models.CASCADE, blank=True
     )
-    emoji = models.CharField(max_length=2)
+    emoji = models.CharField(max_length=12)
 
     def __str__(self):
         return self.emoji

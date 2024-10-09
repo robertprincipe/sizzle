@@ -7,10 +7,12 @@ const ActionsPost = ({
   post_id,
   comment_count,
   reaction_count,
+  sendJsonMessage,
 }: {
-  post_id?: string;
+  post_id: string;
   comment_count?: number;
   reaction_count?: number;
+  sendJsonMessage: any;
 }) => {
   const IsLoading = !post_id && !comment_count;
   return (
@@ -20,21 +22,25 @@ const ActionsPost = ({
           <Skeleton className="h-[65px] w-[300px] bg-dark dark:bg-muted rounded-full shadow-md inline-block" />
         </>
       ) : (
-        <div className="relative inline-block px-4 py-3 bg-light rounded-full shadow-md dark:bg-app-dark">
+        <div className="relative inline-block px-4 py-3 rounded-full shadow-md text-card-foreground bg-card">
           <div className="flex items-center gap-x-1.5">
-            <ReactPost postId={post_id || ""} reaction_count={reaction_count} />
-            <div className="h-3 mx-3 border-r border-muted dark:border-dark"></div>
+            <ReactPost
+              postId={post_id}
+              reaction_count={reaction_count}
+              sendJsonMessage={sendJsonMessage}
+            />
+            <div className="h-3 mx-3 border-r border-r-border"></div>
 
             <div className="flex items-center gap-x-1.5 mt-2 md:mt-0">
               <div className="inline-block hs-tooltip">
                 <a
-                  className="flex items-center text-sm text-muted hs-tooltip-toggle gap-x-2 hover:text-dark dark:text-muted dark:hover:text-muted"
+                  className="flex items-center text-sm gap-x-2"
                   href="#comments"
                 >
                   <MessageCircle className="h-5" />
                   {comment_count}
                   <span
-                    className="absolute z-10 invisible inline-block px-2 py-1 text-xs font-medium text-light transition-opacity bg-indigo-500 rounded-md shadow-sm opacity-0 hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible dark:bg-black"
+                    className="absolute z-10 invisible inline-block px-2 py-1 text-xs font-medium transition-opacity bg-indigo-500 rounded-md shadow-sm"
                     role="tooltip"
                   >
                     Comment
@@ -44,10 +50,10 @@ const ActionsPost = ({
 
               <div className="block h-3 mx-3 border-r border-muted dark:border-dark"></div>
 
-              <div className="relative inline-flex hs-dropdown">
+              <div className="relative inline-flex">
                 <button
                   id="blog-article-share-dropdown"
-                  className="flex items-center text-sm text-muted hs-dropdown-toggle gap-x-2 hover:text-dark dark:text-muted dark:hover:text-muted"
+                  className="flex items-center text-sm gap-x-2"
                 >
                   <Share2 className="w-5" />
                 </button>

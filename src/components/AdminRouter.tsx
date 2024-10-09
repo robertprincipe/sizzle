@@ -1,10 +1,7 @@
 import { lazy } from "react";
 import { RouteObject } from "react-router-dom";
-import Main from "@/components/layouts/Main";
-import BlogPage from "@/pages/Blog/BlogPage";
 import { ProtectedRoute } from "./shared/ProtectedRoutes";
-import HomePage from "@/pages/HomePage";
-import TagPage from "@/pages/TagPage";
+import AdminLayout from "./layouts/Admin";
 
 const AdminRoutesList = (): RouteObject[] => [
   {
@@ -16,7 +13,7 @@ const AdminRoutesList = (): RouteObject[] => [
         element: <ProtectedRoute redirectTo="/auth/login" />,
         children: [
           {
-            path: "post/:id/edit",
+            path: "posts/:id/edit",
             element: <EditPostPage />,
           },
           {
@@ -35,6 +32,10 @@ const AdminRoutesList = (): RouteObject[] => [
             path: "notifications",
             element: <NotificationsPage />,
           },
+           {
+            path: "account",
+            element: <AccountPage />,
+          },
         ],
       },
     ],
@@ -51,7 +52,9 @@ const OverViewPage = LazyLoading(
 );
 import NotificationsPage from "@/pages/Admin/NotificationsPage";
 import LazyLoading from "./HOC/LazyLoading";
-const AdminLayout = LazyLoading(lazy(() => import("./layouts/Admin")));
+import AccountPage from "@/pages/Admin/account-page";
+
+// const Main = LazyLoading(lazy(() => import("./layouts/Admin")));
 
 const EditPostPage = LazyLoading(
   lazy(() => import("@/pages/Blog/EditPostPage"))

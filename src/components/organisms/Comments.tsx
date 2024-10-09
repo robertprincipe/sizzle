@@ -51,8 +51,6 @@ const Comments = ({ post: { id: post_id, comment_count } }: ICommentsProps) => {
   });
 
   const onSubmit = async (data: commentData) => {
-    console.log(data);
-
     const commentDataPost = {
       ...data,
       id: editComment?.id,
@@ -92,9 +90,9 @@ const Comments = ({ post: { id: post_id, comment_count } }: ICommentsProps) => {
   };
 
   return (
-    <div className="max-w-2xl px-4 mx-auto" id="comments">
+    <div className="mt-3" id="comments">
       <div className="flex items-center justify-between mb-4">
-        <h4 className="text-lg font-bold text-app-dark lg:text-2xl dark:text-light">
+        <h4 className="text-lg font-bold text-accent-foreground">
           Comentarios ({comment_count || 0})
         </h4>
       </div>

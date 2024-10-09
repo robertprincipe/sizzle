@@ -3,7 +3,7 @@ import { RouteObject } from "react-router-dom";
 import Main from "@/components/layouts/Main";
 import BlogPage from "@/pages/Blog/BlogPage";
 import { ProtectedRoute } from "./shared/ProtectedRoutes";
-import HomePage from "@/pages/HomePage";
+import HomePage from "@/pages/home-page";
 import TagPage from "@/pages/TagPage";
 
 const MainRoutesList = (): RouteObject[] => [
@@ -46,14 +46,14 @@ import NotificationsPage from "@/pages/Admin/NotificationsPage";
 import LazyLoading from "./HOC/LazyLoading";
 const AdminLayout = LazyLoading(lazy(() => import("./layouts/Admin")));
 const ProfilePage = LazyLoading(lazy(() => import("@/pages/ProfilePage")));
-const ContactPage = LazyLoading(lazy(() => import("@/pages/ContactPage")));
-const PricingPage = LazyLoading(lazy(() => import("@/pages/PricingPage")));
+const ContactPage = LazyLoading(lazy(() => import("@/pages/contact-page")));
+const PricingPage = LazyLoading(lazy(() => import("@/pages/pricing-page")));
 
 const EditPostPage = LazyLoading(
   lazy(() => import("@/pages/Blog/EditPostPage"))
 );
 
-const PostPage = LazyLoading(lazy(() => import("@/pages/Blog/PostPage")));
+const PostPage = LazyLoading(lazy(() => import("@/pages/Blog/post-page")));
 
 const ConfigProfilePage = LazyLoading(
   lazy(() => import("@/pages/Admin/ConfigProfilePage"))

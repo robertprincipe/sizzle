@@ -19,7 +19,7 @@ export default function BlogPage() {
 
   return (
     <div className="container max-w-4xl py-6 lg:py-10">
-      <Head title="Publicaciones | Wariv" />
+      <Head title="Publicaciones | Sizzle" />
       <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between md:gap-8">
         <div className="flex-1 space-y-4">
           <h1 className="text-3xl font-bold md:text-4xl md:leading-tight dark:text-light lg:text-4xl">

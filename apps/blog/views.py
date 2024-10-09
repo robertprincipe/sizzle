@@ -149,7 +149,7 @@ def editor_posts(request):
             {"message": "No tienes publicaciones"}, status=status.HTTP_404_NOT_FOUND
         )
 
-    posts = PostEditorSerializer(posts, many=True)
+    posts = PostSerializer(posts, many=True)
 
     return Response(posts.data, status=status.HTTP_200_OK)
 
@@ -434,6 +434,25 @@ def reactions_post(request, post_id):
     reactions_serializer = ReactionSerializer(post.reactions, many=True)
     return Response(reactions_serializer.data, status=status.HTTP_200_OK)
 
+@api_view(["GET"])
+def reaction_user_post(request, post_id):
+    try:
+        post = Post.objects.get(id=post_id)
+    except Post.DoesNotExist:
+        return Response(
+            {"message": "No existe la publicación"}, status=status.HTTP_404_NOT_FOUND
+        )
+    if not request.user.is_authenticated:
+        return Response(
+            {}, status=status.HTTP_404_NOT_FOUND
+        )
+    # find reaction of user autenticated or null
+    reaction = Reaction.objects.filter(post=post, user=request.user).first()
+    if not reaction:
+        return Response(None, status=status.HTTP_404_NOT_FOUND)
+    print("hpolasoas")
+    reaction_serializer = ReactionSerializer(reaction)
+    return Response(reaction_serializer.data, status=status.HTTP_200_OK)
 
 @api_view(["GET"])
 def user_reaction(request, post_id):

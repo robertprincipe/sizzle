@@ -1,6 +1,6 @@
 import { Outlet, useLocation, useNavigation } from "react-router-dom";
 import { SiteHeader } from "../site-header";
-import Footer from "../shared/Footer";
+import { SiteFooter } from "../shared/site-footer";
 import { useAuthStore } from "@/store/auth";
 import { useEffect } from "react";
 
@@ -23,10 +23,10 @@ const Main = () => {
   return (
     <>
       <SiteHeader />
-      <main>
+      <main className="container">
         <Outlet />
       </main>
-      <Footer />
+      <SiteFooter />
     </>
   );
 };

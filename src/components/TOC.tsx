@@ -7,12 +7,11 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-type TOSType = {
+type TOCProps = {
   selector: string;
 };
 
-export const TOC = ({ selector }: TOSType) => {
-  const [openTOC, setOpenTOC] = useState("toc");
+export const TOC = ({ selector }: TOCProps) => {
   const [currentHeadingID, setCurrentHeadingID] = useState<
     string | undefined
   >();
@@ -82,40 +81,32 @@ export const TOC = ({ selector }: TOSType) => {
   };
 
   return (
-    <Accordion type="single" collapsible value={openTOC}>
-      <AccordionItem value="toc">
-        <AccordionTrigger
-          onClick={() => setOpenTOC(openTOC === "toc" ? "" : "toc")}
+    <ul
+      className="flex flex-col text-sm text-muted-foreground"
+      ref={listWrapperRef}
+    >
+      {headings.map((heading) => (
+        <li
+          className={`${
+            Number(heading.tagName.match(/(\d+)/)?.[0] || "1") > 2
+              ? "ml-3 border-l-2 border-r-border px-3"
+              : "py-2"
+          }`}
+          key={heading.dataset.id}
         >
-          <p className="font-medium text-lg">Tabla de contenidos</p>
-        </AccordionTrigger>
-        <AccordionContent className="overflow-hidden -mt-5">
-          <ul className="m-0 list-none p-1" ref={listWrapperRef}>
-            {headings.map((heading) => (
-              <li
-                className={`pt-1.5 ${
-                  Number(heading.tagName.match(/(\d+)/)?.[0] || "1") > 2
-                    ? "ml-6"
-                    : ""
-                }`}
-                key={heading.dataset.id}
-              >
-                <a
-                  data-id={heading.dataset.id}
-                  onClick={() => goToSection(heading)}
-                  className={`inline-flex no-underline text-sm text-muted cursor-pointer ${
-                    currentHeadingID === heading.dataset.id
-                      ? "text-light font-semibold"
-                      : "hover:text-muted"
-                  }`}
-                >
-                  {heading.innerHTML}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
+          <a
+            data-id={heading.dataset.id}
+            onClick={() => goToSection(heading)}
+            className={`inline-flex no-underline cursor-pointer ${
+              currentHeadingID === heading.dataset.id
+                ? "text-foreground font-semibold"
+                : "text-muted-foreground"
+            }`}
+          >
+            {heading.innerHTML}
+          </a>
+        </li>
+      ))}
+    </ul>
   );
 };

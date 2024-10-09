@@ -12,12 +12,9 @@ type ITagFieldProps = {
 const TagField = ({ tag, removeTag }: ITagFieldProps) => {
   return (
     <div
-      className={`flex items-center whitespace-nowrap rounded-lg border border-muted p-1.5 text-xs font-bold text-light bg-dark cursor-default select-none`}
+      className={`flex text-foreground items-center whitespace-nowrap rounded-lg border border-border p-1.5 text-xs font-bold cursor-default select-none`}
     >
-      #
-      <div className={`bg-transparent border-none focus:outline-none`}>
-        {tag.name}
-      </div>
+      #{tag.name}
       <X className="h-4 cursor-pointer" onClick={() => removeTag(tag.name)} />
     </div>
   );

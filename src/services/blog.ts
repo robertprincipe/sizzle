@@ -80,6 +80,10 @@ export const reactionList = (post_id: string) =>
     API.get<IReactionList>(`/reaction-list/post/${post_id}`)
         .then(res => res.data)
 
+export const reactionUser = (post_id: string) =>
+    API.get<IReaction>(`/react/user/post/${post_id}`)
+        .then(res => res.data)
+
 export const userReaction = (post_id: string) =>
     API.get<{ user_reaction: string, count: number }>(`/reaction/user/${post_id}`)
         .then(res => res.data)

@@ -38,7 +38,7 @@ const CommentCard = ({
       <footer className="flex items-center justify-between mb-2">
         <div className="flex items-center">
           <Link
-            className="inline-flex items-center text-sm text-app-dark dark:text-light"
+            className="inline-flex items-center text-sm"
             to={`/@/${comment.user?.username}`}
           >
             {/* <img
@@ -46,7 +46,7 @@ const CommentCard = ({
               src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
               alt="Michael Gough"
             /> */}
-            <div className="relative flex items-center justify-center w-8 h-8 overflow-hidden rounded-full">
+            <div className="relative flex items-center justify-center w-8 h-8 overflow-hidden rounded-full text-secondary">
               <Avatar className="overflow-hidden rounded-full">
                 <AvatarImage
                   src={comment?.user?.picture as string}
@@ -64,7 +64,7 @@ const CommentCard = ({
           </Link>
 
           <span className="mx-1.5">•</span>
-          <p className="text-xs text-dark dark:text-muted">
+          <p className="text-xs text-popover-foreground">
             <time dateTime="2022-02-08" title="February 8th, 2022">
               {fromNow(comment.created_at || new Date())}
             </time>
@@ -96,10 +96,10 @@ const CommentCard = ({
           </DropdownMenuContent>
         </DropdownMenu>
       </footer>
-      <p className="text-muted dark:text-muted">{comment.content}</p>
+      <p className="text-muted-foreground">{comment.content}</p>
       <div className="flex items-center mt-4 space-x-4">
         <a
-          className="flex items-center text-sm text-muted hover:underline dark:text-muted"
+          className="flex items-center text-sm text-secodary-foreground hover:underline"
           onClick={() => setToReply(comment)}
           href="#comments"
         >

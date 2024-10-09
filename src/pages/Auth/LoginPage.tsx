@@ -102,7 +102,7 @@ const LoginPage = () => {
             to={"/auth/signup"}
             className="relative flex justify-center text-xs uppercase"
           >
-            <span className="px-2 text-muted bgapp-dark">
+            <span className="px-2 text-muted bg-card">
               Soy nuevo quiero registrarme
             </span>
           </Link>

@@ -203,7 +203,7 @@ const PricingPrice = () => {
           </div>
 
           <div>
-            <div className="relative z-10 rounded-xl border bg-white p-5 shadow-xl shadow-muted dark:border-dark dark:bg-dark dark:shadow-app-dark/[.2] md:p-10">
+            <div className="relative z-10 rounded-xl border bg-white p-5 shadow-xl shadow-muted dark:border-dark dark:bg-dark dark:shadow-card/[.2] md:p-10">
               <h3 className="text-xl font-bold text-dark dark:text-muted">
                 Teams
               </h3>

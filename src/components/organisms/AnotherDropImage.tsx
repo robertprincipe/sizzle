@@ -46,7 +46,7 @@ const AnotherDropImage = ({ value, onChange }: any) => {
             <span className="text-xs font-light">Suelta la imágen</span>
           ) : (
             <span className="text-xs">
-              <span className="font-bold text-app-dark dark:text-light">
+              <span className="font-bold text-card dark:text-light">
                 Abrir imagen
               </span>{" "}
               o arrastra y suelta las imágenes que deseas subir

@@ -22,6 +22,7 @@ urlpatterns = [
     path("reaction/user/<uuid:post_id>", user_reaction, name="user_reaction"),
     path("reaction-list/post/<uuid:post_id>", reaction_list, name="reaction_list"),
     path("react/post", react_post, name="react_post"),
+    path("react/user/post/<uuid:post_id>", reaction_user_post, name="reaction_user_post"),
     path(
         "posts/<uuid:post_id>/remove-image", delete_image_post, name="delete_image_post"
     ),

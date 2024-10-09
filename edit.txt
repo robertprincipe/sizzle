@@ -121,7 +121,7 @@ disabled = { isLoading }
     < /button>
     < /div>
     < /div>
-    < div className = "prose prose-stone mx-auto lg:w-[800px] p-2 text-app-dark dark:prose-invert dark:text-light" >
+    < div className = "prose prose-stone mx-auto lg:w-[800px] p-2 text-card dark:prose-invert dark:text-light" >
         <DropImageFile
             defaultImage={ post?.cover_image as string }
 value = { coverImage }

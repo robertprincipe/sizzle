@@ -248,7 +248,7 @@ const Hero = () => {
 
           <div className="absolute bottom-0 left-0">
             <svg
-              className="w-2/3 ml-auto h-auto text-light dark:text-app-dark"
+              className="w-2/3 ml-auto h-auto text-light dark:text-card"
               width="630"
               height="451"
               viewBox="0 0 630 451"

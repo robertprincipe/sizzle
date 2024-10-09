@@ -19,9 +19,9 @@ const AuthLayout = () => {
       <div className="flex z-20 items-center inset-x-4 lg:inset-x-10 justify-between absolute top-4 lg:right-8 md:top-8">
         <Link
           to="/"
-          className="z-20 flex items-center text-lg text-app-dark md:text-light dark:text-light md:dark:text-app-dark font-medium"
+          className="z-20 flex items-center text-lg text-card md:text-light dark:text-light md:dark:text-card font-medium"
         >
-          <img src={Logo} className="w-8 mr-1" /> Wariv
+          <img src={Logo} className="w-8 mr-1" /> Sizzle
         </Link>
 
         <DropdownMenu>
